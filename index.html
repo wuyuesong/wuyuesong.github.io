@@ -150,7 +150,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2021/09/27/atan%E4%B8%8Eatan2/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2021/09/28/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/In-Circle/In-Circle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +164,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/27/atan%E4%B8%8Eatan2/" class="post-title-link" itemprop="url">atan与atan2</a>
+            <a href="/2021/09/28/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/In-Circle/In-Circle/" class="post-title-link" itemprop="url">In-Circle</a>
         </h2>
 
         <div class="post-meta">
@@ -173,8 +173,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-09-27 21:23:18" itemprop="dateCreated datePublished" datetime="2021-09-27T21:23:18+08:00">2021-09-27</time>
+              <time title="Created: 2021-09-28 18:09:09 / Modified: 21:10:05" itemprop="dateCreated datePublished" datetime="2021-09-28T18:09:09+08:00">2021-09-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95%E5%A4%A7%E5%B8%88%E4%B9%8B%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">计算几何大师之路</span></a>
+                </span>
             </span>
 
           
@@ -188,7 +198,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <blockquote>
+<p>uva 11524</p>
+</blockquote>
+<h4 id="题意">题意</h4>
+<p>如图所示， <span class="math inline">\(\triangle{ABC}\)</span> 的内切圆把他的三边分别划分成 <span class="math inline">\(m1:n1\)</span> , <span class="math inline">\(m2:n2\)</span> ,<span class="math inline">\(m3:n3\)</span> 的比例。另外已知内切圆的半径 <span class="math inline">\(r\)</span> ,求 <span class="math inline">\(\triangle{ABC}\)</span> 的面积 。</p>
+<figure>
+<img src="/2021/09/28/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/In-Circle/In-Circle/image-20210928181829265.png" alt="image-20210928181829265"><figcaption aria-hidden="true">image-20210928181829265</figcaption>
+</figure>
+<h4 id="普遍思路">普遍思路</h4>
+<p>设三角形三边长为 <span class="math inline">\(a\)</span> , <span class="math inline">\(b\)</span> , <span class="math inline">\(c\)</span> 。</p>
+<p>由内切圆得三角形的面积为 <span class="math inline">\(S = \frac{(a+b+c)*r}{2}\)</span> 。</p>
+<p>由海伦公式得三角形得面积为 <span class="math inline">\(S = \sqrt{p*(p-a)*(p-b)*(p-c)}\)</span> 。</p>
+<p>其中 <span class="math inline">\(p = \frac{a+b+c}{2}\)</span> 。</p>
+<p>设 <span class="math inline">\(AP\)</span> 为<span class="math inline">\(m_1x\)</span>联立两个方程可以解出 <span class="math inline">\(x\)</span> 从而可以求出答案。</p>
+<h4 id="个人思路">个人思路</h4>
+<p>个人认为上述方程比较难解，下面给出另一种解法。</p>
+<img src="/2021/09/28/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/In-Circle/In-Circle/09/28/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/In-Circle/In-Circle/image-20210928183308083.png" class title="image-20210928183308083">
+<p>在三角形中有如下结论</p>
+<p><span class="math inline">\(\tan{\frac{A}{2}}*\tan{\frac{B}{2}}+\tan{\frac{A}{2}}*\tan{\frac{C}{2}}+\tan{\frac{B}{2}}*\tan{\frac{C}{2}} = 1\)</span></p>
+<p><span class="math inline">\(\therefore \frac{1}{\tan{\frac{A}{2}}} + \frac{1}{\tan{\frac{B}{2}}} + \frac{1}{\tan{\frac{C}{2}}} = \frac{1}{\tan{\frac{A}{2}}\tan{\frac{B}{2}}\tan{\frac{C}{2}}}\)</span></p>
+<p>而 <span class="math inline">\(\tan{\frac{A}{2}} = \frac{r}{y}\)</span> , <span class="math inline">\(\tan{\frac{B}{2}} = \frac{r}{z}\)</span>, <span class="math inline">\(\tan{\frac{C}{2}} = \frac{r}{x}\)</span></p>
+<p>代入上式得 <span class="math inline">\(\frac{x+y+z}{r} = \frac{xyz}{r^3}\)</span></p>
+<p>即可解出答案。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FOR(i,f_start,f_end) for(int i=f_start;i&lt;=f_end;++i)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ull;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;PII;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">1e-8</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">200000</span> + <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="comment">//unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();</span></span><br><span class="line"><span class="comment">//mt19937 rand_num(seed);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//freopen(&quot;in.txt&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">    <span class="comment">//freopen(&quot;out.txt&quot;,&quot;w&quot;,stdout);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//std::ios::sync_with_stdio(false);</span></span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    cin &gt;&gt; t;</span><br><span class="line">    <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">        <span class="keyword">double</span> r;</span><br><span class="line">        cin &gt;&gt; r;</span><br><span class="line">        <span class="keyword">double</span> m1,n1,m2,n2,m3,n3;</span><br><span class="line">        cin &gt;&gt; m1 &gt;&gt; n1 &gt;&gt; m2 &gt;&gt; n2 &gt;&gt; m3 &gt;&gt; n3;</span><br><span class="line">        <span class="keyword">double</span> p,q;</span><br><span class="line">        p = m2*m2*m1*n2/n1/r/r;</span><br><span class="line">        q = (n1*m2+m1*m2+n1*n2)/n1;</span><br><span class="line">        <span class="keyword">double</span> x = <span class="built_in">sqrt</span>(q/p);</span><br><span class="line">        <span class="keyword">double</span> l = (<span class="number">2</span>*m2 + <span class="number">2</span>*n2 + m1*m2/n1 + n2*n3/m3)*x/<span class="number">2</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%.4lf\n&quot;</span>,l*r);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -239,7 +273,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-28 09:46:13" itemprop="dateModified" datetime="2021-09-28T09:46:13+08:00">2021-09-28</time>
+                <time title="Modified: 2021-09-28 18:10:01" itemprop="dateModified" datetime="2021-09-28T18:10:01+08:00">2021-09-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
