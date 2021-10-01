@@ -150,6 +150,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/" class="post-title-link" itemprop="url">翻译</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-01 22:24:06 / Modified: 23:14:49" itemprop="dateCreated datePublished" datetime="2021-10-01T22:24:06+08:00">2021-10-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/XCPC/" itemprop="url" rel="index"><span itemprop="name">XCPC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>前言</p>
+<p>作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。</p>
+</blockquote>
+<h4 id="sdkd-2021-summer-training-series-a-2nd-round">SDKD 2021 Summer Training Series A 2nd Round</h4>
+<blockquote>
+<p>2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)</p>
+</blockquote>
+<h5 id="a---average-rank"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500A">A - Average Rank</a></h5>
+<p>在一个比赛中，每周完成的人可以得到一个点数，在每周的末尾，会对每个人的到的点数进行排名。每个人的排名为分数大于他的人数<span class="math inline">\(+1\)</span> , 如果两个人得到的点数相同那么他们的名次相同。</p>
+<figure>
+<img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/21dfad4dca68e82d048f45957c56a4d5.png" alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>一共有n名参赛选手，比赛进行w周，每周给你一个选手的得分列表，你的任务是计算n名选手在这w周的平均名次。</p>
+<p><strong>输入</strong></p>
+<p>第一行n,w，分别表示人数和周数。</p>
+<p>接下来w行，第 <span class="math inline">\(i\)</span> 行开头为 <span class="math inline">\(k\)</span>，接下来k个数字<span class="math inline">\(c_1,…c_k\)</span>表示<span class="math inline">\(c_1,…,c_k\)</span>名选手在第 <span class="math inline">\(i\)</span> 周得到一分。</p>
+<p>所有选手的总共得分不超过 <span class="math inline">\(1 million\)</span>。</p>
+<p><strong>输出</strong></p>
+<p><span class="math inline">\(n\)</span>行，第<span class="math inline">\(i\)</span>行表示第<span class="math inline">\(i\)</span>名选手的平均名次。</p>
+<h5 id="b---balanced-cut"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500B">B - Balanced Cut</a></h5>
+<p>给你一棵 <span class="math inline">\(n\)</span> 个结点的平衡二叉搜索树，该数具有如下性质：</p>
+<ul>
+<li>左右子树深度之差不超过1。</li>
+<li>结点的值比左子树中所有结点的值都大，比右子树所有结点的值都小。</li>
+</ul>
+<p>现在让你删除结点至只剩 <span class="math inline">\(k\)</span> 个结点，当你删除结点时，所有该节点的子孙结点将被删除。</p>
+<p>先让你完成这个操作，使剩余结点的中序遍历字典序最小。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n,k\)</span> 表示有<span class="math inline">\(n\)</span>个结点，要求剩余<span class="math inline">\(k\)</span>个结点。</p>
+<p>接下来 <span class="math inline">\(n\)</span> 行表示，第<span class="math inline">\(i\)</span>行为 <span class="math inline">\(p_i\)</span> ,表示值为 <span class="math inline">\(i\)</span> 的结点的父亲的值为<span class="math inline">\(p_i\)</span>, <span class="math inline">\(p_i\)</span> 为 <span class="math inline">\(-1\)</span> 表示为根节点。</p>
+<p><strong>输出</strong></p>
+<p>一个字符串，第 <span class="math inline">\(i\)</span> 位为<span class="math inline">\(0\)</span>表示删除，为 <span class="math inline">\(1\)</span> 表示保留。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/09/28/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/In-Circle/In-Circle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -438,7 +538,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-27 18:10:05" itemprop="dateModified" datetime="2021-09-27T18:10:05+08:00">2021-09-27</time>
+                <time title="Modified: 2021-10-01 15:02:52" itemprop="dateModified" datetime="2021-10-01T15:02:52+08:00">2021-10-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -924,14 +1024,14 @@ dp[x][flag]=max(dp[it][0]+abs(nd[it][0]-nd[x][flag]),dp[it][1]+abs(nd[it][1]-nd[
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
