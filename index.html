@@ -173,10 +173,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-10-01 22:24:06 / Modified: 23:40:49" itemprop="dateCreated datePublished" datetime="2021-10-01T22:24:06+08:00">2021-10-01</time>
+              <time title="Created: 2021-10-01 22:24:06" itemprop="dateCreated datePublished" datetime="2021-10-01T22:24:06+08:00">2021-10-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-02 00:11:15" itemprop="dateModified" datetime="2021-10-02T00:11:15+08:00">2021-10-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -230,6 +236,13 @@
 <p>接下来 <span class="math inline">\(n\)</span> 行，第<span class="math inline">\(i\)</span>行为 <span class="math inline">\(p_i\)</span> ,表示值为 <span class="math inline">\(i\)</span> 的结点的父亲的值为<span class="math inline">\(p_i\)</span>, <span class="math inline">\(p_i\)</span> 为 <span class="math inline">\(-1\)</span> 表示为根节点。</p>
 <p><strong>输出</strong></p>
 <p>一个字符串，第 <span class="math inline">\(i\)</span> 位为<span class="math inline">\(0\)</span>表示删除，为 <span class="math inline">\(1\)</span> 表示保留。</p>
+<h5 id="d---disposable-switches"><a target="_blank" rel="noopener" href="https://vjudge.net/problem/Gym-102500D">D - Disposable Switches</a></h5>
+<p>给一个 <span class="math inline">\(n\)</span> 个结点，<span class="math inline">\(m\)</span> 条路径的无向图，表示一个网络。每根传输时间为 <span class="math inline">\(l/v + c\)</span> , <span class="math inline">\(l\)</span> 为电缆的长度，<span class="math inline">\(v\)</span> 为传输速率，<span class="math inline">\(c\)</span> 为常量，<span class="math inline">\(v\)</span> 和 <span class="math inline">\(c\)</span> 未知 ，只知道<span class="math inline">\(v &gt; 0\)</span> , <span class="math inline">\(c &gt;= 0\)</span> ，当一个数据传送到一个结点时，他会选择路径耗时最短的结点进行转发，求无论 <span class="math inline">\(v\)</span>,<span class="math inline">\(c\)</span> 为何值时，从<span class="math inline">\(1\)</span>发送数据到<span class="math inline">\(n\)</span>，有哪些结点是永远不会被转发到的。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n\)</span>,<span class="math inline">\(m\)</span> ,表示有 <span class="math inline">\(n\)</span> 个结点，<span class="math inline">\(m\)</span> 条路径。接下来 <span class="math inline">\(m\)</span> 行，每行有三个数 <span class="math inline">\(a\)</span> , <span class="math inline">\(b\)</span> , <span class="math inline">\(l\)</span> ,表示 <span class="math inline">\(a\)</span> 到 <span class="math inline">\(b\)</span> 之间的电缆长度为 <span class="math inline">\(l\)</span>。</p>
+<p>无重边，自环。图保证联通。</p>
+<p><strong>输出</strong></p>
+<p>第一行为一个 <span class="math inline">\(k\)</span> ,第二行有<span class="math inline">\(k\)</span>个数，表示有<span class="math inline">\(k\)</span> 个结点不会被转发到。输出按升序排列。</p>
 
       
     </div>
