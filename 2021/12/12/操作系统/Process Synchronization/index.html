@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Process Synchronization 5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized. 在5.4节我们提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Process Synchronization">
+<meta property="og:url" content="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Process%20Synchronization/index.html">
+<meta property="og:site_name" content="wys的个人博客">
+<meta property="og:description" content="Process Synchronization 5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized. 在5.4节我们提">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-12T06:00:06.000Z">
+<meta property="article:modified_time" content="2021-12-12T06:10:06.058Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Process%20Synchronization/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Process Synchronization | wys的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wys的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Process%20Synchronization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Process Synchronization
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-12-12 14:00:06 / Modified: 14:10:06" itemprop="dateCreated datePublished" datetime="2021-12-12T14:00:06+08:00">2021-12-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="process-synchronization">Process Synchronization</h4>
+<h5 id="in-section-5.4-we-mentioned-that-disabling-interrupts-frequently-can-affect-the-systems-clock.-explain-why-this-can-occur-and-how-such-effects-can-be-minimized.-在5.4节我们提到如果频繁的禁用中断会影响系统时钟解释为什么会发生并把影响减到最小">5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized. 在5.4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。</h5>
+<p>The system clock is updated at every clock interrupt. If interrupts were disabled—particularly for a long period of time—it is possible the system clock could easily lose the correct time. The system clock is also used for scheduling purposes. For example, the time quantum for a process is expressed as a number of clock ticks. At every clock interrupt, the scheduler determines if the time quantum for the currently running process has expired. If clock interrupts were disabled, the scheduler could not accurately assign time quantum. This effect can be minimized by disabling clock interrupts for only very short periods.</p>
+<p>系统时钟被每一个时钟中断所更新，如果中断被禁止，特别是很长的时间，那么系统时钟会丢失掉当前时间。系统时钟还用于系统调度。例如，进程的时间量表示为时钟信号的数量，在每个系统中断时，调度程序确定当前运行的时间量是否已过期。如果时钟中断被禁用，调度程序将无法准确分配时间量。这种影响可以通过在每次禁用中断只禁用很短的时间来解决。</p>
+<h5 id="explain-why-windows-linux-and-solaris-implement-multiple-locking-mechanisms.-describe-the-circumstances-under-which-they-use-spin-locks-mutex-locks-semaphores-adaptive-mutex-locks-and-condition-variables.-in-each-case-explain-why-the-mechanism-is-needed.-解释为什么windowslinux-和-solaris-实现多种锁机制解释他们使用自旋锁互斥锁信号量自适应互斥锁和条件变量在每种情况下解释为什么这种锁机制是需要的">5.2 Explain why Windows, Linux, and Solaris implement multiple locking mechanisms. Describe the circumstances under which they use spin-locks, mutex locks, semaphores, adaptive mutex locks, and condition variables. In each case, explain why the mechanism is needed. 解释为什么windows，Linux 和 Solaris 实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。</h5>
+<p>These operating systems provide different locking mechanisms depending on the application developers’ needs. Spinlocks are useful for multiprocessor systems where a thread can run in a busy-loop (for a short period of time) rather than incurring the overhead of being put in a sleep queue. Mutexes are useful for locking resources. Solaris 2 uses adaptive mutexes, meaning that the mutex is implemented with a spin lock on multiprocessor machines. Semaphores and condition variables are more appropriate tools for synchronization when a resource must be held for a long period of time, since spinning is inefficient for a long duration.</p>
+<p>这些操作系统提供了复杂的锁机制，依赖于应用开发者的需要。自旋锁对多处理器系统十分重要，因为对于自旋锁线程可以在忙等待运行而不是被放入睡眠队列，互斥锁对于锁资源非常重要。Solaris使用了自适应互斥锁意味着在多处理机上实现了自旋锁。信号量和条件变量对于同步来说更合适当资源需要被持有很长一段时间，因为自旋很长一段时间是低效的。</p>
+<h5 id="what-is-the-meaning-of-the-term-busy-waiting-what-other-kinds-of-waiting-are-there-in-an-operating-system-can-busy-waiting-be-avoided">5.3 What is the meaning of the term busy waiting? What other kinds of waiting are there in an operating system? Can busy waiting be avoided</h5>
+<p>altogether? Explain your answer. 忙等待是什么意思，还有其他的什么等待，忙等待可以完全避免吗？</p>
+<p>Busy waiting means that a process is waiting for a condition to be satisfied in a tight loop without relinquishing the processor. Alternatively, a process could wait by relinquishing the processor, and block on a condition and wait to be awakened at some appropriate time in the future. Busy waiting can be avoided but incurs the overhead associated with putting a process to sleep and having to wake it up when the appropriate program state is reached. 忙等待意味着进程在一个小的循环中等待条件满足而不放弃处理器。另外的一个进程可以放弃处理器并等待，他可以被条件阻塞然后在合适的时机被唤醒。可以避免忙等待但需花费将进程置于忙状态并将他唤醒的开销。</p>
+<h5 id="explain-why-spinlocks-are-not-appropriate-for-single-processor-systems-yet-are-often-used-in-multiprocessor-systems.-解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中">5.4 Explain why spinlocks are not appropriate for single-processor systems yet are often used in multiprocessor systems. 解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。</h5>
+<p>Spinlocks are not appropriate for single-processor systems because the condition that would break a process out of the spinlock can be obtained only by executing a different process. If the process is not relinquishing the processor, other processes do not get the opportunity to set the program condition required for the first process to make progress. In a multiprocessor system, other processes execute on other processors and thereby modify the program state in order to release the first process from the spinlock. 对于单进程系统，自旋锁不合适因为可以打破进程自旋锁的条件必须被一个正在执行的程序所持有。其他进程没有机会获得释放所得的条件。在多进程系统中，其他进程可以执行在其他处理器上，因此可以修改状态以释放自旋锁。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/" rel="prev" title="翻译">
+      <i class="fa fa-chevron-left"></i> 翻译
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="next" title="Treads">
+      Treads <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#process-synchronization"><span class="nav-number">1.</span> <span class="nav-text">Process Synchronization</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#in-section-5.4-we-mentioned-that-disabling-interrupts-frequently-can-affect-the-systems-clock.-explain-why-this-can-occur-and-how-such-effects-can-be-minimized.-%E5%9C%A85.4%E8%8A%82%E6%88%91%E4%BB%AC%E6%8F%90%E5%88%B0%E5%A6%82%E6%9E%9C%E9%A2%91%E7%B9%81%E7%9A%84%E7%A6%81%E7%94%A8%E4%B8%AD%E6%96%AD%E4%BC%9A%E5%BD%B1%E5%93%8D%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F%E8%A7%A3%E9%87%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%8F%91%E7%94%9F%E5%B9%B6%E6%8A%8A%E5%BD%B1%E5%93%8D%E5%87%8F%E5%88%B0%E6%9C%80%E5%B0%8F"><span class="nav-number">1.1.</span> <span class="nav-text">5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized. 在5.4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#explain-why-windows-linux-and-solaris-implement-multiple-locking-mechanisms.-describe-the-circumstances-under-which-they-use-spin-locks-mutex-locks-semaphores-adaptive-mutex-locks-and-condition-variables.-in-each-case-explain-why-the-mechanism-is-needed.-%E8%A7%A3%E9%87%8A%E4%B8%BA%E4%BB%80%E4%B9%88windowslinux-%E5%92%8C-solaris-%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%A7%8D%E9%94%81%E6%9C%BA%E5%88%B6%E8%A7%A3%E9%87%8A%E4%BB%96%E4%BB%AC%E4%BD%BF%E7%94%A8%E8%87%AA%E6%97%8B%E9%94%81%E4%BA%92%E6%96%A5%E9%94%81%E4%BF%A1%E5%8F%B7%E9%87%8F%E8%87%AA%E9%80%82%E5%BA%94%E4%BA%92%E6%96%A5%E9%94%81%E5%92%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%9C%A8%E6%AF%8F%E7%A7%8D%E6%83%85%E5%86%B5%E4%B8%8B%E8%A7%A3%E9%87%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E7%A7%8D%E9%94%81%E6%9C%BA%E5%88%B6%E6%98%AF%E9%9C%80%E8%A6%81%E7%9A%84"><span class="nav-number">1.2.</span> <span class="nav-text">5.2 Explain why Windows, Linux, and Solaris implement multiple locking mechanisms. Describe the circumstances under which they use spin-locks, mutex locks, semaphores, adaptive mutex locks, and condition variables. In each case, explain why the mechanism is needed. 解释为什么windows，Linux 和 Solaris 实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#what-is-the-meaning-of-the-term-busy-waiting-what-other-kinds-of-waiting-are-there-in-an-operating-system-can-busy-waiting-be-avoided"><span class="nav-number">1.3.</span> <span class="nav-text">5.3 What is the meaning of the term busy waiting? What other kinds of waiting are there in an operating system? Can busy waiting be avoided</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#explain-why-spinlocks-are-not-appropriate-for-single-processor-systems-yet-are-often-used-in-multiprocessor-systems.-%E8%A7%A3%E9%87%8A%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AF%B9%E5%8D%95%E8%BF%9B%E7%A8%8B%E7%B3%BB%E7%BB%9F%E4%B8%8D%E5%90%88%E9%80%82%E5%B9%B6%E4%B8%94%E7%BB%8F%E5%B8%B8%E4%BD%BF%E7%94%A8%E5%9C%A8%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E7%B3%BB%E7%BB%9F%E4%B8%AD"><span class="nav-number">1.4.</span> <span class="nav-text">5.4 Explain why spinlocks are not appropriate for single-processor systems yet are often used in multiprocessor systems. 解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
