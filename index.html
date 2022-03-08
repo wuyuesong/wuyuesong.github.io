@@ -150,6 +150,278 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">XSS笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-08 10:27:27 / Modified: 17:09:35" itemprop="dateCreated datePublished" datetime="2022-03-08T10:27:27+08:00">2022-03-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="xss笔记">XSS笔记</h1>
+<h2 id="xss简介">XSS简介</h2>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png" alt="image-20220308095657142"><figcaption aria-hidden="true">image-20220308095657142</figcaption>
+</figure>
+<blockquote>
+<p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
+</blockquote>
+<h2 id="反射型xss漏洞">反射型XSS漏洞</h2>
+<h3 id="低等级">低等级</h3>
+<p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
+<p>在对话框键入<code>&lt;script&gt;alert("111")&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
+<p>可以看到浏览器上方弹出</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png" alt="image-20220308100719863"><figcaption aria-hidden="true">image-20220308100719863</figcaption>
+</figure>
+<h3 id="中等级">中等级</h3>
+<p>观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
+<ol type="1">
+<li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
+</ol>
+<p>可以看到浏览器成功弹窗</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt="image-20220308101757917"><figcaption aria-hidden="true">image-20220308101757917</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>我们还可以通过混用大小写的方式进行XSS攻击</li>
+</ol>
+<p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击<span class="math inline">\(submit\)</span> 进行提交也可以看到成功弹窗。</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png" alt="image-20220308102802413"><figcaption aria-hidden="true">image-20220308102802413</figcaption>
+</figure>
+<p>​</p>
+<h3 id="高等级">高等级</h3>
+<p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
+<p>我们可以通过 <span class="math inline">\(img\)</span> , <span class="math inline">\(body\)</span> 等标签注入js代码。</p>
+<p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
+<p>提交后可以看到成功进行了弹窗</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt="image-20220308111137012"><figcaption aria-hidden="true">image-20220308111137012</figcaption>
+</figure>
+<h2 id="存储型xss漏洞">存储型XSS漏洞</h2>
+<h3 id="低等级-1">低等级</h3>
+<p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。 addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
+<h4 id="在message进行xss攻击">在message进行xss攻击</h4>
+<p>在message栏输入<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code></p>
+<p>可以看到浏览器上方弹出</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt="image-20220308155737502"><figcaption aria-hidden="true">image-20220308155737502</figcaption>
+</figure>
+<h4 id="在name进行xss攻击">在name进行xss攻击</h4>
+<p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
+<p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
+<p>抓包结果如下：</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png" alt="image-20220308160339068"><figcaption aria-hidden="true">image-20220308160339068</figcaption>
+</figure>
+<p>将txtname改为<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt="image-20220308155737502"><figcaption aria-hidden="true">image-20220308155737502</figcaption>
+</figure>
+<h3 id="中等级-1">中等级</h3>
+<p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
+<p>同理用burp进行抓包</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png" alt="image-20220308163010214"><figcaption aria-hidden="true">image-20220308163010214</figcaption>
+</figure>
+<p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt="image-20220308101757917"><figcaption aria-hidden="true">image-20220308101757917</figcaption>
+</figure>
+<p>可以看到成功弹窗</p>
+<h3 id="高等级-1">高等级</h3>
+<p>同理进行抓包</p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png" alt="image-20220308163311721">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
+<p>放包可以看到成功进行了弹窗</p>
+<figure>
+<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt="image-20220308111137012"><figcaption aria-hidden="true">image-20220308111137012</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/02/24/%E6%8A%A4%E7%BD%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/24/%E6%8A%A4%E7%BD%91/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-24 11:24:04" itemprop="dateCreated datePublished" datetime="2022-02-24T11:24:04+08:00">2022-02-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/02/15/wireshark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/15/wireshark/" class="post-title-link" itemprop="url">wireshark</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-02-15 10:27:27 / Modified: 10:28:24" itemprop="dateCreated datePublished" datetime="2022-02-15T10:27:27+08:00">2022-02-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/24/%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91/Computing%20Machinery%20and%20Intelligence%20(1950)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -342,83 +614,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Treads</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-12-12 14:00:06 / Modified: 14:09:51" itemprop="dateCreated datePublished" datetime="2021-12-12T14:00:06+08:00">2021-12-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="threads">Threads</h4>
-<h5 id="section">4.4</h5>
-<h5 id="context-switching-between-kernel-threads-typically-requires-saving-the-value-of-the-cpu-registers-from-the-thread-being-switched-out-and-restoring-the-cpu-registers-of-the-new-thread-being-scheduled.-使用线程的时候创建了什么资源使用进程的时候创建了什么资源">Context switching between kernel threads typically requires saving the value of the CPU registers from the thread being switched out and restoring the CPU registers of the new thread being scheduled. 使用线程的时候创建了什么资源，使用进程的时候创建了什么资源。</h5>
-<p>Because a thread is smaller than a process, thread creation typically uses fewer resources than process creation. Creating a process requires allocating a process control block ( PCB ), a rather large data structure. The PCB includes a memory map, list of open files, and environment variables. Allocating and managing the memory map is typically the most time-consuming activity. Creating either a user or kernel thread involves allocating a small data structure to hold a register set, stack, and priority.</p>
-<p>线程比进程使用的资源更少，进程需要申请一个PCB，一个更大的数据结构。PCB包含一个内存映射表一系列打开的文件还有环境变量。分配和管理内存映射表是最花时间的活动。创建用户或内核级线程包含分配一个较小的数据结构包括寄存器集合，栈和优先级。</p>
-<h5 id="section-1">4.5</h5>
-<h5 id="assume-that-an-operating-system-maps-user-level-threads-to-the-kernel-using-the-many-to-many-model-and-that-the-mapping-is-done-through-lwp-s.-furthermore-the-system-allows-developers-to-create-real-time-threads-for-use-in-real-time-systems.-is-it-necessary-to-bind-a-real-time">Assume that an operating system maps user-level threads to the kernel using the many-to-many model and that the mapping is done through LWP s. Furthermore, the system allows developers to create real-time threads for use in real-time systems. Is it necessary to bind a real-time</h5>
-<p>thread to an LWP ? Explain. 假设用户线程和内核线程采用多对多的映射关系，并通过LWP进行映射，并且系统允许开发者创建实时线程在实时系统中，那么有必要绑定一个实时线程到LWP上吗？</p>
-<p>Yes. Timing is crucial to real-time applications. If a thread is marked as real-time but is not bound to an LWP , the thread may have to wait to be attached to an LWP before running. Consider if a real-time thread is running (is attached to an LWP ) and then proceeds to block (i.e. must perform I/O , has been preempted by a higher-priority real-time thread, is waiting for a mutual exclusion lock, etc.) While the real-time thread is blocked, the LWP it was attached to has been assigned to another thread. When the real-time thread has been scheduled to run again, it must first wait to be attached to an LWP . By binding an LWP to a real-time thread you are ensuring the thread will be able to run with minimal delay once it is scheduled.</p>
-<p>是的，定时对实时程序十分重要，如果一个线程被标记为实时的但是没有绑定到LWP上，这个线程在运行之前一定要绑定到LWP上。假设一个线程绑定到LWP上，当实时线程阻塞，进程并被阻塞了。LWP被分配给另一个线程，实时线程被计划再次运行，他必须要先被分配给LWP，只有将线程绑定在LWP上，你可以确保线程在调度和能以最小的延迟运行。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Process%20Synchronization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -479,6 +674,83 @@
 <p>Busy waiting means that a process is waiting for a condition to be satisfied in a tight loop without relinquishing the processor. Alternatively, a process could wait by relinquishing the processor, and block on a condition and wait to be awakened at some appropriate time in the future. Busy waiting can be avoided but incurs the overhead associated with putting a process to sleep and having to wake it up when the appropriate program state is reached. 忙等待意味着进程在一个小的循环中等待条件满足而不放弃处理器。另外的一个进程可以放弃处理器并等待，他可以被条件阻塞然后在合适的时机被唤醒。可以避免忙等待但需花费将进程置于忙状态并将他唤醒的开销。</p>
 <h5 id="explain-why-spinlocks-are-not-appropriate-for-single-processor-systems-yet-are-often-used-in-multiprocessor-systems.-解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中">5.4 Explain why spinlocks are not appropriate for single-processor systems yet are often used in multiprocessor systems. 解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。</h5>
 <p>Spinlocks are not appropriate for single-processor systems because the condition that would break a process out of the spinlock can be obtained only by executing a different process. If the process is not relinquishing the processor, other processes do not get the opportunity to set the program condition required for the first process to make progress. In a multiprocessor system, other processes execute on other processors and thereby modify the program state in order to release the first process from the spinlock. 对于单进程系统，自旋锁不合适因为可以打破进程自旋锁的条件必须被一个正在执行的程序所持有。其他进程没有机会获得释放所得的条件。在多进程系统中，其他进程可以执行在其他处理器上，因此可以修改状态以释放自旋锁。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Treads</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-12-12 14:00:06 / Modified: 14:09:51" itemprop="dateCreated datePublished" datetime="2021-12-12T14:00:06+08:00">2021-12-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="threads">Threads</h4>
+<h5 id="section">4.4</h5>
+<h5 id="context-switching-between-kernel-threads-typically-requires-saving-the-value-of-the-cpu-registers-from-the-thread-being-switched-out-and-restoring-the-cpu-registers-of-the-new-thread-being-scheduled.-使用线程的时候创建了什么资源使用进程的时候创建了什么资源">Context switching between kernel threads typically requires saving the value of the CPU registers from the thread being switched out and restoring the CPU registers of the new thread being scheduled. 使用线程的时候创建了什么资源，使用进程的时候创建了什么资源。</h5>
+<p>Because a thread is smaller than a process, thread creation typically uses fewer resources than process creation. Creating a process requires allocating a process control block ( PCB ), a rather large data structure. The PCB includes a memory map, list of open files, and environment variables. Allocating and managing the memory map is typically the most time-consuming activity. Creating either a user or kernel thread involves allocating a small data structure to hold a register set, stack, and priority.</p>
+<p>线程比进程使用的资源更少，进程需要申请一个PCB，一个更大的数据结构。PCB包含一个内存映射表一系列打开的文件还有环境变量。分配和管理内存映射表是最花时间的活动。创建用户或内核级线程包含分配一个较小的数据结构包括寄存器集合，栈和优先级。</p>
+<h5 id="section-1">4.5</h5>
+<h5 id="assume-that-an-operating-system-maps-user-level-threads-to-the-kernel-using-the-many-to-many-model-and-that-the-mapping-is-done-through-lwp-s.-furthermore-the-system-allows-developers-to-create-real-time-threads-for-use-in-real-time-systems.-is-it-necessary-to-bind-a-real-time">Assume that an operating system maps user-level threads to the kernel using the many-to-many model and that the mapping is done through LWP s. Furthermore, the system allows developers to create real-time threads for use in real-time systems. Is it necessary to bind a real-time</h5>
+<p>thread to an LWP ? Explain. 假设用户线程和内核线程采用多对多的映射关系，并通过LWP进行映射，并且系统允许开发者创建实时线程在实时系统中，那么有必要绑定一个实时线程到LWP上吗？</p>
+<p>Yes. Timing is crucial to real-time applications. If a thread is marked as real-time but is not bound to an LWP , the thread may have to wait to be attached to an LWP before running. Consider if a real-time thread is running (is attached to an LWP ) and then proceeds to block (i.e. must perform I/O , has been preempted by a higher-priority real-time thread, is waiting for a mutual exclusion lock, etc.) While the real-time thread is blocked, the LWP it was attached to has been assigned to another thread. When the real-time thread has been scheduled to run again, it must first wait to be attached to an LWP . By binding an LWP to a real-time thread you are ensuring the thread will be able to run with minimal delay once it is scheduled.</p>
+<p>是的，定时对实时程序十分重要，如果一个线程被标记为实时的但是没有绑定到LWP上，这个线程在运行之前一定要绑定到LWP上。假设一个线程绑定到LWP上，当实时线程阻塞，进程并被阻塞了。LWP被分配给另一个线程，实时线程被计划再次运行，他必须要先被分配给LWP，只有将线程绑定在LWP上，你可以确保线程在调度和能以最小的延迟运行。</p>
 
       
     </div>
@@ -846,260 +1118,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/09/19/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/P1142%20%E8%BD%B0%E7%82%B8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/19/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/P1142%20%E8%BD%B0%E7%82%B8/" class="post-title-link" itemprop="url">P1142 轰炸</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-09-19 09:15:55 / Modified: 10:40:44" itemprop="dateCreated datePublished" datetime="2021-09-19T09:15:55+08:00">2021-09-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95%E5%A4%A7%E5%B8%88%E4%B9%8B%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">计算几何大师之路</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="思路一">思路一</h4>
-<p>考虑到数据范围比较小，我们考虑尝试 <span class="math inline">\(\mathcal{O}(n^3)\)</span> 的做法，枚举两个点确定一条线段，然后枚举第三个点，用外积判断三角形的面积是否 <span class="math inline">\(0\)</span>，如果外积为 <span class="math inline">\(0\)</span> ,则说明该点在直线上，在洛谷上提交时，如果 <span class="math inline">\(k\)</span> 不从 <span class="math inline">\(j+1\)</span> 开始循环会 <span class="math inline">\(tle\)</span> 三个点，如果不开 <span class="math inline">\(o2\)</span> 优化会 <span class="math inline">\(tle\)</span> 一个点。</p>
-<h4 id="代码">代码</h4>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FOR(i,f_start,f_end) for(int i=f_start;i&lt;=f_end;++i)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/19/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/P1142%20%E8%BD%B0%E7%82%B8/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/09/18/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95%E6%A8%A1%E6%9D%BF(%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/18/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95%E6%A8%A1%E6%9D%BF(%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0)/" class="post-title-link" itemprop="url">计算几何模板(持续更新)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-18T00:00:00+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-01 15:02:52" itemprop="dateModified" datetime="2021-10-01T15:02:52+08:00">2021-10-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95%E5%A4%A7%E5%B8%88%E4%B9%8B%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">计算几何大师之路</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="计算叉积">1.计算叉积</h4>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">corss</span><span class="params">(PDD a,PDD b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.x*b.y - a.y*b.x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>当 <span class="math inline">\(a\)</span> 在 <span class="math inline">\(b\)</span> 的逆时针方向时，叉积为正，当 <span class="math inline">\(a\)</span> 在 <span class="math inline">\(b\)</span> 的顺时针方向时叉积为负</p>
-</blockquote>
-<h4 id="计算三角形面积">2.计算三角形面积</h4>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">(PDD a,PDD b,PDD c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">corss</span>(b-a,c-a)/<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这里计算的时三角形的有向面积，当 <span class="math inline">\(ab\)</span> 在 <span class="math inline">\(ac\)</span> 逆时针方向时面积为正，顺时针方向时面积为负。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/18/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95%E6%A8%A1%E6%9D%BF(%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0)/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/09/13/XCPC/I-%20Error%20Correction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/13/XCPC/I-%20Error%20Correction/" class="post-title-link" itemprop="url">I- Error Correction</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-13T00:00:00+08:00">2021-09-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-27 18:11:28" itemprop="dateModified" datetime="2021-09-27T18:11:28+08:00">2021-09-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/XCPC%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">XCPC题解</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>2019-2020 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)</p>
-</blockquote>
-<p>题目是给定一个字符串集合，求一个最大的集合，该集合中的元素满足不能交换任意两个字符，使之成为集合中的另一个元素。</p>
-<p>我们考虑将能交换两个字符使其中一个字符串<span class="math inline">\(s1\)</span>变为另一个字符串<span class="math inline">\(s2\)</span>,的两个字符串连边。那么题中的条件可以转化为求一个最大的点集，使这个点集中的元素两两没有连边。即求该图的<strong>最大独立集</strong>。判断两个字符串是否可以连边，我们可以判断两个字符串是否只有两个字符不同。因为所有字符串之间为<span class="math inline">\(anagram\)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。</p>
-<p>我们考虑朴素的最大独立集算法，时间复杂度为<span class="math inline">\(\mathcal{O}(3^{n/3})\)</span>，提交后收获一发<span class="math inline">\(TLE\)</span>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/13/XCPC/I-%20Error%20Correction/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1169,14 +1187,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1203,7 +1221,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
