@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-08 10:27:27 / Modified: 17:09:35" itemprop="dateCreated datePublished" datetime="2022-03-08T10:27:27+08:00">2022-03-08</time>
+              <time title="Created: 2022-03-08 10:27:27 / Modified: 17:11:31" itemprop="dateCreated datePublished" datetime="2022-03-08T10:27:27+08:00">2022-03-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,9 +200,7 @@
       
           <h1 id="xss笔记">XSS笔记</h1>
 <h2 id="xss简介">XSS简介</h2>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png" alt="image-20220308095657142"><figcaption aria-hidden="true">image-20220308095657142</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png"></p>
 <blockquote>
 <p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
 </blockquote>
@@ -211,72 +209,52 @@
 <p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
 <p>在对话框键入<code>&lt;script&gt;alert("111")&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
 <p>可以看到浏览器上方弹出</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png" alt="image-20220308100719863"><figcaption aria-hidden="true">image-20220308100719863</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png"></p>
 <h3 id="中等级">中等级</h3>
 <p>观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
 <ol type="1">
 <li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
 </ol>
 <p>可以看到浏览器成功弹窗</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt="image-20220308101757917"><figcaption aria-hidden="true">image-20220308101757917</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
 <ol start="2" type="1">
 <li>我们还可以通过混用大小写的方式进行XSS攻击</li>
 </ol>
 <p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击<span class="math inline">\(submit\)</span> 进行提交也可以看到成功弹窗。</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png" alt="image-20220308102802413"><figcaption aria-hidden="true">image-20220308102802413</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png"></p>
 <p>​</p>
 <h3 id="高等级">高等级</h3>
 <p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
 <p>我们可以通过 <span class="math inline">\(img\)</span> , <span class="math inline">\(body\)</span> 等标签注入js代码。</p>
 <p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>提交后可以看到成功进行了弹窗</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt="image-20220308111137012"><figcaption aria-hidden="true">image-20220308111137012</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
 <h2 id="存储型xss漏洞">存储型XSS漏洞</h2>
 <h3 id="低等级-1">低等级</h3>
 <p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。 addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
 <h4 id="在message进行xss攻击">在message进行xss攻击</h4>
 <p>在message栏输入<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code></p>
 <p>可以看到浏览器上方弹出</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt="image-20220308155737502"><figcaption aria-hidden="true">image-20220308155737502</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
 <h4 id="在name进行xss攻击">在name进行xss攻击</h4>
 <p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
 <p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
 <p>抓包结果如下：</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png" alt="image-20220308160339068"><figcaption aria-hidden="true">image-20220308160339068</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png"></p>
 <p>将txtname改为<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt="image-20220308155737502"><figcaption aria-hidden="true">image-20220308155737502</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
 <h3 id="中等级-1">中等级</h3>
 <p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
 <p>同理用burp进行抓包</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png" alt="image-20220308163010214"><figcaption aria-hidden="true">image-20220308163010214</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png"></p>
 <p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt="image-20220308101757917"><figcaption aria-hidden="true">image-20220308101757917</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
 <p>可以看到成功弹窗</p>
 <h3 id="高等级-1">高等级</h3>
 <p>同理进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png" alt="image-20220308163311721">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>放包可以看到成功进行了弹窗</p>
-<figure>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt="image-20220308111137012"><figcaption aria-hidden="true">image-20220308111137012</figcaption>
-</figure>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
 
       
     </div>
