@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="前言 作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。  SDKD 2021 Summer Training Series A 2nd Round 2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)  A - Average Rank">
+  <meta name="description" content="前言 作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。  SDKD 2021 Summer Training Series A 2nd Round  2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)  A - Aver">
 <meta property="og:type" content="article">
 <meta property="og:title" content="翻译">
 <meta property="og:url" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="前言 作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。  SDKD 2021 Summer Training Series A 2nd Round 2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)  A - Average Rank">
+<meta property="og:description" content="前言 作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。  SDKD 2021 Summer Training Series A 2nd Round  2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)  A - Aver">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5C21dfad4dca68e82d048f45957c56a4d5.png">
-<meta property="og:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5Cdad71005c19df40439a95333e4e1b050.png">
+<meta property="og:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/21dfad4dca68e82d048f45957c56a4d5.png">
+<meta property="og:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/dad71005c19df40439a95333e4e1b050.png">
 <meta property="og:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002130640240.png">
 <meta property="og:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002133323113.png">
 <meta property="og:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002141909709.png">
@@ -37,7 +37,7 @@
 <meta property="article:modified_time" content="2022-03-16T13:33:14.901Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5C21dfad4dca68e82d048f45957c56a4d5.png">
+<meta name="twitter:image" content="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/21dfad4dca68e82d048f45957c56a4d5.png">
 
 <link rel="canonical" href="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/">
 
@@ -219,97 +219,102 @@
 <p>前言</p>
 <p>作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。</p>
 </blockquote>
-<h4 id="SDKD-2021-Summer-Training-Series-A-2nd-Round"><a href="#SDKD-2021-Summer-Training-Series-A-2nd-Round" class="headerlink" title="SDKD 2021 Summer Training Series A 2nd Round"></a>SDKD 2021 Summer Training Series A 2nd Round</h4><blockquote>
+<h4 id="sdkd-2021-summer-training-series-a-2nd-round">SDKD 2021 Summer Training Series A 2nd Round</h4>
+<blockquote>
 <p>2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)</p>
 </blockquote>
-<h5 id="A-Average-Rank"><a href="#A-Average-Rank" class="headerlink" title="A - Average Rank"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500A">A - Average Rank</a></h5><p> 在一个比赛中，每周完成的人可以得到一个点数，在每周的末尾，会对每个人的到的点数进行排名。每个人的排名为分数大于他的人数$+1$ , 如果两个人得到的点数相同那么他们的名次相同。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5C21dfad4dca68e82d048f45957c56a4d5.png"></p>
+<h5 id="a---average-rank"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500A">A - Average Rank</a></h5>
+<p>在一个比赛中，每周完成的人可以得到一个点数，在每周的末尾，会对每个人的到的点数进行排名。每个人的排名为分数大于他的人数<span class="math inline">\(+1\)</span> , 如果两个人得到的点数相同那么他们的名次相同。</p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/21dfad4dca68e82d048f45957c56a4d5.png"></p>
 <p>一共有n名参赛选手，比赛进行w周，每周给你一个选手的得分列表，你的任务是计算n名选手在这w周的平均名次。</p>
 <p><strong>输入</strong></p>
 <p>第一行n,w，分别表示人数和周数。</p>
-<p>接下来w行，第 $i$ 行开头为 $k$，接下来k个数字$c_1,…c_k$表示$c_1,…,c_k$名选手在第 $i$ 周得到一分。</p>
-<p>所有选手的总共得分不超过 $1 million$。</p>
+<p>接下来w行，第 <span class="math inline">\(i\)</span> 行开头为 <span class="math inline">\(k\)</span>，接下来k个数字<span class="math inline">\(c_1,…c_k\)</span>表示<span class="math inline">\(c_1,…,c_k\)</span>名选手在第 <span class="math inline">\(i\)</span> 周得到一分。</p>
+<p>所有选手的总共得分不超过 <span class="math inline">\(1 million\)</span>。</p>
 <p><strong>输出</strong></p>
-<p>$n$行，第$i$行表示第$i$名选手的平均名次。</p>
-<h5 id="B-Balanced-Cut"><a href="#B-Balanced-Cut" class="headerlink" title="B - Balanced Cut"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500B">B - Balanced Cut</a></h5><p> 给你一棵 $n$ 个结点的平衡二叉搜索树，该树具有如下性质：</p>
+<p><span class="math inline">\(n\)</span>行，第<span class="math inline">\(i\)</span>行表示第<span class="math inline">\(i\)</span>名选手的平均名次。</p>
+<h5 id="b---balanced-cut"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500B">B - Balanced Cut</a></h5>
+<p>给你一棵 <span class="math inline">\(n\)</span> 个结点的平衡二叉搜索树，该树具有如下性质：</p>
 <ul>
 <li>左右子树深度之差不超过1。</li>
 <li>结点的值比左子树中所有结点的值都大，比右子树所有结点的值都小。</li>
 </ul>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5Cdad71005c19df40439a95333e4e1b050.png"></p>
-<p>现在让你删除结点至只剩 $k$ 个结点，当你删除结点时，所有该节点的子孙结点将被删除。</p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/dad71005c19df40439a95333e4e1b050.png"></p>
+<p>现在让你删除结点至只剩 <span class="math inline">\(k\)</span> 个结点，当你删除结点时，所有该节点的子孙结点将被删除。</p>
 <p>先让你完成这个操作，使剩余结点的中序遍历字典序最小。</p>
 <p><strong>输入</strong></p>
-<p>$n,k$ 表示有$n$个结点，要求剩余$k$个结点。</p>
-<p>接下来 $n$ 行，第$i$行为 $p_i$ ,表示值为 $i$ 的结点的父亲的值为$p_i$,  $p_i$ 为 $-1$ 表示为根节点。</p>
+<p><span class="math inline">\(n,k\)</span> 表示有<span class="math inline">\(n\)</span>个结点，要求剩余<span class="math inline">\(k\)</span>个结点。</p>
+<p>接下来 <span class="math inline">\(n\)</span> 行，第<span class="math inline">\(i\)</span>行为 <span class="math inline">\(p_i\)</span> ,表示值为 <span class="math inline">\(i\)</span> 的结点的父亲的值为<span class="math inline">\(p_i\)</span>, <span class="math inline">\(p_i\)</span> 为 <span class="math inline">\(-1\)</span> 表示为根节点。</p>
 <p><strong>输出</strong></p>
-<p>一个字符串，第 $i$ 位为$0$表示删除，为 $1$ 表示保留。</p>
-<h5 id="D-Disposable-Switches"><a href="#D-Disposable-Switches" class="headerlink" title="D - Disposable Switches"></a><a target="_blank" rel="noopener" href="https://vjudge.net/problem/Gym-102500D">D - Disposable Switches</a></h5><p> 给一个 $n$ 个结点，$m$ 条路径的无向图，表示一个网络。每根传输时间为 $l/v + c$ , $l$ 为电缆的长度，$v$ 为传输速率，$c$ 为常量，$v$ 和 $c$ 未知 ，只知道$v &gt; 0$ , $c &gt;= 0$ ，当一个数据传送到一个结点时，他会选择路径耗时最短的结点进行转发，求无论 $v$,$c$ 为何值时，从$1$发送数据到$n$，有哪些结点是永远不会被转发到的。</p>
+<p>一个字符串，第 <span class="math inline">\(i\)</span> 位为<span class="math inline">\(0\)</span>表示删除，为 <span class="math inline">\(1\)</span> 表示保留。</p>
+<h5 id="d---disposable-switches"><a target="_blank" rel="noopener" href="https://vjudge.net/problem/Gym-102500D">D - Disposable Switches</a></h5>
+<p>给一个 <span class="math inline">\(n\)</span> 个结点，<span class="math inline">\(m\)</span> 条路径的无向图，表示一个网络。每根传输时间为 <span class="math inline">\(l/v + c\)</span> , <span class="math inline">\(l\)</span> 为电缆的长度，<span class="math inline">\(v\)</span> 为传输速率，<span class="math inline">\(c\)</span> 为常量，<span class="math inline">\(v\)</span> 和 <span class="math inline">\(c\)</span> 未知 ，只知道<span class="math inline">\(v &gt; 0\)</span> , <span class="math inline">\(c &gt;= 0\)</span> ，当一个数据传送到一个结点时，他会选择路径耗时最短的结点进行转发，求无论 <span class="math inline">\(v\)</span>,<span class="math inline">\(c\)</span> 为何值时，从<span class="math inline">\(1\)</span>发送数据到<span class="math inline">\(n\)</span>，有哪些结点是永远不会被转发到的。</p>
 <p><strong>输入</strong></p>
-<p>$n$,$m$ ,表示有 $n$ 个结点，$m$ 条路径。接下来 $m$ 行，每行有三个数 $a$ , $b$ , $l$ ,表示 $a$ 到 $b$ 之间的电缆长度为 $l$。</p>
+<p><span class="math inline">\(n\)</span>,<span class="math inline">\(m\)</span> ,表示有 <span class="math inline">\(n\)</span> 个结点，<span class="math inline">\(m\)</span> 条路径。接下来 <span class="math inline">\(m\)</span> 行，每行有三个数 <span class="math inline">\(a\)</span> , <span class="math inline">\(b\)</span> , <span class="math inline">\(l\)</span> ,表示 <span class="math inline">\(a\)</span> 到 <span class="math inline">\(b\)</span> 之间的电缆长度为 <span class="math inline">\(l\)</span>。</p>
 <p>无重边，自环。图保证联通。</p>
 <p><strong>输出</strong></p>
-<p> 第一行为一个 $k$ ,第二行有$k$个数，表示有$k$ 个结点不会被转发到。输出按升序排列。</p>
-<h4 id="SDKD-2021-Autumn-Training-Series-B-1st-Round"><a href="#SDKD-2021-Autumn-Training-Series-B-1st-Round" class="headerlink" title="SDKD 2021 Autumn Training Series B 1st Round"></a>SDKD 2021 Autumn Training Series B 1st Round</h4><blockquote>
+<p>第一行为一个 <span class="math inline">\(k\)</span> ,第二行有<span class="math inline">\(k\)</span>个数，表示有<span class="math inline">\(k\)</span> 个结点不会被转发到。输出按升序排列。</p>
+<h4 id="sdkd-2021-autumn-training-series-b-1st-round">SDKD 2021 Autumn Training Series B 1st Round</h4>
+<blockquote>
 <p>2018 German Collegiate Programming Contest (GCPC 18)</p>
 </blockquote>
-<h5 id="A-Attack-on-Alpha-Zet"><a href="#A-Attack-on-Alpha-Zet" class="headerlink" title="A - Attack on Alpha-Zet"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021A">A - Attack on Alpha-Zet</a></h5><p> 给你一个二维网格平面，每格是一个 $1 \times 1$ 的单元格，每个单元格至少有一个和他相邻的单元格，单元格两两之间存在路径，并且不存在环。在这个二维平面中依次访问 $n$ 个点，求最少走过的单元格。</p>
+<h5 id="a---attack-on-alpha-zet"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021A">A - Attack on Alpha-Zet</a></h5>
+<p>给你一个二维网格平面，每格是一个 <span class="math inline">\(1 \times 1\)</span> 的单元格，每个单元格至少有一个和他相邻的单元格，单元格两两之间存在路径，并且不存在环。在这个二维平面中依次访问 <span class="math inline">\(n\)</span> 个点，求最少走过的单元格。</p>
 <img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002130640240.png" class>
-
 <p><strong>输入</strong></p>
-<p>第一行为 $h,w (2\leq h,w\leq 1000)$ 。表示迷宫的高和宽。</p>
-<p>接下来 $h+1$ 行用$ASCII$表示一个迷宫，每行有$2 \cdot w+1$ 个字符。规则如下：</p>
+<p>第一行为 <span class="math inline">\(h,w (2\leq h,w\leq 1000)\)</span> 。表示迷宫的高和宽。</p>
+<p>接下来 <span class="math inline">\(h+1\)</span> 行用<span class="math inline">\(ASCII\)</span>表示一个迷宫，每行有<span class="math inline">\(2 \cdot w+1\)</span> 个字符。规则如下：</p>
 <ul>
 <li>奇数行表示一个竖墙或者空格。偶数行表示一个横墙或者空格。</li>
 <li>第一行为最北边的墙，只由横线构成，接下来的行都表示单元格。</li>
 <li>单元格都在偶数列，左右为竖墙，如果没有竖墙则用空格代替。</li>
 </ul>
-<p>接下来一行是一个数字 $m$ 。</p>
-<p>接下来 $m$ 行，第 $i$ 行表示第 $i$ 要到达的点。每个坐标可能出现多次。$(1,1)$ 为左上角的点  $(h,w)$ 为右下角的点。</p>
+<p>接下来一行是一个数字 <span class="math inline">\(m\)</span> 。</p>
+<p>接下来 <span class="math inline">\(m\)</span> 行，第 <span class="math inline">\(i\)</span> 行表示第 <span class="math inline">\(i\)</span> 要到达的点。每个坐标可能出现多次。<span class="math inline">\((1,1)\)</span> 为左上角的点 <span class="math inline">\((h,w)\)</span> 为右下角的点。</p>
 <p>保证迷宫是封闭的，且两个点之间只有一条路径。</p>
 <p><strong>输出</strong></p>
 <p>一个数字，表示要走过的单元格。</p>
 <img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002133323113.png" class>
-
-
-
-<h5 id="B-Battle-Royale"><a href="#B-Battle-Royale" class="headerlink" title="B - Battle Royale"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021B">B - Battle Royale</a></h5><p>给你个蓝色圆，和一个红色圆 。问从$A$ 走到 $B$ 最短路径。</p>
+<h5 id="b---battle-royale"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021B">B - Battle Royale</a></h5>
+<p>给你个蓝色圆，和一个红色圆 。问从<span class="math inline">\(A\)</span> 走到 <span class="math inline">\(B\)</span> 最短路径。</p>
 <p><strong>输入</strong></p>
-<p>$a$ 点坐标，$b$ 点坐标，蓝圆圆心坐标和半径，红圆坐标与半径。</p>
-<p>$a$,  $b$ 点保证在蓝圆内，红圆外。</p>
+<p><span class="math inline">\(a\)</span> 点坐标，<span class="math inline">\(b\)</span> 点坐标，蓝圆圆心坐标和半径，红圆坐标与半径。</p>
+<p><span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> 点保证在蓝圆内，红圆外。</p>
 <p><strong>输出</strong></p>
-<p>最短路径，误差不超过 $10^{-7}$ 。</p>
-<h5 id="C-Coolest-Ski-Route"><a href="#C-Coolest-Ski-Route" class="headerlink" title="C - Coolest Ski Route"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021C">C - Coolest Ski Route</a></h5><p> 给一个有向图，让你求一条权值最大的路径。</p>
+<p>最短路径，误差不超过 <span class="math inline">\(10^{-7}\)</span> 。</p>
+<h5 id="c---coolest-ski-route"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021C">C - Coolest Ski Route</a></h5>
+<p>给一个有向图，让你求一条权值最大的路径。</p>
 <p><strong>输入</strong></p>
-<p>$n,m$ 表示有 $n$ $(2 \leq n \leq 1000) $个点 ， $m$ $(1 \leq m \leq 5000)$条边。</p>
-<p>接下来 $m$ 行，每行分别为 $s,t,c(1\leq s,t \leq n,1 \leq c \leq 100)$ ,分别表示起点终点和权值。</p>
+<p><span class="math inline">\(n,m\)</span> 表示有 <span class="math inline">\(n\)</span> $(2 n ) $个点 ， <span class="math inline">\(m\)</span> <span class="math inline">\((1 \leq m \leq 5000)\)</span>条边。</p>
+<p>接下来 <span class="math inline">\(m\)</span> 行，每行分别为 <span class="math inline">\(s,t,c(1\leq s,t \leq n,1 \leq c \leq 100)\)</span> ,分别表示起点终点和权值。</p>
 <p>输入保证没有回路。</p>
 <p><strong>输出</strong></p>
 <p>一个整数，表示最长路径。</p>
-<h5 id="D-Down-the-Pyramid"><a href="#D-Down-the-Pyramid" class="headerlink" title="D - Down the Pyramid"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021D">D - Down the Pyramid</a></h5><p> 一个金子塔形状的图案，相邻的两个单元格相加为上层单元格数值，现告诉你 $n$ 层的序列，让你求 $n+1$ 层有几种可能。</p>
+<h5 id="d---down-the-pyramid"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021D">D - Down the Pyramid</a></h5>
+<p>一个金子塔形状的图案，相邻的两个单元格相加为上层单元格数值，现告诉你 <span class="math inline">\(n\)</span> 层的序列，让你求 <span class="math inline">\(n+1\)</span> 层有几种可能。</p>
 <img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002141909709.png" class>
-
 <p><strong>输入</strong></p>
-<p>$n(1 \leq n \leq 10^6)$ </p>
-<p>$n$ 个数表示这个序列。</p>
+<p><span class="math inline">\(n(1 \leq n \leq 10^6)\)</span></p>
+<p><span class="math inline">\(n\)</span> 个数表示这个序列。</p>
 <p><strong>输出</strong></p>
 <p>一个数字，表示下一行有几种可能。</p>
-<h5 id="E-Expired-License"><a href="#E-Expired-License" class="headerlink" title="E - Expired License"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021E">E - Expired License</a></h5><p> 给你 $a,b$ 问你能否找到两个素数$p,q$，使得 $\frac{p}{q} = \frac{a}{b}$。</p>
-<p> <strong>输入</strong></p>
-<p>$n(1 \leq n \leq10^5)$ </p>
-<p>接下来 $n$ 行，每行有一个$a,b(0 &lt; a,b &lt; 100)$ 。小数点后最多五位小数。</p>
+<h5 id="e---expired-license"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021E">E - Expired License</a></h5>
+<p>给你 <span class="math inline">\(a,b\)</span> 问你能否找到两个素数<span class="math inline">\(p,q\)</span>，使得 <span class="math inline">\(\frac{p}{q} = \frac{a}{b}\)</span>。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n(1 \leq n \leq10^5)\)</span></p>
+<p>接下来 <span class="math inline">\(n\)</span> 行，每行有一个<span class="math inline">\(a,b(0 &lt; a,b &lt; 100)\)</span> 。小数点后最多五位小数。</p>
 <p><strong>输出</strong></p>
-<p>满足条件的 $p,q$，如果不存在输出$impossible$ ，如果有多组解，输出 $p+q$ 最小的情况。</p>
-<h5 id="F-Fighting-Monsters"><a href="#F-Fighting-Monsters" class="headerlink" title="F - Fighting Monsters"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021F">F - Fighting Monsters</a></h5><p> 两个怪物互相攻击，，每个怪物有一个血量，当怪物 $A$ 攻击怪物 $B$ 时，会对$B$造成$A$血量的伤害。</p>
+<p>满足条件的 <span class="math inline">\(p,q\)</span>，如果不存在输出<span class="math inline">\(impossible\)</span> ，如果有多组解，输出 <span class="math inline">\(p+q\)</span> 最小的情况。</p>
+<h5 id="f---fighting-monsters"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021F">F - Fighting Monsters</a></h5>
+<p>两个怪物互相攻击，，每个怪物有一个血量，当怪物 <span class="math inline">\(A\)</span> 攻击怪物 <span class="math inline">\(B\)</span> 时，会对<span class="math inline">\(B\)</span>造成<span class="math inline">\(A\)</span>血量的伤害。</p>
 <p>攻击过程如下图所示：</p>
 <img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002151506690.png" class>
-
-<p>现在给你 $n$ 个怪物，问你能不能找到两个怪物，互相攻击使其中一个血量只剩下$1$点。</p>
+<p>现在给你 <span class="math inline">\(n\)</span> 个怪物，问你能不能找到两个怪物，互相攻击使其中一个血量只剩下<span class="math inline">\(1\)</span>点。</p>
 <p><strong>输入</strong></p>
-<p>$n(2 \leq n \leq 10^5)$</p>
-<p>第二行为$n$个数，表示$n$个怪物的血量。</p>
+<p><span class="math inline">\(n(2 \leq n \leq 10^5)\)</span></p>
+<p>第二行为<span class="math inline">\(n\)</span>个数，表示<span class="math inline">\(n\)</span>个怪物的血量。</p>
 <p><strong>输出</strong></p>
-<p>两个怪物的下表$i,j$，如果不存在输出$impossible$。如果存在多个，输出任意。</p>
+<p>两个怪物的下表<span class="math inline">\(i,j\)</span>，如果不存在输出<span class="math inline">\(impossible\)</span>。如果存在多个，输出任意。</p>
 
     </div>
 
@@ -390,7 +395,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDKD-2021-Summer-Training-Series-A-2nd-Round"><span class="nav-number">1.</span> <span class="nav-text">SDKD 2021 Summer Training Series A 2nd Round</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#A-Average-Rank"><span class="nav-number">1.1.</span> <span class="nav-text">A - Average Rank</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#B-Balanced-Cut"><span class="nav-number">1.2.</span> <span class="nav-text">B - Balanced Cut</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#D-Disposable-Switches"><span class="nav-number">1.3.</span> <span class="nav-text">D - Disposable Switches</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDKD-2021-Autumn-Training-Series-B-1st-Round"><span class="nav-number">2.</span> <span class="nav-text">SDKD 2021 Autumn Training Series B 1st Round</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#A-Attack-on-Alpha-Zet"><span class="nav-number">2.1.</span> <span class="nav-text">A - Attack on Alpha-Zet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#B-Battle-Royale"><span class="nav-number">2.2.</span> <span class="nav-text">B - Battle Royale</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#C-Coolest-Ski-Route"><span class="nav-number">2.3.</span> <span class="nav-text">C - Coolest Ski Route</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#D-Down-the-Pyramid"><span class="nav-number">2.4.</span> <span class="nav-text">D - Down the Pyramid</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#E-Expired-License"><span class="nav-number">2.5.</span> <span class="nav-text">E - Expired License</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#F-Fighting-Monsters"><span class="nav-number">2.6.</span> <span class="nav-text">F - Fighting Monsters</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#sdkd-2021-summer-training-series-a-2nd-round"><span class="nav-number">1.</span> <span class="nav-text">SDKD 2021 Summer Training Series A 2nd Round</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a---average-rank"><span class="nav-number">1.1.</span> <span class="nav-text">A - Average Rank</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b---balanced-cut"><span class="nav-number">1.2.</span> <span class="nav-text">B - Balanced Cut</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#d---disposable-switches"><span class="nav-number">1.3.</span> <span class="nav-text">D - Disposable Switches</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sdkd-2021-autumn-training-series-b-1st-round"><span class="nav-number">2.</span> <span class="nav-text">SDKD 2021 Autumn Training Series B 1st Round</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a---attack-on-alpha-zet"><span class="nav-number">2.1.</span> <span class="nav-text">A - Attack on Alpha-Zet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b---battle-royale"><span class="nav-number">2.2.</span> <span class="nav-text">B - Battle Royale</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c---coolest-ski-route"><span class="nav-number">2.3.</span> <span class="nav-text">C - Coolest Ski Route</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#d---down-the-pyramid"><span class="nav-number">2.4.</span> <span class="nav-text">D - Down the Pyramid</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#e---expired-license"><span class="nav-number">2.5.</span> <span class="nav-text">E - Expired License</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#f---fighting-monsters"><span class="nav-number">2.6.</span> <span class="nav-text">F - Fighting Monsters</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

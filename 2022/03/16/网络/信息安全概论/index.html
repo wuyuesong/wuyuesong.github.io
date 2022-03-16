@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="信息安全概论（1）1.1.1安全风险分析与安全对策安全分析要保护对象的价值、弱点、威胁 安全对策（PDRRP） 保护 检测 反应 恢复 惩罚  1.2.1 可用性、真实性、机密性信息的可用性信息系统提供服务的能力   病毒导致的计算机系统瘫痪 蠕虫导致网络堵塞瘫痪 黑客进行的拒绝服务攻击   信息的真实性 可鉴别性  是周瑜发给我的还是曹操发给我的   完整性  是不是发送过程中被改了   抗抵赖">
+  <meta name="description" content="信息安全概论（1） 1.1.1安全风险分析与安全对策 安全分析 要保护对象的价值、弱点、威胁 安全对策（PDRRP）  保护 检测 反应 恢复 惩罚  1.2.1 可用性、真实性、机密性 信息的可用性 信息系统提供服务的能力   病毒导致的计算机系统瘫痪 蠕虫导致网络堵塞瘫痪 黑客进行的拒绝服务攻击   信息的真实性  可鉴别性  是周瑜发给我的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="信息安全概论（1）">
 <meta property="og:url" content="https://101.35.161.126/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="信息安全概论（1）1.1.1安全风险分析与安全对策安全分析要保护对象的价值、弱点、威胁 安全对策（PDRRP） 保护 检测 反应 恢复 惩罚  1.2.1 可用性、真实性、机密性信息的可用性信息系统提供服务的能力   病毒导致的计算机系统瘫痪 蠕虫导致网络堵塞瘫痪 黑客进行的拒绝服务攻击   信息的真实性 可鉴别性  是周瑜发给我的还是曹操发给我的   完整性  是不是发送过程中被改了   抗抵赖">
+<meta property="og:description" content="信息安全概论（1） 1.1.1安全风险分析与安全对策 安全分析 要保护对象的价值、弱点、威胁 安全对策（PDRRP）  保护 检测 反应 恢复 惩罚  1.2.1 可用性、真实性、机密性 信息的可用性 信息系统提供服务的能力   病毒导致的计算机系统瘫痪 蠕虫导致网络堵塞瘫痪 黑客进行的拒绝服务攻击   信息的真实性  可鉴别性  是周瑜发给我的">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://101.35.161.126/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png">
 <meta property="article:published_time" content="2022-03-16T07:57:27.000Z">
@@ -204,15 +204,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="信息安全概论（1）"><a href="#信息安全概论（1）" class="headerlink" title="信息安全概论（1）"></a>信息安全概论（1）</h1><h2 id="1-1-1安全风险分析与安全对策"><a href="#1-1-1安全风险分析与安全对策" class="headerlink" title="1.1.1安全风险分析与安全对策"></a>1.1.1安全风险分析与安全对策</h2><h2 id="安全分析"><a href="#安全分析" class="headerlink" title="安全分析"></a>安全分析</h2><p>要保护对象的<strong>价值、弱点、威胁</strong></p>
-<h3 id="安全对策（PDRRP）"><a href="#安全对策（PDRRP）" class="headerlink" title="安全对策（PDRRP）"></a>安全对策（<strong>PDRR</strong>P）</h3><ul>
+        <h1 id="信息安全概论1">信息安全概论（1）</h1>
+<h2 id="安全风险分析与安全对策">1.1.1安全风险分析与安全对策</h2>
+<h2 id="安全分析">安全分析</h2>
+<p>要保护对象的<strong>价值、弱点、威胁</strong></p>
+<h3 id="安全对策pdrrp">安全对策（<strong>PDRR</strong>P）</h3>
+<ul>
 <li><strong>保护</strong></li>
 <li><strong>检测</strong></li>
 <li><strong>反应</strong></li>
 <li><strong>恢复</strong></li>
 <li>惩罚</li>
 </ul>
-<h2 id="1-2-1-可用性、真实性、机密性"><a href="#1-2-1-可用性、真实性、机密性" class="headerlink" title="1.2.1 可用性、真实性、机密性"></a>1.2.1 可用性、真实性、机密性</h2><h3 id="信息的可用性"><a href="#信息的可用性" class="headerlink" title="信息的可用性"></a>信息的可用性</h3><p>信息系统提供服务的能力</p>
+<h2 id="可用性真实性机密性">1.2.1 可用性、真实性、机密性</h2>
+<h3 id="信息的可用性">信息的可用性</h3>
+<p>信息系统提供服务的能力</p>
 <blockquote>
 <ul>
 <li>病毒导致的计算机系统瘫痪</li>
@@ -220,37 +226,38 @@
 <li>黑客进行的拒绝服务攻击</li>
 </ul>
 </blockquote>
-<h3 id="信息的真实性"><a href="#信息的真实性" class="headerlink" title="信息的真实性"></a>信息的真实性</h3><ul>
+<h3 id="信息的真实性">信息的真实性</h3>
+<ul>
 <li><p>可鉴别性</p>
 <blockquote>
 <p>是周瑜发给我的还是曹操发给我的</p>
-</blockquote>
-</li>
+</blockquote></li>
 <li><p>完整性</p>
 <blockquote>
 <p>是不是发送过程中被改了</p>
-</blockquote>
-</li>
-<li><p>抗抵赖 (面对双方不可信的条件下,提供保障)</p>
-</li>
+</blockquote></li>
+<li><p>抗抵赖 (面对双方不可信的条件下,提供保障)</p></li>
 </ul>
-<h3 id="信息的机密性"><a href="#信息的机密性" class="headerlink" title="信息的机密性"></a>信息的机密性</h3><p>9月14日组织进攻</p>
+<h3 id="信息的机密性">信息的机密性</h3>
+<p>9月14日组织进攻</p>
 <img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png" class>
-
-<h2 id="1-3-1-信息安全模型"><a href="#1-3-1-信息安全模型" class="headerlink" title="1.3.1 信息安全模型"></a>1.3.1 信息安全模型</h2><p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
+<h2 id="信息安全模型">1.3.1 信息安全模型</h2>
+<p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
 <blockquote>
 <p>机密性：Confidentiality</p>
 <p>完整性：Integrity</p>
 <p>可用性 ：Availability</p>
 </blockquote>
-<h2 id="1-4-1-信息时代和信息的价值"><a href="#1-4-1-信息时代和信息的价值" class="headerlink" title="1.4.1 信息时代和信息的价值"></a>1.4.1 信息时代和信息的价值</h2><p><strong>数据</strong> ： 客观事物的符号表示。</p>
+<h2 id="信息时代和信息的价值">1.4.1 信息时代和信息的价值</h2>
+<p><strong>数据</strong> ： 客观事物的符号表示。</p>
 <p><strong>信息</strong> ：有用的数据，能消除主体疑问的数据，能指导主体的行为的数据。</p>
 <ul>
 <li>数据是信息的载体，但信息不等于数据。</li>
 <li>数据中包含信息，但得到数据未必能得到信息，即能指导主体行为。</li>
 </ul>
-<h2 id="1-5-1-信息系统的弱点"><a href="#1-5-1-信息系统的弱点" class="headerlink" title="1.5.1 信息系统的弱点"></a>1.5.1 信息系统的弱点</h2><ol>
-<li>设计上的问题——通常缺乏安全的考虑，比如 $arp$ 病毒。</li>
+<h2 id="信息系统的弱点">1.5.1 信息系统的弱点</h2>
+<ol type="1">
+<li>设计上的问题——通常缺乏安全的考虑，比如 <span class="math inline">\(arp\)</span> 病毒。</li>
 <li>实现上的问题——代码编写中，有意后门和无意的bug。</li>
 <li>配置上的问题——默认的服务。</li>
 <li>管理上的问题——弱的口令，内部人员无意或恶意的操作。</li>
@@ -335,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA%EF%BC%881%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">信息安全概论（1）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-1%E5%AE%89%E5%85%A8%E9%A3%8E%E9%99%A9%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%89%E5%85%A8%E5%AF%B9%E7%AD%96"><span class="nav-number">1.1.</span> <span class="nav-text">1.1.1安全风险分析与安全对策</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">安全分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%AF%B9%E7%AD%96%EF%BC%88PDRRP%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">安全对策（PDRRP）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-1-%E5%8F%AF%E7%94%A8%E6%80%A7%E3%80%81%E7%9C%9F%E5%AE%9E%E6%80%A7%E3%80%81%E6%9C%BA%E5%AF%86%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.2.1 可用性、真实性、机密性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="nav-number">1.3.1.</span> <span class="nav-text">信息的可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%80%A7"><span class="nav-number">1.3.2.</span> <span class="nav-text">信息的真实性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E6%9C%BA%E5%AF%86%E6%80%A7"><span class="nav-number">1.3.3.</span> <span class="nav-text">信息的机密性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-1-%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">1.3.1 信息安全模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-1-%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3%E5%92%8C%E4%BF%A1%E6%81%AF%E7%9A%84%E4%BB%B7%E5%80%BC"><span class="nav-number">1.5.</span> <span class="nav-text">1.4.1 信息时代和信息的价值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-1-%E4%BF%A1%E6%81%AF%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BC%B1%E7%82%B9"><span class="nav-number">1.6.</span> <span class="nav-text">1.5.1 信息系统的弱点</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA1"><span class="nav-number">1.</span> <span class="nav-text">信息安全概论（1）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E9%A3%8E%E9%99%A9%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%89%E5%85%A8%E5%AF%B9%E7%AD%96"><span class="nav-number">1.1.</span> <span class="nav-text">1.1.1安全风险分析与安全对策</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">安全分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%AF%B9%E7%AD%96pdrrp"><span class="nav-number">1.2.1.</span> <span class="nav-text">安全对策（PDRRP）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%94%A8%E6%80%A7%E7%9C%9F%E5%AE%9E%E6%80%A7%E6%9C%BA%E5%AF%86%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.2.1 可用性、真实性、机密性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="nav-number">1.3.1.</span> <span class="nav-text">信息的可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%80%A7"><span class="nav-number">1.3.2.</span> <span class="nav-text">信息的真实性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E6%9C%BA%E5%AF%86%E6%80%A7"><span class="nav-number">1.3.3.</span> <span class="nav-text">信息的机密性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">1.3.1 信息安全模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3%E5%92%8C%E4%BF%A1%E6%81%AF%E7%9A%84%E4%BB%B7%E5%80%BC"><span class="nav-number">1.5.</span> <span class="nav-text">1.4.1 信息时代和信息的价值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BC%B1%E7%82%B9"><span class="nav-number">1.6.</span> <span class="nav-text">1.5.1 信息系统的弱点</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
