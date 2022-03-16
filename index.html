@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-16 17:32:27 / Modified: 21:21:50" itemprop="dateCreated datePublished" datetime="2022-03-16T17:32:27+08:00">2022-03-16</time>
+              <time title="Created: 2022-03-16 17:32:27 / Modified: 21:35:08" itemprop="dateCreated datePublished" datetime="2022-03-16T17:32:27+08:00">2022-03-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,7 +289,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-16 15:57:27 / Modified: 21:33:14" itemprop="dateCreated datePublished" datetime="2022-03-16T15:57:27+08:00">2022-03-16</time>
+              <time title="Created: 2022-03-16 15:57:27 / Modified: 21:35:08" itemprop="dateCreated datePublished" datetime="2022-03-16T15:57:27+08:00">2022-03-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -348,7 +348,7 @@
 </ul>
 <h3 id="信息的机密性">信息的机密性</h3>
 <p>9月14日组织进攻</p>
-<img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png" class>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png"></p>
 <h2 id="信息安全模型">1.3.1 信息安全模型</h2>
 <p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
 <blockquote>
@@ -420,7 +420,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 21:33:14" itemprop="dateModified" datetime="2022-03-16T21:33:14+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 21:35:08" itemprop="dateModified" datetime="2022-03-16T21:35:08+08:00">2022-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -445,7 +445,7 @@
       
           <h1 id="xss笔记">XSS笔记</h1>
 <h2 id="xss简介">XSS简介</h2>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png"></p>
 <blockquote>
 <p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
 </blockquote>
@@ -454,53 +454,52 @@
 <p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
 <p>在对话框键入<code>&lt;script&gt;alert("111")&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
 <p>可以看到浏览器上方弹出</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png"></p>
 <h3 id="中等级">中等级</h3>
 <p>观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
 <ol type="1">
 <li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
 </ol>
 <p>可以看到浏览器成功弹窗</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
 <ol start="2" type="1">
 <li>我们还可以通过混用大小写的方式进行XSS攻击</li>
 </ol>
 <p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击<span class="math inline">\(submit\)</span> 进行提交也可以看到成功弹窗。</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png"></p>
 <p>​</p>
 <h3 id="高等级">高等级</h3>
 <p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
 <p>我们可以通过 <span class="math inline">\(img\)</span> , <span class="math inline">\(body\)</span> 等标签注入js代码。</p>
 <p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>提交后可以看到成功进行了弹窗</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
 <h2 id="存储型xss漏洞">存储型XSS漏洞</h2>
 <h3 id="低等级-1">低等级</h3>
 <p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。 addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
 <h4 id="在message进行xss攻击">在message进行xss攻击</h4>
 <p>在message栏输入<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code></p>
 <p>可以看到浏览器上方弹出</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
 <h4 id="在name进行xss攻击">在name进行xss攻击</h4>
 <p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
 <p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
 <p>抓包结果如下：</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png"></p>
 <p>将txtname改为<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
 <h3 id="中等级-1">中等级</h3>
 <p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
 <p>同理用burp进行抓包</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png"></p>
 <p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
 <p>可以看到成功弹窗</p>
 <h3 id="高等级-1">高等级</h3>
 <p>同理进行抓包</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png" class>
-<p>改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>放包可以看到成功进行了弹窗</p>
-<img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" class>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
 
       
     </div>
@@ -1025,7 +1024,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 21:33:14" itemprop="dateModified" datetime="2022-03-16T21:33:14+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 21:35:08" itemprop="dateModified" datetime="2022-03-16T21:35:08+08:00">2022-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1093,7 +1092,7 @@
 </blockquote>
 <h5 id="a---attack-on-alpha-zet"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021A">A - Attack on Alpha-Zet</a></h5>
 <p>给你一个二维网格平面，每格是一个 <span class="math inline">\(1 \times 1\)</span> 的单元格，每个单元格至少有一个和他相邻的单元格，单元格两两之间存在路径，并且不存在环。在这个二维平面中依次访问 <span class="math inline">\(n\)</span> 个点，求最少走过的单元格。</p>
-<img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002130640240.png" class>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002130640240.png"></p>
 <p><strong>输入</strong></p>
 <p>第一行为 <span class="math inline">\(h,w (2\leq h,w\leq 1000)\)</span> 。表示迷宫的高和宽。</p>
 <p>接下来 <span class="math inline">\(h+1\)</span> 行用<span class="math inline">\(ASCII\)</span>表示一个迷宫，每行有<span class="math inline">\(2 \cdot w+1\)</span> 个字符。规则如下：</p>
@@ -1107,7 +1106,7 @@
 <p>保证迷宫是封闭的，且两个点之间只有一条路径。</p>
 <p><strong>输出</strong></p>
 <p>一个数字，表示要走过的单元格。</p>
-<img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002133323113.png" class>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002133323113.png"></p>
 <h5 id="b---battle-royale"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021B">B - Battle Royale</a></h5>
 <p>给你个蓝色圆，和一个红色圆 。问从<span class="math inline">\(A\)</span> 走到 <span class="math inline">\(B\)</span> 最短路径。</p>
 <p><strong>输入</strong></p>
@@ -1125,7 +1124,7 @@
 <p>一个整数，表示最长路径。</p>
 <h5 id="d---down-the-pyramid"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021D">D - Down the Pyramid</a></h5>
 <p>一个金子塔形状的图案，相邻的两个单元格相加为上层单元格数值，现告诉你 <span class="math inline">\(n\)</span> 层的序列，让你求 <span class="math inline">\(n+1\)</span> 层有几种可能。</p>
-<img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002141909709.png" class>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002141909709.png"></p>
 <p><strong>输入</strong></p>
 <p><span class="math inline">\(n(1 \leq n \leq 10^6)\)</span></p>
 <p><span class="math inline">\(n\)</span> 个数表示这个序列。</p>
@@ -1141,7 +1140,7 @@
 <h5 id="f---fighting-monsters"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021F">F - Fighting Monsters</a></h5>
 <p>两个怪物互相攻击，，每个怪物有一个血量，当怪物 <span class="math inline">\(A\)</span> 攻击怪物 <span class="math inline">\(B\)</span> 时，会对<span class="math inline">\(B\)</span>造成<span class="math inline">\(A\)</span>血量的伤害。</p>
 <p>攻击过程如下图所示：</p>
-<img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002151506690.png" class>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002151506690.png"></p>
 <p>现在给你 <span class="math inline">\(n\)</span> 个怪物，问你能不能找到两个怪物，互相攻击使其中一个血量只剩下<span class="math inline">\(1\)</span>点。</p>
 <p><strong>输入</strong></p>
 <p><span class="math inline">\(n(2 \leq n \leq 10^5)\)</span></p>
