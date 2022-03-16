@@ -199,7 +199,8 @@
 
       
           <h1 id="信息安全概论（2）"><a href="#信息安全概论（2）" class="headerlink" title="信息安全概论（2）"></a>信息安全概论（2）</h1><h2 id="2-1-密码学基本概念——加密和解密"><a href="#2-1-密码学基本概念——加密和解密" class="headerlink" title="2.1 密码学基本概念——加密和解密"></a>2.1 密码学基本概念——加密和解密</h2><h3 id="机密与真实性的解决方法——加密"><a href="#机密与真实性的解决方法——加密" class="headerlink" title="机密与真实性的解决方法——加密"></a>机密与真实性的解决方法——加密</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">  明文--加密算法 加密密钥--&gt;密文</span><br><span class="line">  密文--解密算法 解密密钥--&gt;明文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="两种密码体制"><a href="#两种密码体制" class="headerlink" title="两种密码体制"></a>两种密码体制</h3><h4 id="单钥密码体制"><a href="#单钥密码体制" class="headerlink" title="单钥密码体制"></a>单钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164218625.png)</p>
+
+<h3 id="两种密码体制"><a href="#两种密码体制" class="headerlink" title="两种密码体制"></a>两种密码体制</h3><h4 id="单钥密码体制"><a href="#单钥密码体制" class="headerlink" title="单钥密码体制"></a>单钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)%5Cimage-20220316164218625.png"></p>
 <blockquote>
 <p>加密密钥和解密密钥相同，或能相互推导</p>
 </blockquote>
@@ -211,18 +212,18 @@
 <p>所以单钥密码算法也被称为对称密码算法。</p>
 <p>单钥密码加密的应用条件：</p>
 <p>​    需要敌人拿不到数据的安全信道传递共用的密钥。</p>
-<h4 id="双钥密码体制"><a href="#双钥密码体制" class="headerlink" title="双钥密码体制"></a>双钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164723920.png)</p>
+<h4 id="双钥密码体制"><a href="#双钥密码体制" class="headerlink" title="双钥密码体制"></a>双钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)%5Cimage-20220316164723920.png"></p>
 <blockquote>
 <p>加密密钥和解密密钥不相同，且不能相互推导</p>
 </blockquote>
 <p>双钥算法之一 —— RSA算法</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316172136374.png)</p>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)%5Cimage-20220316172136374.png"></p>
 <p>加密：$c=m^e \mod {n}$</p>
 <p>解密：$c^d \mod n = m$</p>
 <blockquote>
 <p>知道加密密钥推断不出解密密钥</p>
 </blockquote>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316174502949.png)</p>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)%5Cimage-20220316174502949.png"></p>
 <p>假设一个场景：A与B要进行通信，C为可能的窃听者，双钥密码体制工作如下。</p>
 <p><strong>工作流程：</strong></p>
 <ol>
@@ -329,7 +330,7 @@
 </li>
 </ul>
 <h3 id="信息的机密性"><a href="#信息的机密性" class="headerlink" title="信息的机密性"></a>信息的机密性</h3><p>9月14日组织进攻</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png" alt></p>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA%5Cimage-20220316094317271.png"></p>
 <h2 id="1-3-1-信息安全模型"><a href="#1-3-1-信息安全模型" class="headerlink" title="1.3.1 信息安全模型"></a>1.3.1 信息安全模型</h2><p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
 <blockquote>
 <p>机密性：Confidentiality</p>
@@ -421,51 +422,51 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="XSS笔记"><a href="#XSS笔记" class="headerlink" title="XSS笔记"></a>XSS笔记</h1><h2 id="XSS简介"><a href="#XSS简介" class="headerlink" title="XSS简介"></a>XSS简介</h2><p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png" alt></p>
+          <h1 id="XSS笔记"><a href="#XSS笔记" class="headerlink" title="XSS笔记"></a>XSS笔记</h1><h2 id="XSS简介"><a href="#XSS简介" class="headerlink" title="XSS简介"></a>XSS简介</h2><p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308095657142.png"></p>
 <blockquote>
 <p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
 </blockquote>
 <h2 id="反射型XSS漏洞"><a href="#反射型XSS漏洞" class="headerlink" title="反射型XSS漏洞"></a>反射型XSS漏洞</h2><h3 id="低等级"><a href="#低等级" class="headerlink" title="低等级"></a>低等级</h3><p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
 <p>在对话框键入<code>&lt;script&gt;alert(&quot;111&quot;)&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
 <p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308100719863.png"></p>
 <h3 id="中等级"><a href="#中等级" class="headerlink" title="中等级"></a>中等级</h3><p> 观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
 <ol>
 <li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
 </ol>
 <p>可以看到浏览器成功弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt></p>
-<ol>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308101757917.png"></p>
+<ol start="2">
 <li>我们还可以通过混用大小写的方式进行XSS攻击</li>
 </ol>
 <p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击$submit$ 进行提交也可以看到成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308102802413.png"></p>
 <p>​         </p>
 <h3 id="高等级"><a href="#高等级" class="headerlink" title="高等级"></a>高等级</h3><p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
 <p>我们可以通过 $img$ , $body$ 等标签注入js代码。</p>
 <p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>提交后可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308111137012.png"></p>
 <h2 id="存储型XSS漏洞"><a href="#存储型XSS漏洞" class="headerlink" title="存储型XSS漏洞"></a>存储型XSS漏洞</h2><h3 id="低等级-1"><a href="#低等级-1" class="headerlink" title="低等级"></a>低等级</h3><p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。  addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
 <h4 id="在message进行xss攻击"><a href="#在message进行xss攻击" class="headerlink" title="在message进行xss攻击"></a>在message进行xss攻击</h4><p>在message栏输入<code>&lt;script&gt;alert(&quot;/xss/&quot;)&lt;/script&gt;</code></p>
 <p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308155737502.png"></p>
 <h4 id="在name进行xss攻击"><a href="#在name进行xss攻击" class="headerlink" title="在name进行xss攻击"></a>在name进行xss攻击</h4><p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
 <p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
 <p>抓包结果如下：</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308160339068.png"></p>
 <p>将txtname改为<code>&lt;script&gt;alert(&quot;/xss/&quot;)&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308155737502.png"></p>
 <h3 id="中等级-1"><a href="#中等级-1" class="headerlink" title="中等级"></a>中等级</h3><p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
 <p>同理用burp进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308163010214.png"></p>
 <p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308101757917.png"></p>
 <p>可以看到成功弹窗</p>
 <h3 id="高等级-1"><a href="#高等级-1" class="headerlink" title="高等级"></a>高等级</h3><p>同理进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png" alt>改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308163311721.png">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>放包可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/xss%E7%AC%94%E8%AE%B0%5Cimage-20220308111137012.png"></p>
 
       
     </div>
@@ -1004,7 +1005,7 @@
 <p>2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)</p>
 </blockquote>
 <h5 id="A-Average-Rank"><a href="#A-Average-Rank" class="headerlink" title="A - Average Rank"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500A">A - Average Rank</a></h5><p> 在一个比赛中，每周完成的人可以得到一个点数，在每周的末尾，会对每个人的到的点数进行排名。每个人的排名为分数大于他的人数$+1$ , 如果两个人得到的点数相同那么他们的名次相同。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/21dfad4dca68e82d048f45957c56a4d5.png" alt></p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5C21dfad4dca68e82d048f45957c56a4d5.png"></p>
 <p>一共有n名参赛选手，比赛进行w周，每周给你一个选手的得分列表，你的任务是计算n名选手在这w周的平均名次。</p>
 <p><strong>输入</strong></p>
 <p>第一行n,w，分别表示人数和周数。</p>
@@ -1017,7 +1018,7 @@
 <li>左右子树深度之差不超过1。</li>
 <li>结点的值比左子树中所有结点的值都大，比右子树所有结点的值都小。</li>
 </ul>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/dad71005c19df40439a95333e4e1b050.png" alt></p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5Cdad71005c19df40439a95333e4e1b050.png"></p>
 <p>现在让你删除结点至只剩 $k$ 个结点，当你删除结点时，所有该节点的子孙结点将被删除。</p>
 <p>先让你完成这个操作，使剩余结点的中序遍历字典序最小。</p>
 <p><strong>输入</strong></p>
@@ -1035,7 +1036,7 @@
 <p>2018 German Collegiate Programming Contest (GCPC 18)</p>
 </blockquote>
 <h5 id="A-Attack-on-Alpha-Zet"><a href="#A-Attack-on-Alpha-Zet" class="headerlink" title="A - Attack on Alpha-Zet"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021A">A - Attack on Alpha-Zet</a></h5><p> 给你一个二维网格平面，每格是一个 $1 \times 1$ 的单元格，每个单元格至少有一个和他相邻的单元格，单元格两两之间存在路径，并且不存在环。在这个二维平面中依次访问 $n$ 个点，求最少走过的单元格。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002130640240.png" alt></p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5Cimage-20211002130640240.png"></p>
 <p><strong>输入</strong></p>
 <p>第一行为 $h,w (2\leq h,w\leq 1000)$ 。表示迷宫的高和宽。</p>
 <p>接下来 $h+1$ 行用$ASCII$表示一个迷宫，每行有$2 \cdot w+1$ 个字符。规则如下：</p>
@@ -1049,7 +1050,7 @@
 <p>保证迷宫是封闭的，且两个点之间只有一条路径。</p>
 <p><strong>输出</strong></p>
 <p>一个数字，表示要走过的单元格。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002133323113.png" alt></p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5Cimage-20211002133323113.png"></p>
 <h5 id="B-Battle-Royale"><a href="#B-Battle-Royale" class="headerlink" title="B - Battle Royale"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021B">B - Battle Royale</a></h5><p>给你个蓝色圆，和一个红色圆 。问从$A$ 走到 $B$ 最短路径。</p>
 <p><strong>输入</strong></p>
 <p>$a$ 点坐标，$b$ 点坐标，蓝圆圆心坐标和半径，红圆坐标与半径。</p>
@@ -1064,7 +1065,7 @@
 <p><strong>输出</strong></p>
 <p>一个整数，表示最长路径。</p>
 <h5 id="D-Down-the-Pyramid"><a href="#D-Down-the-Pyramid" class="headerlink" title="D - Down the Pyramid"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021D">D - Down the Pyramid</a></h5><p> 一个金子塔形状的图案，相邻的两个单元格相加为上层单元格数值，现告诉你 $n$ 层的序列，让你求 $n+1$ 层有几种可能。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002141909709.png" alt></p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5Cimage-20211002141909709.png"></p>
 <p><strong>输入</strong></p>
 <p>$n(1 \leq n \leq 10^6)$ </p>
 <p>$n$ 个数表示这个序列。</p>
@@ -1078,7 +1079,7 @@
 <p>满足条件的 $p,q$，如果不存在输出$impossible$ ，如果有多组解，输出 $p+q$ 最小的情况。</p>
 <h5 id="F-Fighting-Monsters"><a href="#F-Fighting-Monsters" class="headerlink" title="F - Fighting Monsters"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021F">F - Fighting Monsters</a></h5><p> 两个怪物互相攻击，，每个怪物有一个血量，当怪物 $A$ 攻击怪物 $B$ 时，会对$B$造成$A$血量的伤害。</p>
 <p>攻击过程如下图所示：</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002151506690.png" alt></p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91%5Cimage-20211002151506690.png"></p>
 <p>现在给你 $n$ 个怪物，问你能不能找到两个怪物，互相攻击使其中一个血量只剩下$1$点。</p>
 <p><strong>输入</strong></p>
 <p>$n(2 \leq n \leq 10^5)$</p>
