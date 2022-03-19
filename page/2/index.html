@@ -150,6 +150,256 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Treads</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-12-12 14:00:06 / Modified: 14:09:51" itemprop="dateCreated datePublished" datetime="2021-12-12T14:00:06+08:00">2021-12-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="threads">Threads</h4>
+<h5 id="section">4.4</h5>
+<h5 id="context-switching-between-kernel-threads-typically-requires-saving-the-value-of-the-cpu-registers-from-the-thread-being-switched-out-and-restoring-the-cpu-registers-of-the-new-thread-being-scheduled.-使用线程的时候创建了什么资源使用进程的时候创建了什么资源">Context switching between kernel threads typically requires saving the value of the CPU registers from the thread being switched out and restoring the CPU registers of the new thread being scheduled. 使用线程的时候创建了什么资源，使用进程的时候创建了什么资源。</h5>
+<p>Because a thread is smaller than a process, thread creation typically uses fewer resources than process creation. Creating a process requires allocating a process control block ( PCB ), a rather large data structure. The PCB includes a memory map, list of open files, and environment variables. Allocating and managing the memory map is typically the most time-consuming activity. Creating either a user or kernel thread involves allocating a small data structure to hold a register set, stack, and priority.</p>
+<p>线程比进程使用的资源更少，进程需要申请一个PCB，一个更大的数据结构。PCB包含一个内存映射表一系列打开的文件还有环境变量。分配和管理内存映射表是最花时间的活动。创建用户或内核级线程包含分配一个较小的数据结构包括寄存器集合，栈和优先级。</p>
+<h5 id="section-1">4.5</h5>
+<h5 id="assume-that-an-operating-system-maps-user-level-threads-to-the-kernel-using-the-many-to-many-model-and-that-the-mapping-is-done-through-lwp-s.-furthermore-the-system-allows-developers-to-create-real-time-threads-for-use-in-real-time-systems.-is-it-necessary-to-bind-a-real-time">Assume that an operating system maps user-level threads to the kernel using the many-to-many model and that the mapping is done through LWP s. Furthermore, the system allows developers to create real-time threads for use in real-time systems. Is it necessary to bind a real-time</h5>
+<p>thread to an LWP ? Explain. 假设用户线程和内核线程采用多对多的映射关系，并通过LWP进行映射，并且系统允许开发者创建实时线程在实时系统中，那么有必要绑定一个实时线程到LWP上吗？</p>
+<p>Yes. Timing is crucial to real-time applications. If a thread is marked as real-time but is not bound to an LWP , the thread may have to wait to be attached to an LWP before running. Consider if a real-time thread is running (is attached to an LWP ) and then proceeds to block (i.e. must perform I/O , has been preempted by a higher-priority real-time thread, is waiting for a mutual exclusion lock, etc.) While the real-time thread is blocked, the LWP it was attached to has been assigned to another thread. When the real-time thread has been scheduled to run again, it must first wait to be attached to an LWP . By binding an LWP to a real-time thread you are ensuring the thread will be able to run with minimal delay once it is scheduled.</p>
+<p>是的，定时对实时程序十分重要，如果一个线程被标记为实时的但是没有绑定到LWP上，这个线程在运行之前一定要绑定到LWP上。假设一个线程绑定到LWP上，当实时线程阻塞，进程并被阻塞了。LWP被分配给另一个线程，实时线程被计划再次运行，他必须要先被分配给LWP，只有将线程绑定在LWP上，你可以确保线程在调度和能以最小的延迟运行。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/" class="post-title-link" itemprop="url">翻译</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-10-01 22:24:06" itemprop="dateCreated datePublished" datetime="2021-10-01T22:24:06+08:00">2021-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 21:35:08" itemprop="dateModified" datetime="2022-03-16T21:35:08+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/XCPC/" itemprop="url" rel="index"><span itemprop="name">XCPC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>前言</p>
+<p>作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。</p>
+</blockquote>
+<h4 id="sdkd-2021-summer-training-series-a-2nd-round">SDKD 2021 Summer Training Series A 2nd Round</h4>
+<blockquote>
+<p>2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)</p>
+</blockquote>
+<h5 id="a---average-rank"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500A">A - Average Rank</a></h5>
+<p>在一个比赛中，每周完成的人可以得到一个点数，在每周的末尾，会对每个人的到的点数进行排名。每个人的排名为分数大于他的人数<span class="math inline">\(+1\)</span> , 如果两个人得到的点数相同那么他们的名次相同。</p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/21dfad4dca68e82d048f45957c56a4d5.png"></p>
+<p>一共有n名参赛选手，比赛进行w周，每周给你一个选手的得分列表，你的任务是计算n名选手在这w周的平均名次。</p>
+<p><strong>输入</strong></p>
+<p>第一行n,w，分别表示人数和周数。</p>
+<p>接下来w行，第 <span class="math inline">\(i\)</span> 行开头为 <span class="math inline">\(k\)</span>，接下来k个数字<span class="math inline">\(c_1,…c_k\)</span>表示<span class="math inline">\(c_1,…,c_k\)</span>名选手在第 <span class="math inline">\(i\)</span> 周得到一分。</p>
+<p>所有选手的总共得分不超过 <span class="math inline">\(1 million\)</span>。</p>
+<p><strong>输出</strong></p>
+<p><span class="math inline">\(n\)</span>行，第<span class="math inline">\(i\)</span>行表示第<span class="math inline">\(i\)</span>名选手的平均名次。</p>
+<h5 id="b---balanced-cut"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500B">B - Balanced Cut</a></h5>
+<p>给你一棵 <span class="math inline">\(n\)</span> 个结点的平衡二叉搜索树，该树具有如下性质：</p>
+<ul>
+<li>左右子树深度之差不超过1。</li>
+<li>结点的值比左子树中所有结点的值都大，比右子树所有结点的值都小。</li>
+</ul>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/dad71005c19df40439a95333e4e1b050.png"></p>
+<p>现在让你删除结点至只剩 <span class="math inline">\(k\)</span> 个结点，当你删除结点时，所有该节点的子孙结点将被删除。</p>
+<p>先让你完成这个操作，使剩余结点的中序遍历字典序最小。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n,k\)</span> 表示有<span class="math inline">\(n\)</span>个结点，要求剩余<span class="math inline">\(k\)</span>个结点。</p>
+<p>接下来 <span class="math inline">\(n\)</span> 行，第<span class="math inline">\(i\)</span>行为 <span class="math inline">\(p_i\)</span> ,表示值为 <span class="math inline">\(i\)</span> 的结点的父亲的值为<span class="math inline">\(p_i\)</span>, <span class="math inline">\(p_i\)</span> 为 <span class="math inline">\(-1\)</span> 表示为根节点。</p>
+<p><strong>输出</strong></p>
+<p>一个字符串，第 <span class="math inline">\(i\)</span> 位为<span class="math inline">\(0\)</span>表示删除，为 <span class="math inline">\(1\)</span> 表示保留。</p>
+<h5 id="d---disposable-switches"><a target="_blank" rel="noopener" href="https://vjudge.net/problem/Gym-102500D">D - Disposable Switches</a></h5>
+<p>给一个 <span class="math inline">\(n\)</span> 个结点，<span class="math inline">\(m\)</span> 条路径的无向图，表示一个网络。每根传输时间为 <span class="math inline">\(l/v + c\)</span> , <span class="math inline">\(l\)</span> 为电缆的长度，<span class="math inline">\(v\)</span> 为传输速率，<span class="math inline">\(c\)</span> 为常量，<span class="math inline">\(v\)</span> 和 <span class="math inline">\(c\)</span> 未知 ，只知道<span class="math inline">\(v &gt; 0\)</span> , <span class="math inline">\(c &gt;= 0\)</span> ，当一个数据传送到一个结点时，他会选择路径耗时最短的结点进行转发，求无论 <span class="math inline">\(v\)</span>,<span class="math inline">\(c\)</span> 为何值时，从<span class="math inline">\(1\)</span>发送数据到<span class="math inline">\(n\)</span>，有哪些结点是永远不会被转发到的。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n\)</span>,<span class="math inline">\(m\)</span> ,表示有 <span class="math inline">\(n\)</span> 个结点，<span class="math inline">\(m\)</span> 条路径。接下来 <span class="math inline">\(m\)</span> 行，每行有三个数 <span class="math inline">\(a\)</span> , <span class="math inline">\(b\)</span> , <span class="math inline">\(l\)</span> ,表示 <span class="math inline">\(a\)</span> 到 <span class="math inline">\(b\)</span> 之间的电缆长度为 <span class="math inline">\(l\)</span>。</p>
+<p>无重边，自环。图保证联通。</p>
+<p><strong>输出</strong></p>
+<p>第一行为一个 <span class="math inline">\(k\)</span> ,第二行有<span class="math inline">\(k\)</span>个数，表示有<span class="math inline">\(k\)</span> 个结点不会被转发到。输出按升序排列。</p>
+<h4 id="sdkd-2021-autumn-training-series-b-1st-round">SDKD 2021 Autumn Training Series B 1st Round</h4>
+<blockquote>
+<p>2018 German Collegiate Programming Contest (GCPC 18)</p>
+</blockquote>
+<h5 id="a---attack-on-alpha-zet"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021A">A - Attack on Alpha-Zet</a></h5>
+<p>给你一个二维网格平面，每格是一个 <span class="math inline">\(1 \times 1\)</span> 的单元格，每个单元格至少有一个和他相邻的单元格，单元格两两之间存在路径，并且不存在环。在这个二维平面中依次访问 <span class="math inline">\(n\)</span> 个点，求最少走过的单元格。</p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002130640240.png"></p>
+<p><strong>输入</strong></p>
+<p>第一行为 <span class="math inline">\(h,w (2\leq h,w\leq 1000)\)</span> 。表示迷宫的高和宽。</p>
+<p>接下来 <span class="math inline">\(h+1\)</span> 行用<span class="math inline">\(ASCII\)</span>表示一个迷宫，每行有<span class="math inline">\(2 \cdot w+1\)</span> 个字符。规则如下：</p>
+<ul>
+<li>奇数行表示一个竖墙或者空格。偶数行表示一个横墙或者空格。</li>
+<li>第一行为最北边的墙，只由横线构成，接下来的行都表示单元格。</li>
+<li>单元格都在偶数列，左右为竖墙，如果没有竖墙则用空格代替。</li>
+</ul>
+<p>接下来一行是一个数字 <span class="math inline">\(m\)</span> 。</p>
+<p>接下来 <span class="math inline">\(m\)</span> 行，第 <span class="math inline">\(i\)</span> 行表示第 <span class="math inline">\(i\)</span> 要到达的点。每个坐标可能出现多次。<span class="math inline">\((1,1)\)</span> 为左上角的点 <span class="math inline">\((h,w)\)</span> 为右下角的点。</p>
+<p>保证迷宫是封闭的，且两个点之间只有一条路径。</p>
+<p><strong>输出</strong></p>
+<p>一个数字，表示要走过的单元格。</p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002133323113.png"></p>
+<h5 id="b---battle-royale"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021B">B - Battle Royale</a></h5>
+<p>给你个蓝色圆，和一个红色圆 。问从<span class="math inline">\(A\)</span> 走到 <span class="math inline">\(B\)</span> 最短路径。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(a\)</span> 点坐标，<span class="math inline">\(b\)</span> 点坐标，蓝圆圆心坐标和半径，红圆坐标与半径。</p>
+<p><span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> 点保证在蓝圆内，红圆外。</p>
+<p><strong>输出</strong></p>
+<p>最短路径，误差不超过 <span class="math inline">\(10^{-7}\)</span> 。</p>
+<h5 id="c---coolest-ski-route"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021C">C - Coolest Ski Route</a></h5>
+<p>给一个有向图，让你求一条权值最大的路径。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n,m\)</span> 表示有 <span class="math inline">\(n\)</span> $(2 n ) $个点 ， <span class="math inline">\(m\)</span> <span class="math inline">\((1 \leq m \leq 5000)\)</span>条边。</p>
+<p>接下来 <span class="math inline">\(m\)</span> 行，每行分别为 <span class="math inline">\(s,t,c(1\leq s,t \leq n,1 \leq c \leq 100)\)</span> ,分别表示起点终点和权值。</p>
+<p>输入保证没有回路。</p>
+<p><strong>输出</strong></p>
+<p>一个整数，表示最长路径。</p>
+<h5 id="d---down-the-pyramid"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021D">D - Down the Pyramid</a></h5>
+<p>一个金子塔形状的图案，相邻的两个单元格相加为上层单元格数值，现告诉你 <span class="math inline">\(n\)</span> 层的序列，让你求 <span class="math inline">\(n+1\)</span> 层有几种可能。</p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002141909709.png"></p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n(1 \leq n \leq 10^6)\)</span></p>
+<p><span class="math inline">\(n\)</span> 个数表示这个序列。</p>
+<p><strong>输出</strong></p>
+<p>一个数字，表示下一行有几种可能。</p>
+<h5 id="e---expired-license"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021E">E - Expired License</a></h5>
+<p>给你 <span class="math inline">\(a,b\)</span> 问你能否找到两个素数<span class="math inline">\(p,q\)</span>，使得 <span class="math inline">\(\frac{p}{q} = \frac{a}{b}\)</span>。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n(1 \leq n \leq10^5)\)</span></p>
+<p>接下来 <span class="math inline">\(n\)</span> 行，每行有一个<span class="math inline">\(a,b(0 &lt; a,b &lt; 100)\)</span> 。小数点后最多五位小数。</p>
+<p><strong>输出</strong></p>
+<p>满足条件的 <span class="math inline">\(p,q\)</span>，如果不存在输出<span class="math inline">\(impossible\)</span> ，如果有多组解，输出 <span class="math inline">\(p+q\)</span> 最小的情况。</p>
+<h5 id="f---fighting-monsters"><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021F">F - Fighting Monsters</a></h5>
+<p>两个怪物互相攻击，，每个怪物有一个血量，当怪物 <span class="math inline">\(A\)</span> 攻击怪物 <span class="math inline">\(B\)</span> 时，会对<span class="math inline">\(B\)</span>造成<span class="math inline">\(A\)</span>血量的伤害。</p>
+<p>攻击过程如下图所示：</p>
+<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002151506690.png"></p>
+<p>现在给你 <span class="math inline">\(n\)</span> 个怪物，问你能不能找到两个怪物，互相攻击使其中一个血量只剩下<span class="math inline">\(1\)</span>点。</p>
+<p><strong>输入</strong></p>
+<p><span class="math inline">\(n(2 \leq n \leq 10^5)\)</span></p>
+<p>第二行为<span class="math inline">\(n\)</span>个数，表示<span class="math inline">\(n\)</span>个怪物的血量。</p>
+<p><strong>输出</strong></p>
+<p>两个怪物的下表<span class="math inline">\(i,j\)</span>，如果不存在输出<span class="math inline">\(impossible\)</span>。如果存在多个，输出任意。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/09/28/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/In-Circle/In-Circle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -933,7 +1183,7 @@ dp[x][flag]=max(dp[it][0]+abs(nd[it][0]-nd[x][flag]),dp[it][1]+abs(nd[it][1]-nd[
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
