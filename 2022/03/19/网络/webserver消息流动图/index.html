@@ -20,15 +20,21 @@
     var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="wys的个人博客">
-<meta property="og:url" content="https://101.35.161.126/categories/%E5%93%B2%E5%AD%A6/index.html">
+  <meta name="description" content="webserver消息流动图   Server  监听进来的TCP字节流  Router  接受HTTP请求，并决定调用哪个Handler  Handler  处理HTTP请求，构建HTTP响应  HTTP Library  解释字节流，把它转化为HTTP请求 把HTTP响应转化回字节流">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web Server消息流动图">
+<meta property="og:url" content="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/index.html">
 <meta property="og:site_name" content="wys的个人博客">
+<meta property="og:description" content="webserver消息流动图   Server  监听进来的TCP字节流  Router  接受HTTP请求，并决定调用哪个Handler  Handler  处理HTTP请求，构建HTTP响应  HTTP Library  解释字节流，把它转化为HTTP请求 把HTTP响应转化回字节流">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png">
+<meta property="article:published_time" content="2022-03-19T02:32:27.000Z">
+<meta property="article:modified_time" content="2022-03-19T03:04:21.286Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png">
 
-<link rel="canonical" href="https://101.35.161.126/categories/%E5%93%B2%E5%AD%A6/">
+<link rel="canonical" href="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
 
 
 <script id="page-configurations">
@@ -36,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Category: 哲学 | wys的个人博客</title>
+  <title>Web Server消息流动图 | wys的个人博客</title>
   
 
 
@@ -144,51 +150,107 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">哲学
-          <small>Category</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Web Server消息流动图
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-19 10:32:27 / Modified: 11:04:21" itemprop="dateCreated datePublished" datetime="2022-03-19T10:32:27+08:00">2022-03-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <figure>
+<img src="/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png" alt="webserver消息流动图"><figcaption aria-hidden="true">webserver消息流动图</figcaption>
+</figure>
+<ul>
+<li>Server
+<ul>
+<li>监听进来的TCP字节流</li>
+</ul></li>
+<li>Router
+<ul>
+<li>接受HTTP请求，并决定调用哪个Handler</li>
+</ul></li>
+<li>Handler
+<ul>
+<li>处理HTTP请求，构建HTTP响应</li>
+</ul></li>
+<li>HTTP Library
+<ul>
+<li>解释字节流，把它转化为HTTP请求</li>
+<li>把HTTP响应转化回字节流</li>
+</ul></li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-12-12T14:10:06+08:00"
-              content="2021-12-12">
-          12-12
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/12/12/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E7%AC%94%E8%AE%B0/" itemprop="url">
-            <span itemprop="name">西方哲学史</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/18/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(3)/" rel="prev" title="信息安全概论（3）">
+      <i class="fa fa-chevron-left"></i> 信息安全概论（3）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -347,6 +409,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
