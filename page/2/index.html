@@ -150,7 +150,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Process%20Synchronization/">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +164,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/Process%20Synchronization/" class="post-title-link" itemprop="url">Process Synchronization</a>
+            <a href="/2021/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Treads</a>
         </h2>
 
         <div class="post-meta">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-12-12 14:00:06 / Modified: 14:10:06" itemprop="dateCreated datePublished" datetime="2021-12-12T14:00:06+08:00">2021-12-12</time>
+              <time title="Created: 2021-12-12 14:00:06 / Modified: 14:09:51" itemprop="dateCreated datePublished" datetime="2021-12-12T14:00:06+08:00">2021-12-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -198,18 +198,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="process-synchronization">Process Synchronization</h4>
-<h5 id="in-section-5.4-we-mentioned-that-disabling-interrupts-frequently-can-affect-the-systems-clock.-explain-why-this-can-occur-and-how-such-effects-can-be-minimized.-在5.4节我们提到如果频繁的禁用中断会影响系统时钟解释为什么会发生并把影响减到最小">5.1 In Section 5.4, we mentioned that disabling interrupts frequently can affect the system’s clock. Explain why this can occur and how such effects can be minimized. 在5.4节我们提到如果频繁的禁用中断会影响系统时钟，解释为什么会发生并把影响减到最小。</h5>
-<p>The system clock is updated at every clock interrupt. If interrupts were disabled—particularly for a long period of time—it is possible the system clock could easily lose the correct time. The system clock is also used for scheduling purposes. For example, the time quantum for a process is expressed as a number of clock ticks. At every clock interrupt, the scheduler determines if the time quantum for the currently running process has expired. If clock interrupts were disabled, the scheduler could not accurately assign time quantum. This effect can be minimized by disabling clock interrupts for only very short periods.</p>
-<p>系统时钟被每一个时钟中断所更新，如果中断被禁止，特别是很长的时间，那么系统时钟会丢失掉当前时间。系统时钟还用于系统调度。例如，进程的时间量表示为时钟信号的数量，在每个系统中断时，调度程序确定当前运行的时间量是否已过期。如果时钟中断被禁用，调度程序将无法准确分配时间量。这种影响可以通过在每次禁用中断只禁用很短的时间来解决。</p>
-<h5 id="explain-why-windows-linux-and-solaris-implement-multiple-locking-mechanisms.-describe-the-circumstances-under-which-they-use-spin-locks-mutex-locks-semaphores-adaptive-mutex-locks-and-condition-variables.-in-each-case-explain-why-the-mechanism-is-needed.-解释为什么windowslinux-和-solaris-实现多种锁机制解释他们使用自旋锁互斥锁信号量自适应互斥锁和条件变量在每种情况下解释为什么这种锁机制是需要的">5.2 Explain why Windows, Linux, and Solaris implement multiple locking mechanisms. Describe the circumstances under which they use spin-locks, mutex locks, semaphores, adaptive mutex locks, and condition variables. In each case, explain why the mechanism is needed. 解释为什么windows，Linux 和 Solaris 实现多种锁机制。解释他们使用自旋锁，互斥锁信号量，自适应互斥锁和条件变量。在每种情况下，解释为什么这种锁机制是需要的。</h5>
-<p>These operating systems provide different locking mechanisms depending on the application developers’ needs. Spinlocks are useful for multiprocessor systems where a thread can run in a busy-loop (for a short period of time) rather than incurring the overhead of being put in a sleep queue. Mutexes are useful for locking resources. Solaris 2 uses adaptive mutexes, meaning that the mutex is implemented with a spin lock on multiprocessor machines. Semaphores and condition variables are more appropriate tools for synchronization when a resource must be held for a long period of time, since spinning is inefficient for a long duration.</p>
-<p>这些操作系统提供了复杂的锁机制，依赖于应用开发者的需要。自旋锁对多处理器系统十分重要，因为对于自旋锁线程可以在忙等待运行而不是被放入睡眠队列，互斥锁对于锁资源非常重要。Solaris使用了自适应互斥锁意味着在多处理机上实现了自旋锁。信号量和条件变量对于同步来说更合适当资源需要被持有很长一段时间，因为自旋很长一段时间是低效的。</p>
-<h5 id="what-is-the-meaning-of-the-term-busy-waiting-what-other-kinds-of-waiting-are-there-in-an-operating-system-can-busy-waiting-be-avoided">5.3 What is the meaning of the term busy waiting? What other kinds of waiting are there in an operating system? Can busy waiting be avoided</h5>
-<p>altogether? Explain your answer. 忙等待是什么意思，还有其他的什么等待，忙等待可以完全避免吗？</p>
-<p>Busy waiting means that a process is waiting for a condition to be satisfied in a tight loop without relinquishing the processor. Alternatively, a process could wait by relinquishing the processor, and block on a condition and wait to be awakened at some appropriate time in the future. Busy waiting can be avoided but incurs the overhead associated with putting a process to sleep and having to wake it up when the appropriate program state is reached. 忙等待意味着进程在一个小的循环中等待条件满足而不放弃处理器。另外的一个进程可以放弃处理器并等待，他可以被条件阻塞然后在合适的时机被唤醒。可以避免忙等待但需花费将进程置于忙状态并将他唤醒的开销。</p>
-<h5 id="explain-why-spinlocks-are-not-appropriate-for-single-processor-systems-yet-are-often-used-in-multiprocessor-systems.-解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中">5.4 Explain why spinlocks are not appropriate for single-processor systems yet are often used in multiprocessor systems. 解释自旋锁为什么对单进程系统不合适并且经常使用在多处理器系统中。</h5>
-<p>Spinlocks are not appropriate for single-processor systems because the condition that would break a process out of the spinlock can be obtained only by executing a different process. If the process is not relinquishing the processor, other processes do not get the opportunity to set the program condition required for the first process to make progress. In a multiprocessor system, other processes execute on other processors and thereby modify the program state in order to release the first process from the spinlock. 对于单进程系统，自旋锁不合适因为可以打破进程自旋锁的条件必须被一个正在执行的程序所持有。其他进程没有机会获得释放所得的条件。在多进程系统中，其他进程可以执行在其他处理器上，因此可以修改状态以释放自旋锁。</p>
+          <h4 id="threads">Threads</h4>
+<h5 id="section">4.4</h5>
+<h5 id="context-switching-between-kernel-threads-typically-requires-saving-the-value-of-the-cpu-registers-from-the-thread-being-switched-out-and-restoring-the-cpu-registers-of-the-new-thread-being-scheduled.-使用线程的时候创建了什么资源使用进程的时候创建了什么资源">Context switching between kernel threads typically requires saving the value of the CPU registers from the thread being switched out and restoring the CPU registers of the new thread being scheduled. 使用线程的时候创建了什么资源，使用进程的时候创建了什么资源。</h5>
+<p>Because a thread is smaller than a process, thread creation typically uses fewer resources than process creation. Creating a process requires allocating a process control block ( PCB ), a rather large data structure. The PCB includes a memory map, list of open files, and environment variables. Allocating and managing the memory map is typically the most time-consuming activity. Creating either a user or kernel thread involves allocating a small data structure to hold a register set, stack, and priority.</p>
+<p>线程比进程使用的资源更少，进程需要申请一个PCB，一个更大的数据结构。PCB包含一个内存映射表一系列打开的文件还有环境变量。分配和管理内存映射表是最花时间的活动。创建用户或内核级线程包含分配一个较小的数据结构包括寄存器集合，栈和优先级。</p>
+<h5 id="section-1">4.5</h5>
+<h5 id="assume-that-an-operating-system-maps-user-level-threads-to-the-kernel-using-the-many-to-many-model-and-that-the-mapping-is-done-through-lwp-s.-furthermore-the-system-allows-developers-to-create-real-time-threads-for-use-in-real-time-systems.-is-it-necessary-to-bind-a-real-time">Assume that an operating system maps user-level threads to the kernel using the many-to-many model and that the mapping is done through LWP s. Furthermore, the system allows developers to create real-time threads for use in real-time systems. Is it necessary to bind a real-time</h5>
+<p>thread to an LWP ? Explain. 假设用户线程和内核线程采用多对多的映射关系，并通过LWP进行映射，并且系统允许开发者创建实时线程在实时系统中，那么有必要绑定一个实时线程到LWP上吗？</p>
+<p>Yes. Timing is crucial to real-time applications. If a thread is marked as real-time but is not bound to an LWP , the thread may have to wait to be attached to an LWP before running. Consider if a real-time thread is running (is attached to an LWP ) and then proceeds to block (i.e. must perform I/O , has been preempted by a higher-priority real-time thread, is waiting for a mutual exclusion lock, etc.) While the real-time thread is blocked, the LWP it was attached to has been assigned to another thread. When the real-time thread has been scheduled to run again, it must first wait to be attached to an LWP . By binding an LWP to a real-time thread you are ensuring the thread will be able to run with minimal delay once it is scheduled.</p>
+<p>是的，定时对实时程序十分重要，如果一个线程被标记为实时的但是没有绑定到LWP上，这个线程在运行之前一定要绑定到LWP上。假设一个线程绑定到LWP上，当实时线程阻塞，进程并被阻塞了。LWP被分配给另一个线程，实时线程被计划再次运行，他必须要先被分配给LWP，只有将线程绑定在LWP上，你可以确保线程在调度和能以最小的延迟运行。</p>
 
       
     </div>
