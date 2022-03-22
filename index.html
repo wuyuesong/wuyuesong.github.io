@@ -150,6 +150,124 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/" class="post-title-link" itemprop="url">信息安全概论（5）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-21 21:57:27" itemprop="dateCreated datePublished" datetime="2022-03-21T21:57:27+08:00">2022-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-22 19:12:20" itemprop="dateModified" datetime="2022-03-22T19:12:20+08:00">2022-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="信息安全概论5">信息安全概论（5）</h1>
+<h2 id="电子时代加密">5.1.1 电子时代加密</h2>
+<p>加密本质上由两部分组成，分别为<strong>置换</strong>、<strong>替代</strong>：</p>
+<p><strong>置换</strong>（<span class="math inline">\(permutation\)</span>）：如左边第一个位置的值到右边换到第三位。左右两边1或0的个数必定相等。P-box的输入线数可以做的很大。</p>
+<figure>
+<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322165135496.png" alt="image-20220322165135496"><figcaption aria-hidden="true">image-20220322165135496</figcaption>
+</figure>
+<p><strong>替代</strong>（<span class="math inline">\(substituion\)</span>）：解码器+ p-box + 编码器 构成s-box。左右两边1或0的个数不一定相等。他的输入线数不适合做很大。</p>
+<figure>
+<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322170743324.png" alt="image-20220322170743324"><figcaption aria-hidden="true">image-20220322170743324</figcaption>
+</figure>
+<p>组合：并联 + 串联，同时引入密钥，就构成了DES加密算法的雏形。</p>
+<figure>
+<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322172125431.png" alt="image-20220322172125431"><figcaption aria-hidden="true">image-20220322172125431</figcaption>
+</figure>
+<p>由于S盒输入线数不适合做的很大，所以可以采用多个S盒并联和然后和P盒串联来构成一轮加密操作。每一轮加密操作之前明文都要和密钥进行异或操作。</p>
+<h2 id="des的简介">5.2.1 DES的简介</h2>
+<p>DES利用56比特串长度的密码来加密长度为64位的明文，经过16轮运算，得到长度为64位的密文。密钥通过16轮密钥扩展算法生成16个子密钥。</p>
+<figure>
+<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322180312723.png" alt="image-20220322180312723"><figcaption aria-hidden="true">image-20220322180312723</figcaption>
+</figure>
+<h2 id="简化des的轮密钥生成">5.3.1 简化DES的轮密钥生成</h2>
+<ol type="1">
+<li>先对密钥按一定顺序进行排列。</li>
+<li>然后将密钥进行分组。</li>
+<li>对每组中的密钥循环左移。</li>
+<li>重新组合成<code>56-bit</code>。</li>
+<li>然后再按另一种方式进行全排列。</li>
+</ol>
+<h2 id="简化des轮过程">5.4.1 简化DES轮过程</h2>
+<ol type="1">
+<li>将明文分为左右两部分。</li>
+<li>将右明文进行扩展。</li>
+<li>将结果与子密钥进行异或。</li>
+<li>将扩展比特的字符串转化为原位数。</li>
+<li>将得到的结果与左明文异或作为右明文，原右明文作为左明文。</li>
+</ol>
+<h2 id="计算机时代">5.5.1 计算机时代</h2>
+<p><strong>扩散</strong>（Diffusion）：明文的统计结构被扩散消失到密文的长程统计特性，使得明文和密文之间的统计关系尽量复杂。</p>
+<p><strong>混乱</strong>（confusion）：使得密文的统计特性与密钥的取值之间的关系尽量复杂。</p>
+<h4 id="好加密算法的现象雪崩效应">好加密算法的现象——雪崩效应</h4>
+<p>明文或密文变化1bit密文所有bit都可能发生变化。</p>
+<blockquote>
+<p>The best is : 每bit变化的概率为<span class="math inline">\(\frac{1}{2}\)</span> ,且bit之间变化相互独立。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -173,10 +291,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-03-19 10:32:27 / Modified: 11:04:21" itemprop="dateCreated datePublished" datetime="2022-03-19T10:32:27+08:00">2022-03-19</time>
+              <time title="Created: 2022-03-19 10:32:27" itemprop="dateCreated datePublished" datetime="2022-03-19T10:32:27+08:00">2022-03-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-21 22:21:33" itemprop="dateModified" datetime="2022-03-21T22:21:33+08:00">2022-03-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -270,7 +394,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-21 21:54:58" itemprop="dateModified" datetime="2022-03-21T21:54:58+08:00">2022-03-21</time>
+                <time title="Modified: 2022-03-21 22:21:06" itemprop="dateModified" datetime="2022-03-21T22:21:06+08:00">2022-03-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1084,105 +1208,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2021/12/12/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/12/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">西方哲学史</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-12-12 14:10:06" itemprop="dateCreated datePublished" datetime="2021-12-12T14:10:06+08:00">2021-12-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-23 20:11:32" itemprop="dateModified" datetime="2021-12-23T20:11:32+08:00">2021-12-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%93%B2%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">哲学</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>《西方哲学史》 罗素</p>
-</blockquote>
-<h4 id="第一篇-前苏格拉底哲学家">第一篇 前苏格拉底哲学家</h4>
-<ul>
-<li>除了在恋爱和战争中而外，他们从来不说谎。</li>
-<li>唯有当一个人去做某一件事并不是因为受冲动的驱使，而是因为他的理性告诉他说，到了某个未来时期他会因此而受益的时候，这时候才出现了真正的深谋远虑。打猎不需要深谋远虑，因为那是愉快的；但耕种土地是一种劳动，而并不是出于自发的冲动就可以做得到的事。</li>
-<li>文明要想消灭冲动，不仅靠个人的理性，还要靠法律、道德、宗教。</li>
-<li>私有财产制度带来的女性的从属状态，同时通常还创造出来一个奴隶阶级。一方面是把社会的目的强加给个人，而另一方面，个人已经获得了一种习惯把自己的一生视为是一个整体，于是越来越多地为着自己的未来而牺牲自己的目前。</li>
-<li>眼光长远是理性的，但也是苦闷的，因为美好 永远在将来，当下永远有苦难。酒神巴克斯的崇拜 者反对这种理性。酒能带给他们精神和肉体上的欢 乐，打破日常生活的苦闷。没有酒则生活无趣，有 酒生活就埋有隐患。眼光长远与冲动之间的对立贯 穿历史，不分上下。</li>
-<li>人类成就中最伟大的东西大部分都包含有某种沉醉的成分,某种程度上的以热情来扫除审慎。</li>
-<li>一部分希腊人被激烈的感情、苦闷的现实苦恼；另一部分趋于理智，自我认识清楚。正是这两 派人的共存造就了希腊的伟大，无论在思想上、艺 术上，还是宗教上。若是只有一派人，无论是冲动 的还是理智的，都不会改变世界。希腊最原始的神话形象不是神明宙斯，而是因带给人间火种而受苦受难的普罗米修斯。</li>
-</ul>
-<h5 id="第三章-毕达哥拉斯">第三章 毕达哥拉斯</h5>
-<ul>
-<li>几何学对于哲学与科学方法的影响一直是深远的。希腊人所建立的几何学是从自明的,或者被认为是自明的公理出发,根据演绎的推理前进,而达到那些远不是自明的定理。公理和定理被认为对于实际空间是真确的,而实际空间又是经验中所有的东西。这样,首先注意到自明的东西然后再运用演绎法,就好像是可能发现实际世界中一切事物了。</li>
-<li>我相信,数学是我们信仰永恒的与严格的真理的主要根源,也是信仰有一个超感的可知的世界的主要根源。</li>
-<li>毕达哥拉斯那里得来的。如果不是他,基督徒便不会认为基督就是道;如果不是他,神学家就不会追求上帝存在与灵魂不朽的逻辑证明。但是在他的身上,这一切还都不显著。</li>
-</ul>
-<h5 id="第四章-赫拉克利特">第四章 赫拉克利特</h5>
-<ul>
-<li>希腊人发现了数学推理和演绎的方法。 他们发明的几何学深深影响了近代科学。但是，几 何学也体现了希腊人片面的一面。他们根据现实进 行推理、演绎，得出的结论如果与现实不符，就认 为现实错了。这是片面的，后世被这种片面的观点 引入歧途。因此，不能盲目崇拜希腊人。虽然当时 有许多天才，但是不能无视近代思想的进步，只盯 着遥远的古希腊时期。</li>
-<li>赫拉克利特并没有流传下著作，他的言行多出 现在柏拉图和亚里士多德等人的著作的引文，而这 些引文大多是为了批判他才引证的。😂</li>
-<li>不断有人投身哲学领域进行研究的目的之一便 是追求永恒。这种追求是一种本能，最早是出于对 生活的热爱和灾难的躲避。（这里感觉很类似三体）</li>
-<li>近代的神学开始相信天上的神也是不断进步的。这也包含着一种永恒，那就是万物都在变化。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1252,7 +1277,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
