@@ -20,17 +20,19 @@
     var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="wireshark">
-<meta property="og:url" content="https://101.35.161.126/2022/02/15/wireshark/index.html">
+  <meta name="description" content="7.1.2 tea基本介绍 123456789void encipher(unsigned int v[2], unsigned int key[4]) &amp;#123;	unsigned int v0 &#x3D; v[0], v1 &#x3D; v[1],i,sum &#x3D; 0,delta &#x3D; 0x9E3779B9;	for(i&#x3D;0;i &lt; 32;i++)&amp;#123;		v0 +&#x3D; (((v1 &lt;&lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信息安全概论（7）">
+<meta property="og:url" content="https://101.35.161.126/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(7)/index.html">
 <meta property="og:site_name" content="wys的个人博客">
+<meta property="og:description" content="7.1.2 tea基本介绍 123456789void encipher(unsigned int v[2], unsigned int key[4]) &amp;#123;	unsigned int v0 &#x3D; v[0], v1 &#x3D; v[1],i,sum &#x3D; 0,delta &#x3D; 0x9E3779B9;	for(i&#x3D;0;i &lt; 32;i++)&amp;#123;		v0 +&#x3D; (((v1 &lt;&lt;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-02-15T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-02-15T02:28:24.869Z">
+<meta property="article:published_time" content="2022-03-24T12:14:27.000Z">
+<meta property="article:modified_time" content="2022-03-24T14:19:11.866Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://101.35.161.126/2022/02/15/wireshark/">
+<link rel="canonical" href="https://101.35.161.126/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(7)/">
 
 
 <script id="page-configurations">
@@ -43,7 +45,7 @@
   };
 </script>
 
-  <title>wireshark | wys的个人博客</title>
+  <title>信息安全概论（7） | wys的个人博客</title>
   
 
 
@@ -153,7 +155,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/02/15/wireshark/">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(7)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,7 +168,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          wireshark
+          信息安全概论（7）
         </h1>
 
         <div class="post-meta">
@@ -177,7 +179,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-02-15 10:27:27 / Modified: 10:28:24" itemprop="dateCreated datePublished" datetime="2022-02-15T10:27:27+08:00">2022-02-15</time>
+              <time title="Created: 2022-03-24 20:14:27 / Modified: 22:19:11" itemprop="dateCreated datePublished" datetime="2022-03-24T20:14:27+08:00">2022-03-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +202,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h2 id="tea基本介绍">7.1.2 tea基本介绍</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">encipher</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> v[<span class="number">2</span>], <span class="keyword">unsigned</span> <span class="keyword">int</span> key[<span class="number">4</span>])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> v0 = v[<span class="number">0</span>], v1 = v[<span class="number">1</span>],i,sum = <span class="number">0</span>,delta = <span class="number">0x9E3779B9</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i &lt; <span class="number">32</span>;i++)&#123;</span><br><span class="line">		v0 += (((v1 &lt;&lt; <span class="number">4</span>) ^ (v1 &gt;&gt; <span class="number">5</span>)) + v1) ^ (sum + key[sum &amp; <span class="number">3</span>]);</span><br><span class="line">		sum += delta;</span><br><span class="line">		v1 += (((v0 &lt;&lt; <span class="number">4</span>) ^ (v0 &gt;&gt; <span class="number">5</span>)) + v0) ^ (sum + key[(sum &gt;&gt; <span class="number">11</span>) &amp; <span class="number">3</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	v[<span class="number">0</span>] = v0;v[<span class="number">1</span>] = v1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>TEA的特点</strong></p>
+<ul>
+<li>简单、代码短、无密钥扩展、安全。</li>
+<li>理念：轮多转，可以让简单变安全。</li>
+<li>实现：CPU基本指令（移位、异或、位与、模加、模减）、占用内存也很小</li>
+</ul>
+<h2 id="tea算法设计">7.2.1 tea算法设计</h2>
+<p>TEA的设计：</p>
+<ol type="1">
+<li><p><span class="math inline">\(feistel\)</span>结构，用+-代替⊕（XOR）</p></li>
+<li><p>轮函数F比较简单</p></li>
+<li><p>轮多：32个循环，64轮。</p>
+<p>其中<span class="math inline">\(\delta = \lfloor(\sqrt{5}-1)2^{31} \rfloor\)</span>,只要不为0就行。</p>
+<p><strong>TEA的解密函数</strong></p></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">decipher</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> v[<span class="number">2</span>], <span class="keyword">unsigned</span> <span class="keyword">int</span> key[<span class="number">4</span>])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> v0 = v[<span class="number">0</span>], v1 = v[<span class="number">1</span>],,delta = <span class="number">0x9E3779B9</span>,sum = delta*num_rounds;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i &lt; num_rounds;i++)&#123;</span><br><span class="line">        v1 -= (((v0 &lt;&lt; <span class="number">4</span>) ^ (v0 &gt;&gt; <span class="number">5</span>)) + v0) ^ (sum + key[(sum &gt;&gt; <span class="number">11</span>) &amp; <span class="number">3</span>]);</span><br><span class="line">		sum -= delta;</span><br><span class="line">		v0 -= (((v1 &lt;&lt; <span class="number">4</span>) ^ (v1 &gt;&gt; <span class="number">5</span>)) + v1) ^ (sum + key[sum &amp; <span class="number">3</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	v[<span class="number">0</span>] = v0;v[<span class="number">1</span>] = v1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -216,13 +235,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/12/24/%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91/Computing%20Machinery%20and%20Intelligence%20(1950)/" rel="prev" title="Computing Machinery and Intelligence (1950)">
-      <i class="fa fa-chevron-left"></i> Computing Machinery and Intelligence (1950)
+    <a href="/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(6)/" rel="prev" title="信息安全概论（6）">
+      <i class="fa fa-chevron-left"></i> 信息安全概论（6）
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/02/24/%E6%8A%A4%E7%BD%91/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -281,6 +297,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tea%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">7.1.2 tea基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tea%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">7.2.1 tea算法设计</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
