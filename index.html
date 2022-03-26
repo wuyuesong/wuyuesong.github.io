@@ -45,6 +45,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?176038d5e76ea511f3c7ecd6a3813b97";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -146,6 +155,218 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/" class="post-title-link" itemprop="url">Shell Tools and Scripting</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-26 14:01:27 / Modified: 22:26:13" itemprop="dateCreated datePublished" datetime="2022-03-26T14:01:27+08:00">2022-03-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="shell-tools-and-scripting">Shell Tools and Scripting</h1>
+<p>shell可以定义变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo=bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ <span class="built_in">echo</span> <span class="variable">$foo</span></span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+<p>用空格分开会被认为是可执行程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo = bar</span><br><span class="line">Command &#x27;foo&#x27; not found, did you mean:</span><br></pre></td></tr></table></figure>
+<p>在打印字符串的时候，单引号和双引号相同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Hello&quot;</span><br><span class="line">Hello</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;World&#x27;</span><br><span class="line">World</span><br></pre></td></tr></table></figure>
+<p>但是在打印变量的时候，单引号不会替换变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Value is $foo&quot;</span><br><span class="line">Value is bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;Value is $foo&#x27;</span><br><span class="line">Value is $foo</span><br></pre></td></tr></table></figure>
+<p>可以定义shell脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mcd () &#123;</span><br><span class="line">        mkdir -p  &quot;$1&quot;</span><br><span class="line">        cd &quot;$1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>source命令可以将shell脚本加载进shell，然后就可以执行shell脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ source mcd.sh</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ mcd test</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$</span><br></pre></td></tr></table></figure>
+<p>$_ 返回上一个命令的最后一个参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ mkdir test</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ cd $_</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$</span><br></pre></td></tr></table></figure>
+<p>!! 可以用以代替上一条命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ mkdir /mnt/new</span><br><span class="line">mkdir: cannot create directory ‘/mnt/new’: Permission denied</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ sudo !!</span><br><span class="line">sudo mkdir /mnt/new</span><br></pre></td></tr></table></figure>
+<p>$? 可以返回上一条命令的退出状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ echo &quot;Hello&quot;</span><br><span class="line">Hello</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ echo $?</span><br><span class="line">0</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ grep foobar mcd.sh</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ echo $?</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p>0表示正常退出，1在grep中表示error code</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ echo $?</span><br><span class="line">0</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ false</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ echo $?</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p><strong>总结</strong></p>
+<ul>
+<li><code>$0</code> - Name of the script</li>
+<li><code>$1</code> to <code>$9</code> - Arguments to the script. <code>$1</code> is the first argument and so on.</li>
+<li><code>$@</code> - All the arguments</li>
+<li><code>$#</code> - Number of arguments</li>
+<li><code>$?</code> - Return code of the previous command</li>
+<li><code>$$</code> - Process identification number (PID) for the current script</li>
+<li><code>!!</code> - Entire last command, including arguments. A common pattern is to execute a command only for it to fail due to missing permissions; you can quickly re-execute the command with sudo by doing <code>sudo !!</code></li>
+<li><code>$_</code> - Last argument from the last command. If you are in an interactive shell, you can also quickly get this value by typing <code>Esc</code> followed by <code>.</code> or <code>Alt+.</code></li>
+</ul>
+<p>逻辑运算符，同c语言一样有短路机制。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ false || echo &quot;Oops fail&quot;</span><br><span class="line">Oops fail</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ true || echo &quot;Will be not be printed&quot;</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ true &amp;&amp; echo &quot;Things went well&quot;</span><br><span class="line">Things went well</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ false &amp;&amp; echo &quot;This will not print&quot;</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$</span><br></pre></td></tr></table></figure>
+<p>在命令两边加上 $() 可以获得命令的输出并给变量赋值，你可以像下述这样使用它：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ foo=$(pwd)</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ echo $foo</span><br><span class="line">/home/rust/missing</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ echo &quot;We are in $(pwd)&quot;</span><br><span class="line">We are in /home/rust/missing</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意在执行echo命令的时候要加上双引号。</p>
+</blockquote>
+<p>还有一个不为别人所熟知的特性是 &lt;( CMD )。</p>
+<p>这个特性会执行CMD的值，然后将结果放在一个临时文件中，然后用&lt;( )代替文件的名字。</p>
+<p>For example, <code>diff &lt;(ls foo) &lt;(ls bar)</code> will show differences between files in dirs <code>foo</code> and <code>bar</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ tree</span><br><span class="line">.</span><br><span class="line">├── a</span><br><span class="line">│   └── a.txt</span><br><span class="line">├── b</span><br><span class="line">│   └── b.txt</span><br><span class="line">├── mcd.sh</span><br><span class="line">└── test</span><br><span class="line"></span><br><span class="line">3 directories, 3 files</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ diff &lt;(ls a) &lt;(ls b)</span><br><span class="line">1c1</span><br><span class="line">&lt; a.txt</span><br><span class="line">---</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> b.txt</span></span><br></pre></td></tr></table></figure>
+<p>接下来是一段 <code>shell</code> 脚本，</p>
+<p>/dev/null 是<code>linux</code>一个特殊的设备，它丢弃一切写入其中的数据。</p>
+<p><code>2&gt;</code> 是标准错误重定向，当发生标准错误时，数据写入到 <code>2&gt;</code> 之后。</p>
+<p>When performing comparisons in bash, try to use double brackets <code>[[ ]]</code> in favor of simple brackets <code>[ ]</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">echo &quot;Starting program at $(date)&quot; # Date will be substituted</span><br><span class="line"></span><br><span class="line">echo &quot;Running program $0 with $# arguments with pid $$&quot;</span><br><span class="line"></span><br><span class="line">for file in &quot;$@&quot;; do</span><br><span class="line">    grep foobar &quot;$file&quot; &gt; /dev/null 2&gt; /dev/null</span><br><span class="line">    # When pattern is not found, grep has exit status 1</span><br><span class="line">    # We redirect STDOUT and STDERR to a null register since we do not care about them</span><br><span class="line">    if [[ $? -ne 0 ]]; then</span><br><span class="line">        echo &quot;File $file does not have any foobar, adding one&quot;</span><br><span class="line">        echo &quot;# foobar&quot; &gt;&gt; &quot;$file&quot;</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>使用大括号可以将多个参数聚合到一块，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ touch foo&#123;,1,2,10&#125;</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ ls</span><br><span class="line">a  b  foo  foo1  foo10  foo2  mcd.sh  test</span><br></pre></td></tr></table></figure>
+<p>如下命令可以在<code>foo</code>，和 <code>bar</code> 下创建 <code>a-j</code> 的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ mkdir foo bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ touch &#123;foo,bar&#125;/&#123;a..j&#125;</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$</span><br></pre></td></tr></table></figure>
+<p>我们对于如下的python文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="built_in">reversed</span>(sys.argv[<span class="number">1</span>:]):</span><br><span class="line">    <span class="built_in">print</span>(arg)</span><br></pre></td></tr></table></figure>
+<p>我们可以采用如下方式运行程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ ./script.py a b c</span><br><span class="line">c</span><br><span class="line">b</span><br><span class="line">a</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ python script.py a b c</span><br><span class="line">c</span><br><span class="line">b</span><br><span class="line">a</span><br></pre></td></tr></table></figure>
+<p>需要注意的是使用 <code>./</code> 启动需要在文件上方加上<code>#!/usr/bin/python</code> 来找到执行文件的程序。</p>
+<p>或者你可以在程序上方加上 <code>#!/usr/bin/env python</code> 这句话的意思是在环境变量中找python所在位置，这种方式可以让该程序在不同机器上运行。 这行代码被称为shebang。</p>
+<p>我们可以用一种叫做<code>shellcheck</code>的工具来检查脚本。</p>
+<p>有个叫做 <code>tldr</code> 的很好用的工具，可以查看命令的示例用法。</p>
+<p>以下是 <code>tar</code> 的用法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- [c]reate an archive and write it to a [f]ile:</span><br><span class="line">  tar cf &#123;&#123;target.tar&#125;&#125; &#123;&#123;file1&#125;&#125; &#123;&#123;file2&#125;&#125; &#123;&#123;file3&#125;&#125;</span><br><span class="line"></span><br><span class="line">- [c]reate a g[z]ipped archive and write it to a [f]ile:</span><br><span class="line">  tar czf &#123;&#123;target.tar.gz&#125;&#125; &#123;&#123;file1&#125;&#125; &#123;&#123;file2&#125;&#125; &#123;&#123;file3&#125;&#125;</span><br><span class="line"></span><br><span class="line">- [c]reate a g[z]ipped archive from a directory using relative paths:</span><br><span class="line">  tar czf &#123;&#123;target.tar.gz&#125;&#125; --directory=&#123;&#123;path/to/directory&#125;&#125; .</span><br><span class="line"></span><br><span class="line">- E[x]tract a (compressed) archive [f]ile into the current directory [v]erbosely:</span><br><span class="line">  tar xvf &#123;&#123;source.tar[.gz|.bz2|.xz]&#125;&#125;</span><br><span class="line"></span><br><span class="line">- E[x]tract a (compressed) archive [f]ile into the target directory:</span><br><span class="line">  tar xf &#123;&#123;source.tar[.gz|.bz2|.xz]&#125;&#125; --directory=&#123;&#123;directory&#125;&#125;</span><br><span class="line"></span><br><span class="line">- [c]reate a compressed archive and write it to a [f]ile, using [a]rchive suffix to determine the compression program:</span><br><span class="line">  tar caf &#123;&#123;target.tar.xz&#125;&#125; &#123;&#123;file1&#125;&#125; &#123;&#123;file2&#125;&#125; &#123;&#123;file3&#125;&#125;</span><br><span class="line"></span><br><span class="line">- Lis[t] the contents of a tar [f]ile [v]erbosely:</span><br><span class="line">  tar tvf &#123;&#123;source.tar&#125;&#125;</span><br><span class="line"></span><br><span class="line">- E[x]tract files matching a pattern from an archive [f]ile:</span><br><span class="line">  tar xf &#123;&#123;source.tar&#125;&#125; --wildcards &quot;&#123;&#123;*.html&#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/25/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(8)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(8)/" class="post-title-link" itemprop="url">信息安全概论（8）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-25 16:41:27 / Modified: 21:38:37" itemprop="dateCreated datePublished" datetime="2022-03-25T16:41:27+08:00">2022-03-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="信息安全概论8">信息安全概论（8）</h1>
+<h2 id="病毒的特性">病毒的特性</h2>
+<ul>
+<li>传染性</li>
+<li>隐蔽性</li>
+<li>危害性</li>
+</ul>
+<h2 id="恶意代码的种类">恶意代码的种类</h2>
+<p><strong>病毒</strong>：寄生存在。</p>
+<p><strong>木马</strong>：独立存在。</p>
+<p><strong>蠕虫</strong>：强传染性、常利用漏洞自动感染别人。</p>
+<p><strong>寄生生存</strong>：</p>
+<figure>
+<img src="/2022/03/25/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(8)/image-20220325171126332.png" alt="image-20220325171126332"><figcaption aria-hidden="true">image-20220325171126332</figcaption>
+</figure>
+<p>由于早期的DOS系统，文件很少，如果多出一个文件很容易被发现，所以当时寄生病毒比较流行，但由于代码编写难度较大，逐渐不再流行。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1025,194 +1246,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">XSS笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-08 10:27:27" itemprop="dateCreated datePublished" datetime="2022-03-08T10:27:27+08:00">2022-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 21:35:08" itemprop="dateModified" datetime="2022-03-16T21:35:08+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="xss笔记">XSS笔记</h1>
-<h2 id="xss简介">XSS简介</h2>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png"></p>
-<blockquote>
-<p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
-</blockquote>
-<h2 id="反射型xss漏洞">反射型XSS漏洞</h2>
-<h3 id="低等级">低等级</h3>
-<p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
-<p>在对话框键入<code>&lt;script&gt;alert("111")&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
-<p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png"></p>
-<h3 id="中等级">中等级</h3>
-<p>观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
-<ol type="1">
-<li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
-</ol>
-<p>可以看到浏览器成功弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
-<ol start="2" type="1">
-<li>我们还可以通过混用大小写的方式进行XSS攻击</li>
-</ol>
-<p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击<span class="math inline">\(submit\)</span> 进行提交也可以看到成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png"></p>
-<p>​</p>
-<h3 id="高等级">高等级</h3>
-<p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
-<p>我们可以通过 <span class="math inline">\(img\)</span> , <span class="math inline">\(body\)</span> 等标签注入js代码。</p>
-<p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
-<p>提交后可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
-<h2 id="存储型xss漏洞">存储型XSS漏洞</h2>
-<h3 id="低等级-1">低等级</h3>
-<p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。 addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
-<h4 id="在message进行xss攻击">在message进行xss攻击</h4>
-<p>在message栏输入<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code></p>
-<p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
-<h4 id="在name进行xss攻击">在name进行xss攻击</h4>
-<p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
-<p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
-<p>抓包结果如下：</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png"></p>
-<p>将txtname改为<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
-<h3 id="中等级-1">中等级</h3>
-<p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
-<p>同理用burp进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png"></p>
-<p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
-<p>可以看到成功弹窗</p>
-<h3 id="高等级-1">高等级</h3>
-<p>同理进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
-<p>放包可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/02/24/%E6%8A%A4%E7%BD%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/24/%E6%8A%A4%E7%BD%91/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-02-24 11:24:04" itemprop="dateCreated datePublished" datetime="2022-02-24T11:24:04+08:00">2022-02-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1282,14 +1315,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
