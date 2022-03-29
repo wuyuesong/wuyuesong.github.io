@@ -28,8 +28,9 @@
 <meta property="og:description" content="Command-line Environment SIGNAL 您的 shell 会使用 UNIX 提供的信号机制执行进程间通信。 我们可以使用man signal 来查看signal的帮助文档。 对于如下的 python 程序 123456789101112#!&#x2F;usr&#x2F;bin&#x2F;env pythonimport signal, timedef handler(signum, time)">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://101.35.161.126/2022/03/29/missing-semester/Command-line%20Environment/image-20220329181623036.png">
+<meta property="og:image" content="https://101.35.161.126/2022/03/29/missing-semester/Command-line%20Environment/image-20220329195737938.png">
 <meta property="article:published_time" content="2022-03-29T05:28:27.000Z">
-<meta property="article:modified_time" content="2022-03-29T10:19:10.790Z">
+<meta property="article:modified_time" content="2022-03-29T13:23:28.911Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/03/29/missing-semester/Command-line%20Environment/image-20220329181623036.png">
@@ -191,7 +192,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-29 13:28:27 / Modified: 18:19:10" itemprop="dateCreated datePublished" datetime="2022-03-29T13:28:27+08:00">2022-03-29</time>
+              <time title="Created: 2022-03-29 13:28:27 / Modified: 21:23:28" itemprop="dateCreated datePublished" datetime="2022-03-29T13:28:27+08:00">2022-03-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -285,6 +286,44 @@
 </ul>
 <p><code>htop</code> 可以查看进程的资源占用情况。</p>
 <p><img src="/2022/03/29/missing-semester/Command-line%20Environment/image-20220329181623036.png"></p>
+<p><strong>别名</strong></p>
+<p>有的时候你要经常输入一些很长的命令，这个时候你可以用别名来取代这个很长的命令。</p>
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 创建常用命令的缩写</span><br><span class="line">alias ll=&quot;ls -lh&quot;</span><br><span class="line"></span><br><span class="line"># 能够少输入很多</span><br><span class="line">alias gs=&quot;git status&quot;</span><br><span class="line">alias gc=&quot;git commit&quot;</span><br><span class="line">alias v=&quot;vim&quot;</span><br><span class="line"></span><br><span class="line"># 手误打错命令也没关系</span><br><span class="line">alias sl=ls</span><br><span class="line"></span><br><span class="line"># 重新定义一些命令行的默认行为</span><br><span class="line">alias mv=&quot;mv -i&quot;           # -i prompts before overwrite</span><br><span class="line">alias mkdir=&quot;mkdir -p&quot;     # -p make parent dirs as needed</span><br><span class="line">alias df=&quot;df -h&quot;           # -h prints human readable format</span><br><span class="line"></span><br><span class="line"># 别名可以组合使用</span><br><span class="line">alias la=&quot;ls -A&quot;</span><br><span class="line">alias lla=&quot;la -l&quot;</span><br><span class="line"></span><br><span class="line"># 在忽略某个别名</span><br><span class="line">\ls</span><br><span class="line"># 或者禁用别名</span><br><span class="line">unalias la</span><br><span class="line"></span><br><span class="line"># 获取别名的定义</span><br><span class="line">alias ll</span><br><span class="line"># 会打印 ll=&#x27;ls -lh&#x27;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意， <code>=</code>两边是没有空格的，因为 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/alias.1p.html"><code>alias</code></a> 是一个 shell 命令，它只接受一个参数。</p>
+<p>值得注意的是，在默认情况下 shell 并不会保存别名。为了让别名持续生效，您需要将配置放进 shell 的启动文件里，像是<code>.bashrc</code> 或 <code>.zshrc</code></p>
+</blockquote>
+<h2 id="配置文件dotfiles">配置文件（Dotfiles）</h2>
+<p>很多程序的配置都是通过纯文本格式的被称作<em>点文件</em>的配置文件来完成的（之所以称为点文件，是因为它们的文件名以 <code>.</code> 开头，例如 <code>~/.vimrc</code>。也正因为此，它们默认是隐藏文件，<code>ls</code>并不会显示它们）。</p>
+<p>shell 的配置也是通过这类文件完成的。在启动时，您的 shell 程序会读取很多文件以加载其配置项。根据 shell 本身的不同，您从登录开始还是以交互的方式完成这一过程可能会有很大的不同。关于这一话题，<a target="_blank" rel="noopener" href="https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html">这里</a> 有非常好的资源。</p>
+<p>如下工具可以用如下配置文件进行配置。</p>
+<ul>
+<li><code>bash</code> - <code>~/.bashrc</code>, <code>~/.bash_profile</code></li>
+<li><code>git</code> - <code>~/.gitconfig</code></li>
+<li><code>vim</code> - <code>~/.vimrc</code> 和 <code>~/.vim</code> 目录</li>
+<li><code>ssh</code> - <code>~/.ssh/config</code></li>
+<li><code>tmux</code> - <code>~/.tmux.conf</code></li>
+</ul>
+<p>本课程的老师们也在 GitHub 上开源了他们的配置文件： <a target="_blank" rel="noopener" href="https://github.com/anishathalye/dotfiles">Anish</a>, <a target="_blank" rel="noopener" href="https://github.com/jonhoo/configs">Jon</a>, <a target="_blank" rel="noopener" href="https://github.com/jjgo/dotfiles">Jose</a>.</p>
+<p><img src="/2022/03/29/missing-semester/Command-line%20Environment/image-20220329195737938.png"></p>
+<p>我们可以建立一个 <code>dotfiles</code> 文件夹来统一管理配置文件，并使用版本控制系统进行管理，然后通过脚本将其 <strong>符号链接</strong> 到需要的地方。</p>
+<h2 id="ssh">SSH</h2>
+<p>我们可以通过 <code>ssh-keygen</code> 来生成密匙对，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -o -a 100 -t ed5519</span><br></pre></td></tr></table></figure>
+<p>其实直接 <code>ssh-keygen</code> 就行，后面那一串可能是用来加强安全性的。</p>
+<p>我们可以通过如下命令将公钥传递到服务器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub | ssh ubuntu@101.35.161.* tee .ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>照理来说就能免密登录了，但我不行不知道为什么。</p>
+<p>可以用 <code>ssh-copy-id</code> 不用输入<code>passphrase</code>。</p>
+<p>我们可以通过scp发送文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp motes.md ubuntu@101.35.161.*:foobar.md</span><br></pre></td></tr></table></figure>
+<p>如果文件较多，可以用<code>rsync</code>发送文件，当传到一半中断时，可以从中断处继续传，因为<code>rsync</code> 只对差异文件进行修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avP . ubuntu@101.35.161.*:missing</span><br></pre></td></tr></table></figure>
+<p>我们可以在 <code>~/.ssh/config</code> 中加入以下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host txy</span><br><span class="line">        User ubuntu</span><br><span class="line">        HostName 101.35.161.126</span><br><span class="line">        IdentityFile ~/.ssh/id_rsa</span><br><span class="line">        RemoteForward 9999 localhost:8888</span><br></pre></td></tr></table></figure>
+<p>来避免每次都输入很长的远程端口地址。</p>
+<p>一个技巧是我们可以在远程服务器的<code>tmux</code>中跑程序，退出以后再回来程序还在跑，所以我们可以用这种方式跑耗时比较长的程序。</p>
 
     </div>
 
@@ -362,7 +401,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#command-line-environment"><span class="nav-number">1.</span> <span class="nav-text">Command-line Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#signal"><span class="nav-number">1.1.</span> <span class="nav-text">SIGNAL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tmux"><span class="nav-number">1.2.</span> <span class="nav-text">TMUX</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#command-line-environment"><span class="nav-number">1.</span> <span class="nav-text">Command-line Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#signal"><span class="nav-number">1.1.</span> <span class="nav-text">SIGNAL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tmux"><span class="nav-number">1.2.</span> <span class="nav-text">TMUX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6dotfiles"><span class="nav-number">1.3.</span> <span class="nav-text">配置文件（Dotfiles）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh"><span class="nav-number">1.4.</span> <span class="nav-text">SSH</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
