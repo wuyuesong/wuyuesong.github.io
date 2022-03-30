@@ -160,6 +160,207 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/30/missing-semester/Version%20Control%20(Git)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/30/missing-semester/Version%20Control%20(Git)/" class="post-title-link" itemprop="url">Version Control (Git)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-30 14:31:27 / Modified: 21:11:34" itemprop="dateCreated datePublished" datetime="2022-03-30T14:31:27+08:00">2022-03-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="version-control-git">Version Control (Git)</h1>
+<p><code>git init</code>创建仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/rust/missing/playgroud/demo/.git/</span><br></pre></td></tr></table></figure>
+<p><code>git help</code> 查看帮助，后面要加上参数，比如说<code>git init</code></p>
+<p>我们创建一个文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello world&quot;</span> &gt; hello.txt</span><br></pre></td></tr></table></figure>
+<p>这个时候查看 <code>git status</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">No commits yet</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use <span class="string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="keyword">in</span> what will be committed)</span><br><span class="line"></span><br><span class="line">        hello.txt</span><br></pre></td></tr></table></figure>
+<p>我们可以看到一个`Untracked files 。</p>
+<p>然后<code>git add hello.txt</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line"></span><br><span class="line">On branch master</span><br><span class="line"></span><br><span class="line">No commits yet</span><br><span class="line"></span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use <span class="string">&quot;git rm --cached &lt;file&gt;...&quot;</span> to unstage)</span><br><span class="line"></span><br><span class="line">        new file:   hello.txt</span><br></pre></td></tr></table></figure>
+<p>输入 <code>git commit</code> 我们可以看到<code>commit message for your changes</code></p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330150554475.png"></p>
+<p>然后我们可以在最上方输入<code>git commit</code> 的提交信息。</p>
+<p>以下连接可以对编写提交信息有所帮助：</p>
+<ul>
+<li>如何编写 <a target="_blank" rel="noopener" href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">良好的提交信息</a>!</li>
+<li>为何要 <a target="_blank" rel="noopener" href="https://chris.beams.io/posts/git-commit/">编写良好的提交信息</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[master (root-commit) c67b17d] Add hello.txt`</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"> create mode 100644 hello.txt</span><br></pre></td></tr></table></figure>
+<p>然后就提示了相关信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<p>以上信息可以查看<code>commit history</code></p>
+<p>我们可以用 <code>git cat-file -p</code> 来查看 <code>commit</code> 的相关内容。</p>
+<p>例如上述提交我们得到的hash值是 <code>c67b17d</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git cat-file -p c67b17d</span><br><span class="line">tree 68aba62e560c0ebc3396e8ae9335232cd93a3f60</span><br><span class="line">author wys &lt;1377030423@qq.com&gt; 1648623855 +0800</span><br><span class="line">committer wys &lt;1377030423@qq.com&gt; 1648623855 +0800</span><br><span class="line"></span><br><span class="line">Add hello.txt`</span><br></pre></td></tr></table></figure>
+<p>我们可以得到相关信息。</p>
+<p>我们再对 <code>68aba62e560c0ebc3396e8ae9335232cd93a3f60</code> 进行<code>git cat-file -p</code> ，可以查看更详细的信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> git cat-file -p 68aba62e560c0ebc3396e8ae9335232cd93a3f60</span><br><span class="line">100644 blob 3b18e512dba79e4c8300dd08aeb37f8e728b8dad    hello.txt</span><br></pre></td></tr></table></figure>
+<p>我们再对 <code>3b18e512dba79e4c8300dd08aeb37f8e728b8dad</code> 进行<code>git cat-file -p</code> ，可以查看文件内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> git cat-file -p 3b18e512dba79e4c8300dd08aeb37f8e728b8dad</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<p><code>git log</code> 展示的信息非常的抽象不易于查看，我们可以通过以下命令，进行图形化的查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --all --graph --decorate</span><br></pre></td></tr></table></figure>
+<p>很遗憾由于我们的提交只有一次，所以和之前没什么区别。</p>
+<p>我们新添加一些内容。</p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330165942312.png"></p>
+<p>再次输入以下信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --all --graph --decorate</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330170052069.png"></p>
+<p>我们可以查看图形化的提交结果。</p>
+<p>我们可以通过 <code>git checkout</code> 改变当前仓库的状态。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout c67b17d1</span><br><span class="line">Note: checking out <span class="string">&#x27;c67b17d1&#x27;</span>.</span><br></pre></td></tr></table></figure>
+<p>此时我们再查看当前的文件，就可以发现文件内容为第一次提交时的内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat hello.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330171952070.png"></p>
+<p><code>HEAD</code> 指针也移到了第一个状态。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">Previous HEAD position was c67b17d Add hello.txt`</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line"></span><br><span class="line">cat hello.txt</span><br><span class="line">hello world</span><br><span class="line">another line</span><br></pre></td></tr></table></figure>
+<p><code>git checkout master</code> 可以使用别名回到最新的状态。</p>
+<p><code>git diff</code>可以查看文件和当前状态文件的差别，加上<code>hash</code>码可以查看和指定文件的差别。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff hello.txt</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330173517557.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff c67b17d1 hello.txt</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330173628255.png"></p>
+<p><code>git checkout &lt;文件&gt;</code> 会丢弃文件中修改的内容，然后将文件的内容变为<code>HEAD</code>指针所指向的内容</p>
+<p><code>git branch</code> 可以查看当前有哪些分支。<code>--vv</code>参数可以显示更多的信息。</p>
+<p><code>git branch &lt;分支名&gt;</code> 可以新建分支。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch cat</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330182825930.png"></p>
+<p>可以看到新建了一个分支<code>cat</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> git checkout cat</span><br><span class="line">Switched to branch <span class="string">&#x27;cat&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>将 <code>HEAD</code> 指针指向<code>cat</code>分支</p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330183109402.png"></p>
+<p>做一些修改然后提交</p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330183702033.png"></p>
+<p>可以看到<code>cat</code>分支往前走了一个节点。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --all --graph --decorate --oneline</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330184446862.png"></p>
+<p>我们继续创建分支，可以看到现在已经有两个分支。</p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330185418461.png"></p>
+<p>我们接下来对两个分支进行合并。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line"></span><br><span class="line">git merge cat</span><br><span class="line">Updating 6bf6674..09a8ebb</span><br><span class="line">Fast-forward</span><br><span class="line"> animal.py | 8 +++++++-</span><br><span class="line"> 1 file changed, 7 insertions(+), 1 deletion(-)</span><br><span class="line"> </span><br><span class="line"> git merge dog</span><br><span class="line">Auto-merging animal.py</span><br><span class="line">CONFLICT (content): Merge conflict <span class="keyword">in</span> animal.py</span><br><span class="line">Automatic merge failed; fix conflicts and <span class="keyword">then</span> commit the result.</span><br></pre></td></tr></table></figure>
+<p><code>merge cat</code>的时候一切正常，<code>merge dog</code>的时候出现冲突。</p>
+<p>我们编辑文件，可以看到冲突部分如下：</p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330190706456.png"></p>
+<p>修改如下：</p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330191534744.png"></p>
+<p>然后就可以正常进行<code>merge</code></p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330191655673.png"></p>
+<p>可以看到完成了合并。</p>
+<p><img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330191801124.png"></p>
+<h2 id="远端操作">远端操作</h2>
+<ul>
+<li><p><code>git remote</code>: 列出远端</p></li>
+<li><p><code>git remote add &lt;name&gt; &lt;url&gt;</code>: 添加一个远端</p>
+<blockquote>
+<p>这里的name是远程仓库的名字，一般都是<code>origin</code>，这里的<code>url</code>可以是本地地址，比如说<code>../remote</code></p>
+<p>需要注意的是远程仓库的创建要用<code>git init --bare</code></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add origin ../remote</span><br></pre></td></tr></table></figure></li>
+<li><p><code>git push &lt;remote&gt; &lt;local branch&gt;:&lt;remote branch&gt;</code>: 将对象传送至远端并更新远端引用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master:master</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330195829301.png" alt="image-20220330195829301"><figcaption aria-hidden="true">image-20220330195829301</figcaption>
+</figure>
+<blockquote>
+<p>之后<code>git log</code>就可以看到远程仓库的状态</p>
+</blockquote></li>
+<li><p><code>git branch --set-upstream-to=&lt;remote&gt;/&lt;remote branch&gt;</code>: 创建本地和远端分支的关联关系</p>
+<blockquote>
+<p>例如 git branch --set-upstream-to=origin/master</p>
+<p>以后就可以直接<code>git push</code>了</p>
+</blockquote>
+<p>用<code>git branch -vv</code> 可以看到当前分支绑定了哪个远端分支</p>
+<figure>
+<img src="/2022/03/30/missing-semester/Version%20Control%20(Git)/image-20220330204316997.png" alt="image-20220330204316997"><figcaption aria-hidden="true">image-20220330204316997</figcaption>
+</figure></li>
+<li><p><code>git fetch</code>: 从远端获取对象/索引</p></li>
+<li><p><code>git pull</code>: 相当于 <code>git fetch; git merge</code></p></li>
+<li><p><code>git clone</code>: 从远端下载仓库</p></li>
+</ul>
+<h1 id="git-高级操作">Git 高级操作</h1>
+<ul>
+<li><p><code>git config</code>: Git 是一个 <a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-config">高度可定制的</a> 工具</p></li>
+<li><p><code>git clone --depth=1</code>: 浅克隆（shallow clone），不包括完整的版本历史信息</p>
+<blockquote>
+<p>如果版本历史信息过大，可以使用这个命令，也可以直接 git clone --shallow</p>
+</blockquote></li>
+<li><p><code>git add -p</code>: 交互式暂存</p>
+<blockquote>
+<p>这个命令可以保留一些你想要的更改，忽略一些你不需要的更改（比如debug信息）。</p>
+</blockquote></li>
+<li><p><code>git rebase -i</code>: 交互式变基</p></li>
+<li><p><code>git blame</code>: 查看最后修改某行的人</p>
+<blockquote>
+<p>后面加文件名。出来的信息前面会有hash值，git show hash值可以查看详细信息。</p>
+</blockquote></li>
+<li><p><code>git stash</code>: 暂时移除工作目录下的修改内容</p>
+<blockquote>
+<p><code>git stash pop</code> 可以取消撤销</p>
+</blockquote></li>
+<li><p><code>git bisect</code>: 通过二分查找搜索历史记录</p></li>
+<li><p><code>.gitignore</code>: <a target="_blank" rel="noopener" href="https://git-scm.com/docs/gitignore">指定</a> 故意不追踪的文件</p></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/29/missing-semester/Command-line%20Environment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1128,92 +1329,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/18/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(3)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/18/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(3)/" class="post-title-link" itemprop="url">信息安全概论（3）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-18 14:51:27" itemprop="dateCreated datePublished" datetime="2022-03-18T14:51:27+08:00">2022-03-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-21 22:21:06" itemprop="dateModified" datetime="2022-03-21T22:21:06+08:00">2022-03-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论3">信息安全概论（3）</h1>
-<h2 id="磁盘加密">磁盘加密</h2>
-<p><code>Truecrypt</code> 这个貌似是上古遗物了，现在貌似都用<code>BitLocker</code>？</p>
-<p><code>Truecrypt</code> 这个东西貌似支持双密码，一个真密码一个假密码。</p>
-<p>用到加密的数据的时候就把他挂载到硬盘上，不用的时候就取消挂载，这样数据就读不出来了。</p>
-<p>软件开源。</p>
-<h2 id="邮件加密">邮件加密</h2>
-<p><code>pgp4win</code></p>
-<p>这个软件可以支持双钥密码<strong>加密密钥公开</strong>的应用，也可以支持双钥密码<strong>解密密钥公开</strong>的应用。</p>
-<p>软件开源。</p>
-<p><code>thunderbird</code></p>
-<p>邮件客户端，也支持加密解密。也是上古遗物了。</p>
-<p>软件</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1283,7 +1398,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
