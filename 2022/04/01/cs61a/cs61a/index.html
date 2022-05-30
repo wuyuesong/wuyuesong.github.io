@@ -27,10 +27,12 @@
 <meta property="og:site_name" content="wys的个人博客">
 <meta property="og:description" content="CS61A (2020summer) from operator import truediv,floordiv truediv &#x3D;&#x3D; &#x2F; floordiv &#x3D;&#x3D; &#x2F;&#x2F; 可以编写文档进行测试： 1234567891011121314&quot;&quot;&quot;Our first Python source file&quot;&quot;&quot;from operator i">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://101.35.161.126/2022/04/01/cs61a/cs61a/image-20220411213249514.png">
 <meta property="article:published_time" content="2022-04-01T14:21:27.000Z">
-<meta property="article:modified_time" content="2022-04-03T14:28:56.801Z">
+<meta property="article:modified_time" content="2022-04-11T13:41:31.009Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://101.35.161.126/2022/04/01/cs61a/cs61a/image-20220411213249514.png">
 
 <link rel="canonical" href="https://101.35.161.126/2022/04/01/cs61a/cs61a/">
 
@@ -195,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-03 22:28:56" itemprop="dateModified" datetime="2022-04-03T22:28:56+08:00">2022-04-03</time>
+                <time title="Modified: 2022-04-11 21:41:31" itemprop="dateModified" datetime="2022-04-11T21:41:31+08:00">2022-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,8 +226,20 @@
 <p><code>floordiv</code> == //</p>
 <p>可以编写文档进行测试：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;Our first Python source file&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">from operator import floordiv,mod</span><br><span class="line"></span><br><span class="line">def divide_exact(n,d):</span><br><span class="line">    &quot;&quot;&quot;Return the quotient and remainder of dividing N by D.</span><br><span class="line"></span><br><span class="line">    &gt;&gt;&gt; q, r = divide_exact(2013,10)</span><br><span class="line">    &gt;&gt;&gt; q</span><br><span class="line">    201</span><br><span class="line">    &gt;&gt;&gt; r</span><br><span class="line">    3</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    return floordiv(n, d),mod(n, d)</span><br></pre></td></tr></table></figure>
+<p>执行方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m doctest file.py</span><br></pre></td></tr></table></figure>
 <p>假值有 <code>False</code>， <code>0</code>，<code>‘’</code>，<code>None</code></p>
 <p>Functions have as their parent the frame in which they were defined.</p>
+<p><code>tuple</code> 可以作为字典的 <code>key</code></p>
+<p><code>list</code> 不能作为字典的<code>key</code></p>
+<p>可变的默认参数是危险的</p>
+<p>示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">s = []</span>):</span></span><br><span class="line"><span class="meta">... </span>    s.append(<span class="number">5</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> <span class="built_in">len</span>(s)</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>迭代器的<code>for</code> 语句只能迭代一次。</p>
+<p>迭代器可以迭代字典的<code>key</code>、<code>value</code>、<code>item</code> ，当字典的结构发生变化时，迭代器失效。</p>
+<p><strong>Built-in Functions for Iteration</strong></p>
+<p><img src="/2022/04/01/cs61a/cs61a/image-20220411213249514.png"></p>
+<p>返回 <code>yield</code> 语句的是 <code>generator</code> ，一个 <code>generator</code> 可以返回多个 <code>yield</code> 语句。</p>
 
     </div>
 
@@ -320,14 +334,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -406,6 +420,26 @@
 
 
 
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
 
 
 
