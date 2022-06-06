@@ -160,6 +160,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(7)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(7)/" class="post-title-link" itemprop="url">信息安全概论（7）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-24 20:14:27 / Modified: 22:19:11" itemprop="dateCreated datePublished" datetime="2022-03-24T20:14:27+08:00">2022-03-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="tea基本介绍">7.1.2 tea基本介绍</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">encipher</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> v[<span class="number">2</span>], <span class="keyword">unsigned</span> <span class="keyword">int</span> key[<span class="number">4</span>])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> v0 = v[<span class="number">0</span>], v1 = v[<span class="number">1</span>],i,sum = <span class="number">0</span>,delta = <span class="number">0x9E3779B9</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i &lt; <span class="number">32</span>;i++)&#123;</span><br><span class="line">		v0 += (((v1 &lt;&lt; <span class="number">4</span>) ^ (v1 &gt;&gt; <span class="number">5</span>)) + v1) ^ (sum + key[sum &amp; <span class="number">3</span>]);</span><br><span class="line">		sum += delta;</span><br><span class="line">		v1 += (((v0 &lt;&lt; <span class="number">4</span>) ^ (v0 &gt;&gt; <span class="number">5</span>)) + v0) ^ (sum + key[(sum &gt;&gt; <span class="number">11</span>) &amp; <span class="number">3</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	v[<span class="number">0</span>] = v0;v[<span class="number">1</span>] = v1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>TEA的特点</strong></p>
+<ul>
+<li>简单、代码短、无密钥扩展、安全。</li>
+<li>理念：轮多转，可以让简单变安全。</li>
+<li>实现：CPU基本指令（移位、异或、位与、模加、模减）、占用内存也很小</li>
+</ul>
+<h2 id="tea算法设计">7.2.1 tea算法设计</h2>
+<p>TEA的设计：</p>
+<ol type="1">
+<li><p><span class="math inline">\(feistel\)</span>结构，用+-代替⊕（XOR）</p></li>
+<li><p>轮函数F比较简单</p></li>
+<li><p>轮多：32个循环，64轮。</p>
+<p>其中<span class="math inline">\(\delta = \lfloor(\sqrt{5}-1)2^{31} \rfloor\)</span>,只要不为0就行。</p>
+<p><strong>TEA的解密函数</strong></p></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">decipher</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> v[<span class="number">2</span>], <span class="keyword">unsigned</span> <span class="keyword">int</span> key[<span class="number">4</span>])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> v0 = v[<span class="number">0</span>], v1 = v[<span class="number">1</span>],,delta = <span class="number">0x9E3779B9</span>,sum = delta*num_rounds;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i &lt; num_rounds;i++)&#123;</span><br><span class="line">        v1 -= (((v0 &lt;&lt; <span class="number">4</span>) ^ (v0 &gt;&gt; <span class="number">5</span>)) + v0) ^ (sum + key[(sum &gt;&gt; <span class="number">11</span>) &amp; <span class="number">3</span>]);</span><br><span class="line">		sum -= delta;</span><br><span class="line">		v0 -= (((v1 &lt;&lt; <span class="number">4</span>) ^ (v1 &gt;&gt; <span class="number">5</span>)) + v1) ^ (sum + key[sum &amp; <span class="number">3</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	v[<span class="number">0</span>] = v0;v[<span class="number">1</span>] = v1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(6)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1138,74 +1223,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/02/15/wireshark/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/15/wireshark/" class="post-title-link" itemprop="url">wireshark</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-02-15 10:27:27 / Modified: 10:28:24" itemprop="dateCreated datePublished" datetime="2022-02-15T10:27:27+08:00">2022-02-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1275,7 +1292,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
