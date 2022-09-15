@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185202374.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185211315.png">
 <meta property="article:published_time" content="2022-08-15T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T12:33:15.892Z">
+<meta property="article:modified_time" content="2022-09-15T12:42:07.572Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220912160812006.png">
@@ -210,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:33:15" itemprop="dateModified" datetime="2022-09-15T20:33:15+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:42:07" itemprop="dateModified" datetime="2022-09-15T20:42:07+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,6 +252,7 @@
 <p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232327205.png"></p>
 <p>这将是一件很好的事情，但该类的主题实际上是围绕优化和最小化I/O。因此，这是一个非常糟糕的方案，因为我们在R中获取每个记录，并在S中读取每个页面以搜索匹配项。这样做的I/O成本将是[R]+|R|[S]，其中[R]是R中的页数，|R|是R中记录的数量。虽然我们可以通过在for循环中切换R和S的顺序来稍微优化，但这确实不是一个很好的策略。</p>
 <p>注意：SNLJ不会产生|R| I/o来读取R中的每一条记录。这将花费[R]I/o，因为它实际上更像是“R中的每个页面<span class="math inline">\(p_r\)</span>:<span class="math inline">\(p_r\)</span>中的每个记录r:S中的每个页<span class="math inline">\(p_s\)</span>:<span class="math inline">\(p_s\)</span>中每个记录s:join”，因为我们不能一次读取少于一页。</p>
+<span id="more"></span>
 <h2 id="页嵌套循环连接-pnlj">3 页嵌套循环连接 PNLJ</h2>
 <p>很明显，我们不想为R的每一条记录读取S的每一页，那么我们能做得更好吗？如果我们读S中的每一页，而读R中的每页，会怎么样？也就是说，对于R的一页，获取所有记录并将它们与S中的每个记录进行匹配，然后对R的每一页执行此操作。</p>
 <p>这称为页面嵌套循环连接（PNLJ）。下面是它的伪代码：</p>

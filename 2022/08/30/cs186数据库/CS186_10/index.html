@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910192857931.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910220056954.png">
 <meta property="article:published_time" content="2022-08-30T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T12:37:40.384Z">
+<meta property="article:modified_time" content="2022-09-15T12:41:49.131Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910085705898.png">
@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:37:40" itemprop="dateModified" datetime="2022-09-15T20:37:40+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:41:49" itemprop="dateModified" datetime="2022-09-15T20:41:49+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,6 +251,7 @@
 </ul>
 <p>为了解决这个问题，我们将使用严格的两相锁定。严格的2PL与2PL相同，只是当事务完成时所有锁一起释放。</p>
 <p><img src="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910090520577.png"></p>
+<span id="more"></span>
 <h2 id="锁管理">3 锁管理</h2>
 <p>现在我们知道了锁的用途和类型。我们将了解锁管理器1如何管理这些锁和解锁（或获取和释放）请求，以及它如何决定何时授予锁。</p>
 <p>LM维护一个哈希表，该哈希表以被锁定资源的名称为键。每个条目包含一个授权集（一组授权锁/持有每个资源锁的事务）、锁类型（S或X或我们尚未引入的类型）和等待队列（由于与已授权的锁冲突而无法满足的锁请求队列）。见下图：</p>

@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907181225957.png">
 <meta property="og:image" content="https://101.35.161.126/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907182028599.png">
 <meta property="article:published_time" content="2022-07-15T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T12:16:06.676Z">
+<meta property="article:modified_time" content="2022-09-15T12:42:37.033Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907172924957.png">
@@ -204,7 +204,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:16:06" itemprop="dateModified" datetime="2022-09-15T20:16:06+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:42:37" itemprop="dateModified" datetime="2022-09-15T20:42:37+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -233,6 +233,7 @@
 <h2 id="文件页面记录">2 文件、页面、记录</h2>
 <p>关系型数据库最基本的单位是记录（行）。这些记录被组织成关系（表），他们可以被修改，删除或者在内存中创建。</p>
 <p>对磁盘来说基本的单位是页，是从磁盘到内存传输的最小单位，反之亦然。为了以与磁盘兼容的格式表示关系数据库，每个关系都存储在自己的文件中，其记录被组织到文件中的页面中。基于关系的模式和访问模式，数据库将确定：（1）使用的文件类型，（2）文件中页面的组织方式，（3）每个页面上记录的组织方式，以及（4）每个记录的格式。</p>
+<span id="more"></span>
 <h2 id="选择文件类型">3 选择文件类型</h2>
 <p>文件有两种主要类型：堆文件和排序文件。对于每个关系，数据库根据关系访问模式的I/O成本选择要使用的文件类型。1个I/O相当于从磁盘读取1页或向磁盘写入1页，并且基于其访问模式中的插入、删除和扫描操作，为每种文件类型进行I/O计算。选择产生较少I/O成本的文件类型。</p>
 <h2 id="堆文件">4 堆文件</h2>

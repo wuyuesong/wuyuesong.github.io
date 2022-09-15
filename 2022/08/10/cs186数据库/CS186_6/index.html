@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160332326.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160639247.png">
 <meta property="article:published_time" content="2022-08-10T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T12:31:39.550Z">
+<meta property="article:modified_time" content="2022-09-15T12:42:12.051Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220908224458144.png">
@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:31:39" itemprop="dateModified" datetime="2022-09-15T20:31:39+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:42:12" itemprop="dateModified" datetime="2022-09-15T20:42:12+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,6 +230,7 @@
 <h2 id="总体战略">2 总体战略</h2>
 <p>因为我们不能一次将所有数据放入内存，所以我们需要构建几个不同的哈希表并将它们连接在一起。但这个想法有一个问题。如果我们构建两个单独的哈希表，每个哈希表中都有相同的值（例如，“Brian”出现在两个表中），会发生什么？连接这些表将导致一些“Brian”不在彼此旁边。</p>
 <p>为了解决这个问题，在用内存中的数据构建哈希表之前，我们需要保证，如果某个值在内存中，那么它的所有出现都在内存中。换句话说，如果“Brian”至少在内存中出现一次，那么我们只能在数据中每次出现“Brian”，当前都在内存中的情况下构建哈希表。这确保了值只能出现在一个哈希表中，从而使哈希表可以安全连接。</p>
+<span id="more"></span>
 <h2 id="算法">3 算法</h2>
 <p>我们将使用分而治之的算法来解决这个问题。“划分”阶段将划分传递，“控制”阶段将实际构建哈希表。就像在排序注释中一样，我们假设我们有B个缓冲帧可用</p>
 <p>第一次分区传递将每个记录散列到B− 1个分区。分区是一组页面，使得页面上的值都散列为相同的值（对于用于构造分区的散列函数）。我们通过使用B− 1输出缓冲器来实现这一点。当输出缓冲区填满时，我们将页面刷新到磁盘。当下一次缓冲区填满时，我们将其放置在之前从同一缓冲区刷新到磁盘的页面旁边。每个分区最重要的属性是，如果某个值出现在该分区中，那么数据中该值的所有出现都会出现在该区域中。换句话说，如果“Brian”出现在该分区中，“Brian”将不会出现在任何其他分区中。这是因为“Brian”总是散列到相同的值，因此它不可能在不同的分区中结束。我们只有B− 1分区，因为我们需要保存一个缓冲帧作为输入缓冲区。</p>
