@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185202374.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185211315.png">
 <meta property="article:published_time" content="2022-08-15T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T11:55:54.445Z">
+<meta property="article:modified_time" content="2022-09-15T12:33:15.892Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220912160812006.png">
@@ -210,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:55:54" itemprop="dateModified" datetime="2022-09-15T19:55:54+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:33:15" itemprop="dateModified" datetime="2022-09-15T20:33:15+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,9 +240,7 @@
 <p>在讨论不同的连接算法之前，我们需要讨论当由＜<span class="math inline">\(r_i\)</span>，<span class="math inline">\(s_j\)</span>＞组成的新连接关系形成时会发生什么。无论何时计算联接的成本，我们都会忽略将联接关系写入磁盘的成本。这是因为我们假设连接的输出将被稍后执行SQL查询时涉及的另一个操作符使用。通常，此运算符可以直接从内存中使用连接的记录。如果这听起来让人困惑，不要担心；我们将在查询优化模块中重新讨论它，但现在需要记住的重要一点是，最终写入成本不包括在联接成本模型中</p>
 <p>求和并没有告诉我们任何我们不知道的事情；我们需要通过每一轮，准确地找出读写的内容。最后的2X部分表示，为了构建哈希表，我们需要在分区通过后读取和写入每个页面。</p>
 <p>以下是一些重要属性：</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220912160812006.png" alt="image-20220912160812006"><figcaption aria-hidden="true">image-20220912160812006</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220912160812006.png"></p>
 <p>属性1表示我们必须在第一次分区过程中读取每个页面。这直接来自算法。</p>
 <p>属性2表示，在分区过程中，我们将写出至少与读入一样多的页面。这直接来自上面的解释——我们可以在分区过程中创建额外的页面。</p>
 <p>属性3表示我们不会读取比之前分区过程中写入的页面更多的页面。在最坏的情况下，pass i中的每个分区都需要重新分区，因此这需要我们读取每个页面。然而，在大多数情况下，一些分区将足够小，以容纳内存，因此我们可以读取比上一次生成的页面更少的页面。</p>
@@ -250,41 +248,27 @@
 <h2 id="简单嵌套循环连接-snlj">2 简单嵌套循环连接 SNLJ</h2>
 <p>让我们从最简单的策略开始。假设我们有一个B页缓冲区，我们希望在连接条件θ下连接两个表R和s。从最自然的策略开始，我们可以在R中获取每个记录，在S中搜索其所有匹配项，然后生成每个匹配项。</p>
 <p>这称为简单嵌套循环连接（SNLJ）。您可以将其视为两个嵌套的for循环：</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232319911.png" alt="image-20220908232319911"><figcaption aria-hidden="true">image-20220908232319911</figcaption>
-</figure>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232327205.png" alt="image-20220908232327205"><figcaption aria-hidden="true">image-20220908232327205</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232319911.png"></p>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232327205.png"></p>
 <p>这将是一件很好的事情，但该类的主题实际上是围绕优化和最小化I/O。因此，这是一个非常糟糕的方案，因为我们在R中获取每个记录，并在S中读取每个页面以搜索匹配项。这样做的I/O成本将是[R]+|R|[S]，其中[R]是R中的页数，|R|是R中记录的数量。虽然我们可以通过在for循环中切换R和S的顺序来稍微优化，但这确实不是一个很好的策略。</p>
 <p>注意：SNLJ不会产生|R| I/o来读取R中的每一条记录。这将花费[R]I/o，因为它实际上更像是“R中的每个页面<span class="math inline">\(p_r\)</span>:<span class="math inline">\(p_r\)</span>中的每个记录r:S中的每个页<span class="math inline">\(p_s\)</span>:<span class="math inline">\(p_s\)</span>中每个记录s:join”，因为我们不能一次读取少于一页。</p>
 <h2 id="页嵌套循环连接-pnlj">3 页嵌套循环连接 PNLJ</h2>
 <p>很明显，我们不想为R的每一条记录读取S的每一页，那么我们能做得更好吗？如果我们读S中的每一页，而读R中的每页，会怎么样？也就是说，对于R的一页，获取所有记录并将它们与S中的每个记录进行匹配，然后对R的每一页执行此操作。</p>
 <p>这称为页面嵌套循环连接（PNLJ）。下面是它的伪代码：</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909131338267.png" alt="image-20220909131338267"><figcaption aria-hidden="true">image-20220909131338267</figcaption>
-</figure>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909131345156.png" alt="image-20220909131345156"><figcaption aria-hidden="true">image-20220909131345156</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909131338267.png"></p>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909131345156.png"></p>
 <p>这样的I/O成本稍微好一些。它是[R]+[R][S]——这可以通过保持R和S之间的较小关系作为外部关系来优化。</p>
 <h2 id="块嵌套循环连接-bnlj">4 块嵌套循环连接 BNLJ</h2>
 <p>页面嵌套循环连接更好！唯一的问题是我们仍然没有尽可能充分地利用缓冲区。我们有B个缓冲页，但我们的算法只使用了3个缓冲页——一个用于R，一个用于S，另一个用于输出缓冲区。请记住，我们在S中读取的次数越少越好——因此，如果我们可以为R保留B-2页，并将S与每个“块”中的每个记录进行匹配，我们可以大幅降低I/O成本！</p>
 <p>这称为块嵌套循环联接（或块嵌套循环连接）。这里的关键思想是，我们希望利用缓冲区来帮助我们降低I/O成本，因此我们可以为R块保留尽可能多的页面——因为我们每个块只读取S的每个页面一次，更大的块意味着更少的I/O。对于R的每个块，将S中的所有记录与块中的所有纪录进行匹配。</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909141835493.png" alt="image-20220909141835493"><figcaption aria-hidden="true">image-20220909141835493</figcaption>
-</figure>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909141910482.png" alt="image-20220909141910482"><figcaption aria-hidden="true">image-20220909141910482</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909141835493.png"></p>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909141910482.png"></p>
 <p>然后，其I/O成本可以写为</p>
 <p><span class="math inline">\([R] + \lceil \frac{[R]}{B-2} \rceil[S]\)</span></p>
 <p>这好多了！现在，我们利用我们的B缓冲页来减少我们必须在S中读取的次数。</p>
 <h2 id="索引嵌套循环连接-inlj">5 索引嵌套循环连接 INLJ</h2>
 <p>然而，有时块嵌套循环连接不是最好的选择。有时，如果我们在S上有一个索引，该索引位于适当的字段（即我们要加入的字段）上，则在S中查找<span class="math inline">\(r_i\)</span>的匹配可能非常快。这称为索引嵌套循环连接，伪代码如下：</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909143010579.png" alt="image-20220909143010579"><figcaption aria-hidden="true">image-20220909143010579</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909143010579.png"></p>
 <p>I/O成本为[R]+|R|∗（以S为单位查找匹配记录的成本）。</p>
 <p>在S中查找匹配记录的成本将因索引类型而异。如果它是一个B+树，我们将从根开始搜索，并计算需要多少I/O才能到达相应的记录。请参阅B+树课程笔记中的群集和计数I/O部分。</p>
 <h2 id="哈希连接-shj-ghj">6 哈希连接 SHJ GHJ</h2>
@@ -305,28 +289,16 @@
 </ol>
 <p>这称为排序合并连接，平均I/O成本为：排序R的成本+排序S+（[R]+[S]）（但需要注意的是，这不是最坏的情况！）。在最坏的情况下，如果R的每个记录都与S的每个记录匹配，则最后一项变成|R|∗ [S] 。最坏情况下的成本是：排序R的成本+排序S+的成本（[R]+|R|）∗ [S] ）。但这通常不会发生）。</p>
 <p>让我们看一个例子。让左边的表是R，右边的表是S。</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909184627842.png" alt="image-20220909184627842"><figcaption aria-hidden="true">image-20220909184627842</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909184627842.png"></p>
 <p>我们将在S上前进指针（红色箭头），因为28＜31，直到S到达31的sid。然后我们将标记此记录（黑色箭头）。此外，我们将输出此匹配。</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185018084.png" alt="image-20220909185018084"><figcaption aria-hidden="true">image-20220909185018084</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185018084.png"></p>
 <p>然后我们将再次将指针前进到S上，并获得另一个匹配并输出它。</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185040859.png" alt="image-20220909185040859"><figcaption aria-hidden="true">image-20220909185040859</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185040859.png"></p>
 <p>我们再次将指针前进到S上，但没有得到匹配。然后我们将S重置到标记的位置（黑色箭头），然后前进R。当我们前进R时，我们得到另一个匹配，因此我们输出它。</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185133682.png" alt="image-20220909185133682"><figcaption aria-hidden="true">image-20220909185133682</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185133682.png"></p>
 <p>然后我们前进S，得到另一个匹配，然后输出它。</p>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185202374.png" alt="image-20220909185202374"><figcaption aria-hidden="true">image-20220909185202374</figcaption>
-</figure>
-<figure>
-<img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185211315.png" alt="image-20220909185211315"><figcaption aria-hidden="true">image-20220909185211315</figcaption>
-</figure>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185202374.png"></p>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220909185211315.png"></p>
 <h2 id="重要的改进">7.1重要的改进</h2>
 <p>一个重要的改进：您可以将最后一个排序阶段与合并阶段结合起来，前提是您有足够的内存空间为每次运行[R]和每次运行[S]分配一个页面。最后的合并过程是为每次运行R和每次运行S分配一个页面。在此过程中，您节省2∗ （[R]+[S]）I/O</p>
 <p>要执行优化，我们必须 :</p>

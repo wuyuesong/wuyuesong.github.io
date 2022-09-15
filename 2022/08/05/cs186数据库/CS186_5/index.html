@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908210736344.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908213442785.png">
 <meta property="article:published_time" content="2022-08-05T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T11:55:25.043Z">
+<meta property="article:modified_time" content="2022-09-15T12:30:56.664Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908210736344.png">
@@ -198,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:55:25" itemprop="dateModified" datetime="2022-09-15T19:55:25+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:30:56" itemprop="dateModified" datetime="2022-09-15T20:30:56+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,9 +230,7 @@
 <p>为了有效地合并两个列表，必须首先对它们进行排序。这意味着排序算法的第一步应该是对每个页面上的记录进行排序。我们将第一阶段称为“控制”阶段，因为我们正在控制单个页面。</p>
 <p>之后，让我们开始使用合并排序中的合并算法将页面合并在一起。我们将调用这些合并排序运行的结果。排序运行是一系列已排序的页面。</p>
 <p>算法的其余部分将只是继续合并这些排序运行，直到只剩下一个排序运行。一次排序运行意味着我们的数据已完全排序！请参阅下一页的图像，了解算法运行到完成的图表。</p>
-<figure>
-<img src="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908210736344.png" alt="image-20220908210736344"><figcaption aria-hidden="true">image-20220908210736344</figcaption>
-</figure>
+<p><img src="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908210736344.png"></p>
 <h2 id="双向合并分析">3.双向合并分析</h2>
 <p>在分析数据库算法时，最重要的度量是该算法使用的I/O数量，因此让我们从这里开始。首先，请注意，每次传递数据都需要2∗ N个I/O，其中N是数据页的数量。这是因为对于每一次传递，我们需要读入每一页，并在修改后写回每一页。</p>
 <p>剩下要做的唯一一件事就是计算出我们需要多少次传递才能对表进行排序。我们总是需要做最初的“控制”，所以我们总是至少有一个传递。现在，需要多少次合并过程？每通过一次，我们将剩下的排序运行数量减半。每次对数据进行分割都会向您显示日志，因为我们将其除以2，所以日志的基数将为2。接着我们需要$log_2(N) <span class="math inline">\(次传递，总共\)</span>+log_2(N) $次传递。所以我们总共需要 <span class="math inline">\(2N*(1+\lceil log_2(N) \rceil)\)</span> 次I/O（注意：传递0，即初始控制通过，在外部排序中计算为一次传递，并作为I/O成本公式中的一个传递）。</p>
@@ -243,9 +241,7 @@
 <h2 id="完全外部排序">4完全外部排序</h2>
 <p>假设我们有B个缓冲区页面可用。我们将进行的第一个优化是在初始的“控制过程”中。我们不只是对单个页面进行排序，而是加载B页面并将它们一次排序到一个排序运行中。这样，我们将在第一次通过后产生更少和更长的排序运行。</p>
 <p>第二个优化是一次合并两个以上的排序运行。我们有B个可用的缓冲帧，但输出缓冲区需要1。这意味着我们可以有B-1输入缓冲区，因此可以一次合并B-1排序运行。假设我们有4个可用的缓冲帧，请参阅下一页的此类图表。</p>
-<figure>
-<img src="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908213442785.png" alt="image-20220908213442785"><figcaption aria-hidden="true">image-20220908213442785</figcaption>
-</figure>
+<p><img src="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908213442785.png"></p>
 <p>现在，我们在控制阶段一次取4页，并输出长度为4的排序运行。在合并过程中，我们可以一次合并征服过程中产生的所有三个排序块。这将通过次数（因此我们的I/O）减少了一半！</p>
 <h2 id="完全外部合并排序的分析">5.完全外部合并排序的分析</h2>
 <p>现在，让我们计算一下改进后的排序使用与双向合并相同的进程需要多少I/O。控制传递现在只生成<span class="math inline">\(\lceil N/B \rceil\)</span>排序的运行，因此我们要合并的运行较少。在合并过程中，我们将排序的运行数除以B−1而不是2，因此日志的基础需要更改为B− 1.这使得我们的整体排序采用<span class="math inline">\(1+\lceil log_{B−1}\lceil N/B\rceil\)</span> 传递，因此总共<span class="math inline">\(2N*(1+\lceil log_{B−1}\lceil N/B\rceil)\)</span>次I/O。</p>

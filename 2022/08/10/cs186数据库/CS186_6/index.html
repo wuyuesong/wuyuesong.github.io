@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160332326.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160639247.png">
 <meta property="article:published_time" content="2022-08-10T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T11:55:39.794Z">
+<meta property="article:modified_time" content="2022-09-15T12:31:39.550Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220908224458144.png">
@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:55:39" itemprop="dateModified" datetime="2022-09-15T19:55:39+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:31:39" itemprop="dateModified" datetime="2022-09-15T20:31:39+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,27 +237,17 @@
 <p>现在我们所有的分区都可以放在内存中，我们知道所有类似的值都出现在同一个分区中。剩下要做的就是为每个分区构建一个哈希表，并将每个哈希表写入磁盘。</p>
 <h2 id="例子">4 例子</h2>
 <p>在下面的示例中，我们将假设我们有B=3个可用的缓冲页。我们还假设Brian和Eric对第一个哈希函数的值相同，但对第二个哈希函数使用不同的值，Jamie和Lakshya对第一个hash函数使用相同的值。</p>
-<figure>
-<img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220908224458144.png" alt="image-20220908224458144"><figcaption aria-hidden="true">image-20220908224458144</figcaption>
-</figure>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220908224458144.png"></p>
 <p>您可以看到分区0太大，因为它包含4个页面，但我们只有3个缓冲帧可用。然而，当它被递归分区时，子分区（0.a和0.b）都只有2页长，因此它们现在可以放入内存。您还可以看到，在最后一次“控制”之后，所有类似的值都彼此相邻，这是我们的最终目标。</p>
 <h2 id="外部哈希分析">5 外部哈希分析</h2>
 <p>我们不能像排序算法那样创建一个简单的公式来计算I/O的数量，因为我们不知道分区有多大。我们首先需要认识到的一点是，在分区通过后，表中的页面数可能会增加。要了解原因，请考虑下表，其中我们可以在一个页面上拟合两个整数：</p>
-<figure>
-<img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160235801.png" alt="image-20220912160235801"><figcaption aria-hidden="true">image-20220912160235801</figcaption>
-</figure>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160235801.png"></p>
 <p>假设B=3，因此我们只将数据划分为2个分区。假设1和3哈希到分区1，2和4哈希到分区2。分区后，分区1将具有：</p>
-<figure>
-<img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160309822.png" alt="image-20220912160309822"><figcaption aria-hidden="true">image-20220912160309822</figcaption>
-</figure>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160309822.png"></p>
 <p>分区2将有：</p>
-<figure>
-<img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160332326.png" alt="image-20220912160332326"><figcaption aria-hidden="true">image-20220912160332326</figcaption>
-</figure>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160332326.png"></p>
 <p>请注意，我们现在只有4个页面，而我们刚开始时只有3个页面。因此，计算I/O数量的唯一可靠方法是遍历每一轮，查看将读取和写入的内容。设m为所需的分区轮数，设<span class="math inline">\(r_i\)</span>为分区轮数 <span class="math inline">\(i\)</span> 需要读入的页面数，设<span class="math inline">\(w_i\)</span>为需要从分区轮数 <span class="math inline">\(i\)</span> 中写入的页面数；设X为分区后需要构建哈希表的页面总数。以下是I/O数量的公式：</p>
-<figure>
-<img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160639247.png" alt="image-20220912160639247"><figcaption aria-hidden="true">image-20220912160639247</figcaption>
-</figure>
+<p><img src="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/image-20220912160639247.png"></p>
 
     </div>
 
