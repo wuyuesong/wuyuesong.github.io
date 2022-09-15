@@ -1289,7 +1289,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:55:08" itemprop="dateModified" datetime="2022-09-15T19:55:08+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:28:39" itemprop="dateModified" datetime="2022-09-15T20:28:39+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1317,163 +1317,97 @@
 <p>在前面的注释中，我们讨论了SQL是一种声明性编程语言。这意味着您可以指定想要什么，但不必指定如何执行。从用户的角度来看，这很好，因为它使查询更容易编写。然而，作为数据库工程师，我们通常需要一种更具表现力的语言。当我们在几周内研究查询优化时，我们将需要一种方法来表达数据库可以用来执行查询的许多不同的有效计划。为此，我们将使用关系代数，这是一种过程编程语言（这意味着查询将精确指定要使用的运算符和顺序）。</p>
 <h2 id="关系代数导论">2 关系代数导论</h2>
 <p>关系代数中的所有运算符都取一个关系并输出一个关系。基本查询如下所示：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161602181.png" alt="image-20220908161602181"><figcaption aria-hidden="true">image-20220908161602181</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161602181.png"></p>
 <p>π运算符只选择要前进到下一个运算符的列（就像SQL SELECT）。在这种情况下，运算符将dogs关系作为参数，并返回一个仅具有dogs关系的name列的关系。关于关系代数的一个重要事实是，关系是元组的集合，这意味着它们不能有重复。如果dogs关系最初为：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161805215.png" alt="image-20220908161805215"><figcaption aria-hidden="true">image-20220908161805215</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161805215.png"></p>
 <p>上述查询将返回：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161823675.png" alt="image-20220908161823675"><figcaption aria-hidden="true">image-20220908161823675</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161823675.png"></p>
 <p>最初，这两个buster是不同的，因为它们具有不同的年龄，但一旦去掉年龄列，它们就会变成重复的，因此输出关系中只保留一个。</p>
 <p>让我们正式介绍关系代数运算符。</p>
 <h2 id="projection-π">3 Projection (π)</h2>
 <p>我们已经介绍了投影操作符，它只选择指定的列。与运算符的几乎所有参数一样，列在运算符的下标中指定。投影运算符是关系代数版本的SQL SELECT子句。</p>
 <p>现在，我们可以用关系代数表示只涉及SELECT和FROM子句的SQL查询。例如SQL查询：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908162233921.png" alt="image-20220908162233921"><figcaption aria-hidden="true">image-20220908162233921</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908162233921.png"></p>
 <p>可以用我们在第2节中介绍的表达式表示：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908162307165.png" alt="image-20220908162307165"><figcaption aria-hidden="true">image-20220908162307165</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908162307165.png"></p>
 <p>请注意，在关系代数中没有与FROM运算符等效的运算符，因为这些运算符的参数指定了我们从哪些表中提取。</p>
 <h2 id="selection-σ">4 Selection (σ)</h2>
 <p>选择运算符用于根据特定条件筛选行。不要让名称迷惑您-这个操作符相当于SQL的WHERE子句，而不是SELECT子句。让我们尝试用关系代数来表达以下查询：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172628762.png" alt="image-20220908172628762"><figcaption aria-hidden="true">image-20220908172628762</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172628762.png"></p>
 <p>等价的关系代数表达式是：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172712467.png" alt="image-20220908172712467"><figcaption aria-hidden="true">image-20220908172712467</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172712467.png"></p>
 <p>该查询的另一个正确表达式是：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172741185.png" alt="image-20220908172741185"><figcaption aria-hidden="true">image-20220908172741185</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172741185.png"></p>
 <p>这说明了关系代数的美。只有一种（合理的）方法可以为查询试图完成的任务编写SQL，但我们可以在关系代数中找到多个不同的表达式，得到相同的结果。在第一个表达式中，我们首先只选择需要的列，然后过滤掉不需要的行。在第二种方法中，我们先过滤行，然后选择列。我们将很快了解评估这些计划中哪一个更好的方法！</p>
 <p>选择运算符还支持复合谓词。这个∧ 符号对应于SQL中的AND关键字∨ 符号对应于OR关键字。例如</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172852530.png" alt="image-20220908172852530"><figcaption aria-hidden="true">image-20220908172852530</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172852530.png"></p>
 <p>等价于：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172906373.png" alt="image-20220908172906373"><figcaption aria-hidden="true">image-20220908172906373</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908172906373.png"></p>
 <h2 id="union">5 Union (∪)</h2>
 <p>我们将学习如何组合来自不同关系的数据的第一种方法是使用union运算符。就像SQL中的UNION子句一样，我们从每个元组中获取所有行，并将它们合并，同时删除重复项。例如，假设我们有一张狗表：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173004877.png" alt="image-20220908173004877"><figcaption aria-hidden="true">image-20220908173004877</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173004877.png"></p>
 <p>还有一张猫表，看起来像这样：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173030584.png" alt="image-20220908173030584"><figcaption aria-hidden="true">image-20220908173030584</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173030584.png"></p>
 <p>表达式：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173050216.png" alt="image-20220908173050216"><figcaption aria-hidden="true">image-20220908173050216</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173050216.png"></p>
 <p>会返回</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173112852.png" alt="image-20220908173112852"><figcaption aria-hidden="true">image-20220908173112852</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908173112852.png"></p>
 <p>请注意，Garfield只显示一次，因为关系是元组的集合，因此会删除所有重复项。此外，请注意，所有这些集合运算符的一条规则是，它们必须对具有相同数量属性（列）的关系进行操作，并且属性必须具有相同的类型。将具有两列的关系与仅具有一列的关系合并是不合法的，将具有字符串列的关系和具有整数列的另一关系合并也是不合法的。</p>
 <h2 id="set-difference--">6 Set Difference (-)</h2>
 <p>另一个集运算符是集差运算符。Set difference等同于SQL子句EXCEPT。它返回第一个表中的每一行，第二个表中也显示的行除外。如果您运行：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182028895.png" alt="image-20220908182028895"><figcaption aria-hidden="true">image-20220908182028895</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182028895.png"></p>
 <p>在上一节介绍的狗和猫表上的表达式，您将得到：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182058445.png" alt="image-20220908182058445"><figcaption aria-hidden="true">image-20220908182058445</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182058445.png"></p>
 <p>加菲尔德没有出现，因为他在猫表中，猫的名字都不会出现，因为只有第一个关系中的行才可能出现在输出中。</p>
 <h2 id="intersection">7 Intersection (∩)</h2>
 <p>交集与交集SQL运算符类似，因为它只保留交集中两个表中出现的行。如果您运行：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182211969.png" alt="image-20220908182211969"><figcaption aria-hidden="true">image-20220908182211969</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182211969.png"></p>
 <p>在第5节介绍的表格中，您将得到：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182231973.png" alt="image-20220908182231973"><figcaption aria-hidden="true">image-20220908182231973</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182231973.png"></p>
 <p>因为Garfield是两个表中唯一出现的名称。</p>
 <h2 id="cross-product">8 Cross Product (×)</h2>
 <p>叉积运算符就像在SQL中执行笛卡尔积一样。输出是每个可能的元组对的一个元组，同时确保始终从最终输出中删除重复项，以满足集合语义。例如，假设我们有一张狗表：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182340017.png" alt="image-20220908182340017"><figcaption aria-hidden="true">image-20220908182340017</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182340017.png"></p>
 <p>和一张公园表：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182414471.png" alt="image-20220908182414471"><figcaption aria-hidden="true">image-20220908182414471</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182414471.png"></p>
 <p>关系代数等价于</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182436804.png" alt="image-20220908182436804"><figcaption aria-hidden="true">image-20220908182436804</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182436804.png"></p>
 <p>的是</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182450247.png" alt="image-20220908182450247"><figcaption aria-hidden="true">image-20220908182450247</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182450247.png"></p>
 <p>输出会是：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182508253.png" alt="image-20220908182508253"><figcaption aria-hidden="true">image-20220908182508253</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908182508253.png"></p>
 <p>事实上，叉积（×）是内部连接的基础，我们将在下一步讨论。</p>
 <h2 id="joinsjoin">9 Joins(<span class="math inline">\(\Join\)</span>)</h2>
 <p>我们还没有讨论如何在关系代数中表示连接-让我们解决这个问题！要将两个表内部连接在一起，请在 <span class="math inline">\(\Join\)</span> 运算符的左侧编写左表，将连接条件放在下标中，并将右运算符放在右侧。要将“名称”列中的“猫”表和“狗”表连接在一起，您可以编写：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908204949556.png" alt="image-20220908204949556"><figcaption aria-hidden="true">image-20220908204949556</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908204949556.png"></p>
 <p>如果不指定连接条件，它将成为自然连接。回想一下SQL注释，自然连接将每个表中具有相同名称的所有列连接在一起。因此，您也可以编写与上述相同的查询，如下所示：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205103236.png" alt="image-20220908205103236"><figcaption aria-hidden="true">image-20220908205103236</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205103236.png"></p>
 <p>形式上，我们将内部连接运算符称为θ连接（ <span class="math inline">\(\Join_{θ}\)</span>）。θ是连接条件，因此对于上面的表达式，θ连接条件是cats.name=dogs.name。</p>
 <p>运算符执行一个内部连接，这是我们将在这个类中讨论的关系代数表达式的唯一连接。有一些方法可以从我们已经介绍的运算符派生右、左和全外部联接，但这超出了此类的范围。</p>
 <p>与选择运算符σ一样，连接运算符<span class="math inline">\(\Join\)</span> 也支持复合谓词运算符∧ （及）及∨ (或)。</p>
 <p>θ连接和自然连接实际上可以从叉积（×）和选择的连接（σ）导出。例如</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205452171.png" alt="image-20220908205452171"><figcaption aria-hidden="true">image-20220908205452171</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205452171.png"></p>
 <p>可以被写做</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205505284.png" alt="image-20220908205505284"><figcaption aria-hidden="true">image-20220908205505284</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205505284.png"></p>
 <p>自然连接</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205540489.png" alt="image-20220908205540489"><figcaption aria-hidden="true">image-20220908205540489</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205540489.png"></p>
 <p>可以被写作</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205600970.png" alt="image-20220908205600970"><figcaption aria-hidden="true">image-20220908205600970</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205600970.png"></p>
 <h2 id="rename-ρ">10 Rename (ρ)</h2>
 <p>重命名操作符基本上完成了与SQL中的别名相同的任务。如果您希望避免像连接部分中的表达式那样，在表达式的其余部分包含表名，您可以改为编写：</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205644995.png" alt="image-20220908205644995"><figcaption aria-hidden="true">image-20220908205644995</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205644995.png"></p>
 <p>此表达式将dogs关系的名称列重命名为dname first，因此列名中没有冲突。您不能再使用自然联接，因为列没有相同的名称，但如果您想包含其他运算符，则不再需要指定列来自哪个关系。</p>
 <h2 id="group-by-aggregation-γ">11 Group By / Aggregation (γ)</h2>
 <p>我们将讨论的最后一个关系代数运算符是groupby/aggregation运算符，它本质上等同于在SQL中使用groupby和HAVING子句。例如，SQL查询</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205837366.png" alt="image-20220908205837366"><figcaption aria-hidden="true">image-20220908205837366</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205837366.png"></p>
 <p>可以在关系代数中表示为</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205855770.png" alt="image-20220908205855770"><figcaption aria-hidden="true">image-20220908205855770</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205855770.png"></p>
 <p>此外，γ运算符可用于从SQL中选择聚合列，如MAX、MIN、SUM、COUNT等。此已修改的查询来自前面</p>
 <figure>
 <img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205934546.png" alt="image-20220908205934546"><figcaption aria-hidden="true">image-20220908205934546</figcaption>
 </figure>
 <p>可以在关系代数中表示为</p>
-<figure>
-<img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205953524.png" alt="image-20220908205953524"><figcaption aria-hidden="true">image-20220908205953524</figcaption>
-</figure>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908205953524.png"></p>
 
       
     </div>
@@ -1524,7 +1458,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:54:48" itemprop="dateModified" datetime="2022-09-15T19:54:48+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:24:09" itemprop="dateModified" datetime="2022-09-15T20:24:09+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1550,18 +1484,12 @@
           <h1 id="缓冲区管理">缓冲区管理</h1>
 <h2 id="简介">1 简介</h2>
 <p>到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。</p>
-<figure>
-<img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png" alt="image-20220907221359329"><figcaption aria-hidden="true">image-20220907221359329</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png"></p>
 <p>缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的页面。当从内存中逐出页面或将新页面读入内存时，缓冲区管理器与磁盘空间管理器通信以执行所需的磁盘操作。</p>
-<figure>
-<img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png" alt="image-20220907221459150"><figcaption aria-hidden="true">image-20220907221459150</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png"></p>
 <h2 id="缓冲池">2 缓冲池</h2>
 <p>通过将空间划分为可放置页面的帧，将内存转换为缓冲池。缓冲帧可以保存与页面相同数量的数据（因此页面完全适合于帧）。为了有效地跟踪帧，缓冲区管理器为元数据表分配额外的内存空间。</p>
-<figure>
-<img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png" alt="image-20220907221655999"><figcaption aria-hidden="true">image-20220907221655999</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png"></p>
 <p>该表跟踪4条信息：</p>
 <p>1.与存储器地址唯一关联的帧ID</p>
 <p>2.用于确定帧当前包含的页面的页面ID</p>
@@ -1575,13 +1503,9 @@
 <p>一旦请求者完成其工作负载，它负责通知缓冲区管理器减少与先前使用的页面相关联的pin数。</p>
 <h2 id="lru-置换">4 LRU 置换</h2>
 <p>常用的替换策略是LRU（最近最少使用）。当需要将新页读入满缓冲池时，将逐出最近使用最少的未固定页（pin计数=0）。为了跟踪页面使用情况，将向元数据表中添加“上次使用”列，并测量页面的pin计数减少的最新时间。</p>
-<figure>
-<img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152212168.png" alt="image-20220908152212168"><figcaption aria-hidden="true">image-20220908152212168</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152212168.png"></p>
 <p>通常情况下，实现LRU可能成本高昂。时钟策略提供了一种替代实现，其使用元数据表中的ref位（最近引用的）列和时钟指针变量来有效地近似LRU，以跟踪所考虑的当前帧。</p>
-<figure>
-<img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152321653.png" alt="image-20220908152321653"><figcaption aria-hidden="true">image-20220908152321653</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152321653.png"></p>
 <p>时钟策略算法将元数据表视为帧的循环列表。它在开始时将时钟指针设置为第一个未固定帧，并在初始读取到帧中时将每个页面对应行上的ref位设置为1。在尝试驱逐时，策略的工作方式如下：</p>
 <ul>
 <li>遍历表中的帧，跳过固定页并在到达末尾时环绕到帧0，直到找到ref位为0的第一个未固定帧</li>
@@ -1592,20 +1516,14 @@
 <h3 id="顺序扫描性能-lru">4.1 顺序扫描性能-LRU</h3>
 <p>LRU总体性能良好，但当一组页S（其中|S|&gt;缓冲池大小）被多次重复访问时，性能会受到影响。</p>
 <p>为了强调这一点，考虑使用LRU的3帧缓冲池，并具有以下访问模式：</p>
-<figure>
-<img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154024096.png" alt="image-20220908154024096"><figcaption aria-hidden="true">image-20220908154024096</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154024096.png"></p>
 <h2 id="mru更换">5 MRU更换</h2>
 <p>另一个常用的替换策略是MRU（最近使用）。不是逐出最近使用的未固定页面，而是逐出最近一次使用的未锁定页面，该页面的pin计数是在最后一次减少时测量的。</p>
 <h3 id="顺序扫描性能-mru">5.1 顺序扫描性能-MRU</h3>
 <p>起初，使用此策略似乎有违直觉，但考虑使用MRU的3帧缓冲池具有以下访问模式的场景：</p>
-<figure>
-<img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154546209.png" alt="image-20220908154546209"><figcaption aria-hidden="true">image-20220908154546209</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154546209.png"></p>
 <p>显然，无论何时出现顺序洪泛访问模式，MRU在页面命中率方面都远远优于LRU。</p>
-<figure>
-<img src="file:///D:\13770\Tencent%20Files\1377030423\1377030423\Image\C2C\Image2$%606VK2DNA~OTPP$A%60_4CJI8.jpg" alt="img"><figcaption aria-hidden="true">img</figcaption>
-</figure>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220915202401656.png"></p>
 
       
     </div>
@@ -1656,7 +1574,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:20:32" itemprop="dateModified" datetime="2022-09-15T20:20:32+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:22:09" itemprop="dateModified" datetime="2022-09-15T20:22:09+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1682,7 +1600,9 @@
           <h1 id="b-树">B+ 树</h1>
 <h2 id="简介">1 简介</h2>
 <p>在前面的笔记中，我们讨论了数据存储的不同文件和记录表示。本周，我们将介绍索引，它是一种在数据文件之上运行的数据结构，有助于加快对特定键的读取。您可以将数据文件视为书籍的实际内容，将索引视为快速查找的内容表。我们使用索引使查询运行得更快，尤其是那些频繁运行的查询。考虑一个web应用程序，它在登录过程中根据用户名在用户表中查找用户的记录。用户名列上的索引将通过快速查找试图登录的用户的行来加快登录速度。在本课程注释中，我们将学习B+树，这是一种特定类型的索引。下面是一个B+树的示例：</p>
-<img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png" class title="image-20220907182641290">
+<figure>
+<img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png" alt="image-20220907182641290"><figcaption aria-hidden="true">image-20220907182641290</figcaption>
+</figure>
 <h2 id="属性">2 属性</h2>
 <ul>
 <li>d是B+树的阶，每个节点（根节点除外）必须有 <span class="math inline">\(d \leq x \leq 2d\)</span> 项，如果没有删除发生的话（删除数据后叶子节点可能少于d项）。节点中的项必须排序。</li>

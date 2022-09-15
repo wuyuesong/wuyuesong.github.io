@@ -27,7 +27,7 @@
 <meta property="og:site_name" content="wys的个人博客">
 <meta property="og:description" content="B+ 树 1 简介 在前面的笔记中，我们讨论了数据存储的不同文件和记录表示。本周，我们将介绍索引，它是一种在数据文件之上运行的数据结构，有助于加快对特定键的读取。您可以将数据文件视为书籍的实际内容，将索引视为快速查找的内容表。我们使用索引使查询运行得更快，尤其是那些频繁运行的查询。考虑一个web应用程序，它在登录过程中根据用户名在用户表中查找用户的记录。用户名列上的索引将通过快速查找试图登录的">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png">
+<meta property="og:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png">
 <meta property="og:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184154927.png">
 <meta property="og:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184919816.png">
 <meta property="og:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907190309483.png">
@@ -47,10 +47,10 @@
 <meta property="og:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907201432462.png">
 <meta property="og:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907201553616.png">
 <meta property="article:published_time" content="2022-07-20T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T12:20:32.375Z">
+<meta property="article:modified_time" content="2022-09-15T12:22:09.929Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png">
+<meta name="twitter:image" content="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png">
 
 <link rel="canonical" href="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/">
 
@@ -215,7 +215,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:20:32" itemprop="dateModified" datetime="2022-09-15T20:20:32+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 20:22:09" itemprop="dateModified" datetime="2022-09-15T20:22:09+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,7 +241,9 @@
         <h1 id="b-树">B+ 树</h1>
 <h2 id="简介">1 简介</h2>
 <p>在前面的笔记中，我们讨论了数据存储的不同文件和记录表示。本周，我们将介绍索引，它是一种在数据文件之上运行的数据结构，有助于加快对特定键的读取。您可以将数据文件视为书籍的实际内容，将索引视为快速查找的内容表。我们使用索引使查询运行得更快，尤其是那些频繁运行的查询。考虑一个web应用程序，它在登录过程中根据用户名在用户表中查找用户的记录。用户名列上的索引将通过快速查找试图登录的用户的行来加快登录速度。在本课程注释中，我们将学习B+树，这是一种特定类型的索引。下面是一个B+树的示例：</p>
-<img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png" class title="image-20220907182641290">
+<figure>
+<img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png" alt="image-20220907182641290"><figcaption aria-hidden="true">image-20220907182641290</figcaption>
+</figure>
 <h2 id="属性">2 属性</h2>
 <ul>
 <li>d是B+树的阶，每个节点（根节点除外）必须有 <span class="math inline">\(d \leq x \leq 2d\)</span> 项，如果没有删除发生的话（删除数据后叶子节点可能少于d项）。节点中的项必须排序。</li>
