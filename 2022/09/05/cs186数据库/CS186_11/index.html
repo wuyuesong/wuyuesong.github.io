@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="恢复1. 动机在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：  持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。  原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据库在添加新类">
+  <meta name="description" content="恢复 1. 动机 在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：  持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。 原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库————恢复">
 <meta property="og:url" content="https://101.35.161.126/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="恢复1. 动机在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：  持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。  原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据库在添加新类">
+<meta property="og:description" content="恢复 1. 动机 在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：  持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。 原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://101.35.161.126/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913204008887.png">
 <meta property="og:image" content="https://101.35.161.126/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913205955915.png">
 <meta property="og:image" content="https://101.35.161.126/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913210112697.png">
 <meta property="article:published_time" content="2022-09-05T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T11:41:12.751Z">
+<meta property="article:modified_time" content="2022-09-15T11:56:44.797Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913204008887.png">
@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:41:12" itemprop="dateModified" datetime="2022-09-15T19:41:12+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 19:56:44" itemprop="dateModified" datetime="2022-09-15T19:56:44+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,20 +222,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h1><h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1. 动机"></a>1. 动机</h2><p>在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：</p>
-<ol>
-<li><p>持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。</p>
-</li>
-<li><p>原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据库在添加新类之前崩溃，您实际上不想从旧类中删除。</p>
-</li>
+        <h1 id="恢复">恢复</h1>
+<h2 id="动机">1. 动机</h2>
+<p>在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：</p>
+<ol type="1">
+<li><p>持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。</p></li>
+<li><p>原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据库在添加新类之前崩溃，您实际上不想从旧类中删除。</p></li>
 </ol>
-<h2 id="2-强制非强制"><a href="#2-强制非强制" class="headerlink" title="2 .强制非强制"></a>2 .强制非强制</h2><p>如果我们使用强制策略，持久性可以是一个非常简单的属性。强制策略声明，当事务完成时，在事务提交之前，强制将所有修改的数据页发送到磁盘。这将确保持久性，因为磁盘是persistent1；换句话说，一旦页面进入磁盘，它将被永久保存。这种方法的缺点是性能。我们最终做了很多不必要的写入。我们更喜欢的策略是不强制，即只在页面需要从缓冲池中退出时才写回磁盘。虽然这有助于减少不必要的写入，但会使持久性复杂化，因为如果在事务提交后数据库崩溃，某些页面可能尚未写入磁盘，因此会从内存中丢失，因为内存是易失性的。为了解决此问题，我们将在恢复期间重新执行某些操作</p>
-<h2 id="3-Steal-No-Steal"><a href="#3-Steal-No-Steal" class="headerlink" title="3 Steal/No-Steal"></a>3 Steal/No-Steal</h2><p>类似地，使用No-Steal策略很容易确保原子性。No-Steal策略规定，在事务提交之前，不能从内存中逐出页面（从而写入磁盘）。这确保了我们不会让数据库处于中间状态，因为如果事务没有完成，那么它的任何更改实际上都不会写入磁盘并保存。这个政策的问题在于它限制了我们如何使用内存。我们必须将每个修改过的页面保留在内存中，直到事务完成。我们更希望有一个Steal策略，允许在事务完成之前将修改过的页面写入磁盘。这将使执行原子性变得复杂，但我们将通过在恢复期间撤消错误操作来解决此问题。</p>
-<h2 id="4-Steal-No-Force"><a href="#4-Steal-No-Force" class="headerlink" title="4 Steal, No-Force"></a>4 Steal, No-Force</h2><p>回顾一下，我们选择使用两种策略（steal，no-force），这使得很难保证原子性和持久性，但可以获得最佳性能。本说明的其余部分将介绍如何确保原子性和耐用性，同时使用steal、No-Force</p>
-<h2 id="5-提前写入日志"><a href="#5-提前写入日志" class="headerlink" title="5.提前写入日志"></a>5.提前写入日志</h2><p>为了解决这些复杂问题，我们将使用日志记录。日志是描述数据库所做操作的一系列日志记录。</p>
-<h3 id="5-1更新日志记录"><a href="#5-1更新日志记录" class="headerlink" title="5.1更新日志记录"></a>5.1更新日志记录</h3><p>每个写操作（SQL插入/删除/更新）都将获得自己的日志更新记录。</p>
+<h2 id="强制非强制">2 .强制非强制</h2>
+<p>如果我们使用强制策略，持久性可以是一个非常简单的属性。强制策略声明，当事务完成时，在事务提交之前，强制将所有修改的数据页发送到磁盘。这将确保持久性，因为磁盘是persistent1；换句话说，一旦页面进入磁盘，它将被永久保存。这种方法的缺点是性能。我们最终做了很多不必要的写入。我们更喜欢的策略是不强制，即只在页面需要从缓冲池中退出时才写回磁盘。虽然这有助于减少不必要的写入，但会使持久性复杂化，因为如果在事务提交后数据库崩溃，某些页面可能尚未写入磁盘，因此会从内存中丢失，因为内存是易失性的。为了解决此问题，我们将在恢复期间重新执行某些操作</p>
+<h2 id="stealno-steal">3 Steal/No-Steal</h2>
+<p>类似地，使用No-Steal策略很容易确保原子性。No-Steal策略规定，在事务提交之前，不能从内存中逐出页面（从而写入磁盘）。这确保了我们不会让数据库处于中间状态，因为如果事务没有完成，那么它的任何更改实际上都不会写入磁盘并保存。这个政策的问题在于它限制了我们如何使用内存。我们必须将每个修改过的页面保留在内存中，直到事务完成。我们更希望有一个Steal策略，允许在事务完成之前将修改过的页面写入磁盘。这将使执行原子性变得复杂，但我们将通过在恢复期间撤消错误操作来解决此问题。</p>
+<h2 id="steal-no-force">4 Steal, No-Force</h2>
+<p>回顾一下，我们选择使用两种策略（steal，no-force），这使得很难保证原子性和持久性，但可以获得最佳性能。本说明的其余部分将介绍如何确保原子性和耐用性，同时使用steal、No-Force</p>
+<h2 id="提前写入日志">5.提前写入日志</h2>
+<p>为了解决这些复杂问题，我们将使用日志记录。日志是描述数据库所做操作的一系列日志记录。</p>
+<h3 id="更新日志记录">5.1更新日志记录</h3>
+<p>每个写操作（SQL插入/删除/更新）都将获得自己的日志更新记录。</p>
 <p>更新日志记录如下所示：</p>
-<p><img src="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913204008887.png" alt="image-20220913204008887"></p>
+<figure>
+<img src="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913204008887.png" alt="image-20220913204008887"><figcaption aria-hidden="true">image-20220913204008887</figcaption>
+</figure>
 <p>这些字段包括：</p>
 <p>•XID：事务ID-告诉我们哪个事务执行了此操作</p>
 <p>•页面ID：已修改的页面</p>
@@ -243,53 +250,63 @@
 <p>•长度：更改了多少数据（通常以字节为单位）</p>
 <p>•旧数据：原始数据（用于撤销操作）</p>
 <p>•新数据：数据更新为什么（用于重做操作）</p>
-<h2 id="5-2其他日志记录"><a href="#5-2其他日志记录" class="headerlink" title="5.2其他日志记录"></a>5.2其他日志记录</h2><p>我们将在日志中使用其他一些记录类型。随着对这些字段的需求变得明显，我们将在整个注释中将这些字段添加到这些日志记录中。</p>
+<h2 id="其他日志记录">5.2其他日志记录</h2>
+<p>我们将在日志中使用其他一些记录类型。随着对这些字段的需求变得明显，我们将在整个注释中将这些字段添加到这些日志记录中。</p>
 <p>•提交：表示事务正在启动提交过程</p>
 <p>•中止：表示事务正在启动中止过程</p>
 <p>•结束：表示事务已完成（通常意味着它已完成提交或中止）</p>
-<h2 id="5-3-WAL要求"><a href="#5-3-WAL要求" class="headerlink" title="5.3 WAL要求"></a>5.3 WAL要求</h2><p>和常规数据页一样，日志页需要在内存中操作，但需要写入磁盘以永久存储。提前写入日志（WAL）对何时必须将日志写入磁盘提出了要求。这两条规则如下：</p>
-<ol>
-<li><p>日志记录必须在相应的数据页写入磁盘之前写入磁盘。这就是我们将如何实现原子性。对此的直觉是，如果先写入数据页，然后数据库崩溃，我们就无法撤消操作，因为我们不知道发生了什么操作！</p>
-</li>
-<li><p>事务提交时，所有日志记录都必须写入磁盘。这就是我们将如何实现持久性。直觉是，我们需要持续跟踪提交的事务执行了哪些操作。否则，我们将不知道需要重做哪些操作。通过将所有日志写入磁盘，我们可以准确地知道在修改后的数据页写入磁盘之前，如果数据库崩溃，我们需要重做哪些操作！</p>
-</li>
+<h2 id="wal要求">5.3 WAL要求</h2>
+<p>和常规数据页一样，日志页需要在内存中操作，但需要写入磁盘以永久存储。提前写入日志（WAL）对何时必须将日志写入磁盘提出了要求。这两条规则如下：</p>
+<ol type="1">
+<li><p>日志记录必须在相应的数据页写入磁盘之前写入磁盘。这就是我们将如何实现原子性。对此的直觉是，如果先写入数据页，然后数据库崩溃，我们就无法撤消操作，因为我们不知道发生了什么操作！</p></li>
+<li><p>事务提交时，所有日志记录都必须写入磁盘。这就是我们将如何实现持久性。直觉是，我们需要持续跟踪提交的事务执行了哪些操作。否则，我们将不知道需要重做哪些操作。通过将所有日志写入磁盘，我们可以准确地知道在修改后的数据页写入磁盘之前，如果数据库崩溃，我们需要重做哪些操作！</p></li>
 </ol>
-<h2 id="6-WAL实施"><a href="#6-WAL实施" class="headerlink" title="6 WAL实施"></a>6 WAL实施</h2><p>为了实现预写日志记录，我们将在日志记录中添加一个名为LSN的字段，它代表日志序列号。LSN是一个唯一的递增数，有助于表示操作顺序（如果您看到LSN=20的日志记录，则该操作发生在LSN=10的记录之后）。在这个类中，LSN将每次增加10，但这只是一个约定。我们还将在每个日志记录中添加一个prevLSN字段，该字段存储来自同一事务的最后一个操作（这将有助于撤消事务）。数据库还将跟踪存储在RAM中的flushedLSN。flushedLSN跟踪已刷新到磁盘的最后一条日志记录的LSN。刷新页面时，表示页面已写入磁盘；这通常还意味着我们将页面从内存中逐出，因为我们不再需要它了。flushedLSN告诉我们，之前的任何日志记录都不应写入磁盘，因为它们已经存在。日志页通常附加到磁盘上的上一个日志页，因此多次写入相同的日志意味着我们存储了重复数据，这也会扰乱日志的连续性。我们还将向每个数据页添加一段元数据，称为pageLSN。页面LSN存储上次修改页面的操作的LSN。我们将使用它来帮助告诉我们哪些操作实际进入磁盘，哪些操作必须重做。</p>
-<h2 id="7-不等式练习"><a href="#7-不等式练习" class="headerlink" title="7.不等式练习"></a>7.不等式练习</h2><p>在允许将第一页刷新到磁盘之前，必须保持什么不等式？</p>
-<p>​                                                                                       pageLSNi ___ flushedLSN</p>
+<h2 id="wal实施">6 WAL实施</h2>
+<p>为了实现预写日志记录，我们将在日志记录中添加一个名为LSN的字段，它代表日志序列号。LSN是一个唯一的递增数，有助于表示操作顺序（如果您看到LSN=20的日志记录，则该操作发生在LSN=10的记录之后）。在这个类中，LSN将每次增加10，但这只是一个约定。我们还将在每个日志记录中添加一个prevLSN字段，该字段存储来自同一事务的最后一个操作（这将有助于撤消事务）。数据库还将跟踪存储在RAM中的flushedLSN。flushedLSN跟踪已刷新到磁盘的最后一条日志记录的LSN。刷新页面时，表示页面已写入磁盘；这通常还意味着我们将页面从内存中逐出，因为我们不再需要它了。flushedLSN告诉我们，之前的任何日志记录都不应写入磁盘，因为它们已经存在。日志页通常附加到磁盘上的上一个日志页，因此多次写入相同的日志意味着我们存储了重复数据，这也会扰乱日志的连续性。我们还将向每个数据页添加一段元数据，称为pageLSN。页面LSN存储上次修改页面的操作的LSN。我们将使用它来帮助告诉我们哪些操作实际进入磁盘，哪些操作必须重做。</p>
+<h2 id="不等式练习">7.不等式练习</h2>
+<p>在允许将第一页刷新到磁盘之前，必须保持什么不等式？</p>
+<p>​ pageLSNi ___ flushedLSN</p>
 <p>答复:≤, 这来自WAL的第一条规则——在将数据页刷新到磁盘之前，必须刷新相应的日志记录。仅当上次修改数据页的操作的LSN小于或等于flushedLSN时，数据页才会刷新到磁盘。换句话说，在将页面i刷新到磁盘之前，必须将修改页面i的所有操作的日志记录刷新到磁盘。</p>
-<h2 id="8-中止交易"><a href="#8-中止交易" class="headerlink" title="8.中止交易"></a>8.中止交易</h2><p>在从崩溃中恢复之前，让我们先了解数据库如何中止正在进行的事务。我们可能希望由于死锁而中止事务，或者用户可能因为事务花费太长而决定中止。如果操作违反某些完整性约束，也可以中止事务，以保证ACID中的一致性。最后，由于系统崩溃，事务可能需要中止！我们需要确保，一旦中止过程完成，所有操作都不会保留到磁盘。</p>
-<h3 id="8-1中止和CLR日志记录"><a href="#8-1中止和CLR日志记录" class="headerlink" title="8.1中止和CLR日志记录"></a>8.1中止和CLR日志记录</h3><p>我们要做的第一件事是在日志中写入一条中止记录，表示我们正在启动进程。然后，我们将从该事务日志中的最后一个操作开始。我们将撤消事务中的每个操作，并为每个撤消的操作将CLR记录写入日志。CLR（补偿日志记录）是一种新类型的记录，表示我们正在撤消特定操作。它本质上与更新记录相同（它存储以前的状态和新状态），但它告诉我们，该写操作是由于中止而发生的。</p>
-<h2 id="9-恢复数据结构"><a href="#9-恢复数据结构" class="headerlink" title="9 恢复数据结构"></a>9 恢复数据结构</h2><p>我们将保留两个状态表，以使恢复过程更容易一些。第一个表称为事务表，它存储关于活动事务的信息。事务表有三个字段：</p>
+<h2 id="中止交易">8.中止交易</h2>
+<p>在从崩溃中恢复之前，让我们先了解数据库如何中止正在进行的事务。我们可能希望由于死锁而中止事务，或者用户可能因为事务花费太长而决定中止。如果操作违反某些完整性约束，也可以中止事务，以保证ACID中的一致性。最后，由于系统崩溃，事务可能需要中止！我们需要确保，一旦中止过程完成，所有操作都不会保留到磁盘。</p>
+<h3 id="中止和clr日志记录">8.1中止和CLR日志记录</h3>
+<p>我们要做的第一件事是在日志中写入一条中止记录，表示我们正在启动进程。然后，我们将从该事务日志中的最后一个操作开始。我们将撤消事务中的每个操作，并为每个撤消的操作将CLR记录写入日志。CLR（补偿日志记录）是一种新类型的记录，表示我们正在撤消特定操作。它本质上与更新记录相同（它存储以前的状态和新状态），但它告诉我们，该写操作是由于中止而发生的。</p>
+<h2 id="恢复数据结构">9 恢复数据结构</h2>
+<p>我们将保留两个状态表，以使恢复过程更容易一些。第一个表称为事务表，它存储关于活动事务的信息。事务表有三个字段：</p>
 <p>•XID：交易ID</p>
 <p>•状态：运行、提交或中止</p>
 <p>•lastLSN：此交易最近一次操作的LSN</p>
 <p>交易表示例如下：</p>
-<p><img src="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913205955915.png" alt="image-20220913205955915"></p>
+<figure>
+<img src="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913205955915.png" alt="image-20220913205955915"><figcaption aria-hidden="true">image-20220913205955915</figcaption>
+</figure>
 <p>我们维护的另一个表称为脏页表（DPT）。DPT跟踪哪些页面是脏的（回想以前的许多模块，脏意味着页面已经在内存中修改，但尚未刷新到磁盘）。这些信息将非常有用，因为它将告诉我们哪些页面具有尚未进入磁盘的操作。DPT只有两列：</p>
 <p>•页面ID</p>
 <p>•recLSN：第一个弄脏页面的操作</p>
 <p>DPT的示例如下：</p>
-<p><img src="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913210112697.png" alt="image-20220913210112697"></p>
+<figure>
+<img src="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/image-20220913210112697.png" alt="image-20220913210112697"><figcaption aria-hidden="true">image-20220913210112697</figcaption>
+</figure>
 <p>需要注意的是，这两个表都存储在内存中；因此，当从崩溃中恢复时，必须使用日志重建表。我们将在本说明的后面讨论一种使这更容易的方法（检查点）。</p>
-<h2 id="10更多不等式问题"><a href="#10更多不等式问题" class="headerlink" title="10更多不等式问题"></a>10更多不等式问题</h2><ol>
+<h2 id="更多不等式问题">10更多不等式问题</h2>
+<ol type="1">
 <li>填写以下等式以强制执行WAL规则，即在事务T提交之前，必须将所有日志刷新到磁盘：</li>
 </ol>
-<p>​                                   flushedLSN  ___ lastLSNT</p>
-<p>回答：≥  如果flushedLSN 大于事务的最后一次操作，则我们知道该事务的所有日志都在磁盘上。</p>
-<ol start="2">
+<p>​ flushedLSN ___ lastLSNT</p>
+<p>回答：≥ 如果flushedLSN 大于事务的最后一次操作，则我们知道该事务的所有日志都在磁盘上。</p>
+<ol start="2" type="1">
 <li><p>对于DPT中的页面P，填写以下不等式，该不等式必须始终为真：</p>
-<p>​                            recLSNP ___  in memory pageLSNP</p>
-</li>
+<p>​ recLSNP ___ in memory pageLSNP</p></li>
 </ol>
 <p>回答:≤ 如果页面位于脏页表中，则该页面必须是脏的，因此上次更新一定没有将其更新到磁盘。recLSN是第一个弄脏页面的操作，因此它必须小于修改该页面的最后一个操作。</p>
-<ol start="3">
+<ol start="3" type="1">
 <li></li>
 </ol>
-<p>   ​                                                                   recLSNp ____   磁盘上的recLSNP页</p>
+<p>​ recLSNp ____ 磁盘上的recLSNP页</p>
 <p>答案：&gt;如果页面是脏的，则导致页面变脏的操作（recLSN）一定没有将其发送到磁盘，因此它一定是在将页面发送到磁盘的操作之后</p>
 <p>那一页。</p>
-<h2 id="11撤消日志记录"><a href="#11撤消日志记录" class="headerlink" title="11撤消日志记录"></a>11撤消日志记录</h2><p>我们已经介绍了数据库如何写入日志以及在正常运行时如何中止事务的大量背景信息。现在，让我们最终了解所有这些日志记录的原因——从失败中恢复。一种可能的恢复机制是撤消日志记录。请注意，撤销日志记录实际上并没有使用我们之前讨论过的提前写入日志记录（WAL）（我们稍后将回到这一点）。此外，它在缓冲池管理方面使用强制和窃取机制。</p>
+<h2 id="撤消日志记录">11撤消日志记录</h2>
+<p>我们已经介绍了数据库如何写入日志以及在正常运行时如何中止事务的大量背景信息。现在，让我们最终了解所有这些日志记录的原因——从失败中恢复。一种可能的恢复机制是撤消日志记录。请注意，撤销日志记录实际上并没有使用我们之前讨论过的提前写入日志记录（WAL）（我们稍后将回到这一点）。此外，它在缓冲池管理方面使用强制和窃取机制。</p>
 
     </div>
 
@@ -367,7 +384,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D"><span class="nav-number">1.</span> <span class="nav-text">恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1. 动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%BC%BA%E5%88%B6%E9%9D%9E%E5%BC%BA%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2 .强制非强制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Steal-No-Steal"><span class="nav-number">1.3.</span> <span class="nav-text">3 Steal&#x2F;No-Steal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Steal-No-Force"><span class="nav-number">1.4.</span> <span class="nav-text">4 Steal, No-Force</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%8F%90%E5%89%8D%E5%86%99%E5%85%A5%E6%97%A5%E5%BF%97"><span class="nav-number">1.5.</span> <span class="nav-text">5.提前写入日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1更新日志记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2%E5%85%B6%E4%BB%96%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.6.</span> <span class="nav-text">5.2其他日志记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-WAL%E8%A6%81%E6%B1%82"><span class="nav-number">1.7.</span> <span class="nav-text">5.3 WAL要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-WAL%E5%AE%9E%E6%96%BD"><span class="nav-number">1.8.</span> <span class="nav-text">6 WAL实施</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E4%B8%8D%E7%AD%89%E5%BC%8F%E7%BB%83%E4%B9%A0"><span class="nav-number">1.9.</span> <span class="nav-text">7.不等式练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E4%B8%AD%E6%AD%A2%E4%BA%A4%E6%98%93"><span class="nav-number">1.10.</span> <span class="nav-text">8.中止交易</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1%E4%B8%AD%E6%AD%A2%E5%92%8CCLR%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.10.1.</span> <span class="nav-text">8.1中止和CLR日志记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.11.</span> <span class="nav-text">9 恢复数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10%E6%9B%B4%E5%A4%9A%E4%B8%8D%E7%AD%89%E5%BC%8F%E9%97%AE%E9%A2%98"><span class="nav-number">1.12.</span> <span class="nav-text">10更多不等式问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11%E6%92%A4%E6%B6%88%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.13.</span> <span class="nav-text">11撤消日志记录</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D"><span class="nav-number">1.</span> <span class="nav-text">恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1. 动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E9%9D%9E%E5%BC%BA%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2 .强制非强制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stealno-steal"><span class="nav-number">1.3.</span> <span class="nav-text">3 Steal&#x2F;No-Steal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#steal-no-force"><span class="nav-number">1.4.</span> <span class="nav-text">4 Steal, No-Force</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%89%8D%E5%86%99%E5%85%A5%E6%97%A5%E5%BF%97"><span class="nav-number">1.5.</span> <span class="nav-text">5.提前写入日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1更新日志记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.6.</span> <span class="nav-text">5.2其他日志记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wal%E8%A6%81%E6%B1%82"><span class="nav-number">1.7.</span> <span class="nav-text">5.3 WAL要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wal%E5%AE%9E%E6%96%BD"><span class="nav-number">1.8.</span> <span class="nav-text">6 WAL实施</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E7%AD%89%E5%BC%8F%E7%BB%83%E4%B9%A0"><span class="nav-number">1.9.</span> <span class="nav-text">7.不等式练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%AD%A2%E4%BA%A4%E6%98%93"><span class="nav-number">1.10.</span> <span class="nav-text">8.中止交易</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%AD%A2%E5%92%8Cclr%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.10.1.</span> <span class="nav-text">8.1中止和CLR日志记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.11.</span> <span class="nav-text">9 恢复数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E4%B8%8D%E7%AD%89%E5%BC%8F%E9%97%AE%E9%A2%98"><span class="nav-number">1.12.</span> <span class="nav-text">10更多不等式问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%A4%E6%B6%88%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="nav-number">1.13.</span> <span class="nav-text">11撤消日志记录</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

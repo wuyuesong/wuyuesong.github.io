@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="查询优化1 导言当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I&#x2F;O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所需的I&#x2F;">
+  <meta name="description" content="查询优化 1 导言 当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I&#x2F;O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库————查询优化">
 <meta property="og:url" content="https://101.35.161.126/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="查询优化1 导言当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I&#x2F;O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所需的I&#x2F;">
+<meta property="og:description" content="查询优化 1 导言 当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I&#x2F;O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://101.35.161.126/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909190834709.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909204018789.png">
@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://101.35.161.126/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909215355957.png">
 <meta property="og:image" content="https://101.35.161.126/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909220525735.png">
 <meta property="article:published_time" content="2022-08-20T02:27:27.000Z">
-<meta property="article:modified_time" content="2022-09-15T11:40:55.188Z">
+<meta property="article:modified_time" content="2022-09-15T11:56:11.711Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://101.35.161.126/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909190834709.png">
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 19:40:55" itemprop="dateModified" datetime="2022-09-15T19:40:55+08:00">2022-09-15</time>
+                <time title="Modified: 2022-09-15 19:56:11" itemprop="dateModified" datetime="2022-09-15T19:56:11+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,10 +234,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h1><h2 id="1-导言"><a href="#1-导言" class="headerlink" title="1 导言"></a>1 导言</h2><p>当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I/O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所需的I/O数量。查询计划只是一系列操作，这些操作将为查询获得正确的结果。我们使用关系代数来表示它。这是查询计划的示例：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909190834709.png" alt="image-20220909190834709"></p>
+        <h1 id="查询优化">查询优化</h1>
+<h2 id="导言">1 导言</h2>
+<p>当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I/O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所需的I/O数量。查询计划只是一系列操作，这些操作将为查询获得正确的结果。我们使用关系代数来表示它。这是查询计划的示例：</p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909190834709.png" alt="image-20220909190834709"><figcaption aria-hidden="true">image-20220909190834709</figcaption>
+</figure>
 <p>首先，它将两个表连接在一起，然后过滤掉行，最后只投影所需的列。我们很快就会看到，我们可以提出更好的查询计划！</p>
-<h2 id="2-选择性估计"><a href="#2-选择性估计" class="headerlink" title="2.选择性估计"></a>2.选择性估计</h2><p>查询优化的一个重要特性是，在执行一个计划之前，我们无法知道该计划将花费多少I/O。这有两个重要的含义。首先，我们不可能保证找到最佳查询计划-我们只能希望使用启发式和估计找到一个好的（足够的）查询计划。第二，我们需要某种方法来估计查询计划的成本。我们将用来估计查询计划成本的一个工具称为选择性估计。运算符的选择性是一个近似值，表示通过运算符到达其上的运算符的页面百分比。这一点很重要，因为如果我们有一个操作符可以大大减少进入下一阶段的页面数量（如WHERE子句），我们可能希望尽快这样做，以便其他操作符必须处理更少的页面。</p>
+<h2 id="选择性估计">2.选择性估计</h2>
+<p>查询优化的一个重要特性是，在执行一个计划之前，我们无法知道该计划将花费多少I/O。这有两个重要的含义。首先，我们不可能保证找到最佳查询计划-我们只能希望使用启发式和估计找到一个好的（足够的）查询计划。第二，我们需要某种方法来估计查询计划的成本。我们将用来估计查询计划成本的一个工具称为选择性估计。运算符的选择性是一个近似值，表示通过运算符到达其上的运算符的页面百分比。这一点很重要，因为如果我们有一个操作符可以大大减少进入下一阶段的页面数量（如WHERE子句），我们可能希望尽快这样做，以便其他操作符必须处理更少的页面。</p>
 <p>大多数选择性估算公式相当简单。例如，为了估计X=3形式的条件的选择性，公式为1/（X的唯一值的数量）。本说明中使用的公式如下所示，但完整列表请参见讲座/讨论幻灯片。在这些示例中，大写字母表示列，小写字母表示常量。以下示例中的所有值都是整数，因为浮点具有不同的公式。</p>
 <ul>
 <li>X=a: 1/(unique vals in X)</li>
@@ -245,124 +250,144 @@
 <li>X&gt;a: (max(X) - a) / (max(X) - min(X) + 1)</li>
 <li>cond1 AND cond2: Selectivity(cond1) * Selectivity(cond2)</li>
 </ul>
-<h2 id="3-连接的选择性"><a href="#3-连接的选择性" class="headerlink" title="3.连接的选择性"></a>3.连接的选择性</h2><p>假设我们试图在条件A.id=B.id的情况下将表A和表B连接在一起。如果没有条件，则j结果中会有|A|∗|B |元组，因为没有该条件，A中的每一行都与B中的每行连接。连接条件只是X=Y形式的条件，因此选择性估计为：1/max（A.id的唯一VAL，B.id的惟一VAL），这意味着我们可以期望移动的元组总数为：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909204018789.png" alt="image-20220909204018789"></p>
-<h2 id="4种常见的启发式方法"><a href="#4种常见的启发式方法" class="headerlink" title="4种常见的启发式方法"></a>4种常见的启发式方法</h2><p>对于一个相当复杂的查询，有太多可能的查询计划来分析它们。我们需要一些方法来减少我们实际考虑的计划数量。因此，我们将使用一些启发式方法：</p>
+<h2 id="连接的选择性">3.连接的选择性</h2>
+<p>假设我们试图在条件A.id=B.id的情况下将表A和表B连接在一起。如果没有条件，则j结果中会有|A|∗|B |元组，因为没有该条件，A中的每一行都与B中的每行连接。连接条件只是X=Y形式的条件，因此选择性估计为：1/max（A.id的唯一VAL，B.id的惟一VAL），这意味着我们可以期望移动的元组总数为：</p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909204018789.png" alt="image-20220909204018789"><figcaption aria-hidden="true">image-20220909204018789</figcaption>
+</figure>
+<h2 id="种常见的启发式方法">4种常见的启发式方法</h2>
+<p>对于一个相当复杂的查询，有太多可能的查询计划来分析它们。我们需要一些方法来减少我们实际考虑的计划数量。因此，我们将使用一些启发式方法：</p>
 <p>1.尽可能的向下推项目（π）和选择（σ）</p>
 <p>2.只考虑剩下的深度计划</p>
 <p>3.除非交叉连接是唯一的选项，否则不要考虑交叉连接</p>
 <p>第一个启发式方法是，我们将尽可能的投影和选择。我们谈到了为什么进行是有益的。它减少了其他操必须处理的页面数量。但为什么进行投影式有利的呢？事实证明，这也减少了未来操作需要处理的页面数量。由于投影消除了列，行变得更小，这意味着我们可以在一个页面上容纳更多的列，因此页面更少！请注意，您只能投影去除掉查询其余部分中未使用的列（即，如果它们位于尚未计算的SELECT或WHERE子句中，则无法删除该列）。</p>
 <p>第二种启发式方法是只考虑左深计划。左深度计划是一个计划，其中联接中的所有右表都是基表（换句话说，右侧永远不是联接本身的结果，它只能是原始表之一）。下图给出了一些示例，说明哪些是深度计划，哪些不是深度计划</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909204944094.png" alt="image-20220909204944094"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909204944094.png" alt="image-20220909204944094"><figcaption aria-hidden="true">image-20220909204944094</figcaption>
+</figure>
 <p>左深计划有两个主要原因。首先，只考虑它们会大大减少规划空间。计划空间仍然是指数级的，但比我们考虑每个计划时要小得多。其次，这些计划可以完全流水线化，这意味着我们可以将页面一次一个地传递给下一个连接操作符——实际上我们不必将连接的结果写入磁盘。</p>
 <p>第三种启发式是有益的，因为交叉连接产生大量页面，这使得交叉连接上方的运算符执行许多I/O。我们希望尽可能避免这种情况。</p>
-<h2 id="5-系统R的第1遍"><a href="#5-系统R的第1遍" class="headerlink" title="5 系统R的第1遍"></a>5 系统R的第1遍</h2><p>我们将在这个类中学习的查询优化器称为System R。System R使用我们在上一节中提到的所有启发式方法。系统R的第一步决定了如何以最佳方式或有趣的方式访问表（我们将稍微定义有趣）。</p>
+<h2 id="系统r的第1遍">5 系统R的第1遍</h2>
+<p>我们将在这个类中学习的查询优化器称为System R。System R使用我们在上一节中提到的所有启发式方法。系统R的第一步决定了如何以最佳方式或有趣的方式访问表（我们将稍微定义有趣）。</p>
 <p>我们有两种方法可以在第一次访问时访问表：</p>
-<ol>
-<li><p>全表扫描</p>
-</li>
-<li><p>索引扫描（对于表在其上构建的每个索引）</p>
-</li>
+<ol type="1">
+<li><p>全表扫描</p></li>
+<li><p>索引扫描（对于表在其上构建的每个索引）</p></li>
 </ol>
 <p>对于这两种扫描，由于第一种启发式（下推选择操作），我们只返回一行，如果它匹配与其表相关的所有单表条件。涉及来自多个表的列的条件是联接条件，并且还不能应用，因为我们只考虑如何访问单个表。这意味着每种扫描类型的选择性是相同的，因为它们应用相同的条件！</p>
 <p>然而，每种类型的扫描所需的I/O数量将不相同。对于表P，全扫描将始终采用[P]I/O；每一页都需要阅读。</p>
 <p>对于索引扫描，I/O的数量取决于记录的存储方式以及索引是否群集。备选1指数的IO成本为：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909205717449.png" alt="image-20220909205717449"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909205717449.png" alt="image-20220909205717449"><figcaption aria-hidden="true">image-20220909205717449</figcaption>
+</figure>
 <p>您不必读取每个叶，因为您可以应用与索引所基于的列相关的条件。这是因为数据在叶中是按排序顺序排列的，因此您可以直接转到应该开始的叶，然后可以直接扫描，直到条件不再为真。</p>
 <p>示例：重要信息：</p>
 <ul>
-<li><p>表A有[A]页</p>
-</li>
-<li><p>有一个高度为2的C1的备选方案1索引</p>
-</li>
-<li><p>我们的查询中有两个条件：C1&gt;5 and C2&lt;6</p>
-</li>
-<li><p>C1和C2的值都在1-10范围内</p>
-</li>
+<li><p>表A有[A]页</p></li>
+<li><p>有一个高度为2的C1的备选方案1索引</p></li>
+<li><p>我们的查询中有两个条件：C1&gt;5 and C2&lt;6</p></li>
+<li><p>C1和C2的值都在1-10范围内</p></li>
 </ul>
 <p>选择性将是0.25，因为两个条件的选择性都是0.5（根据选择性公式），这是一个and子句，所以我们将它们相乘。然而，我们不能使用C2条件来缩小我们在索引中查看的页面，因为索引不是建立在C2上的。我们可以使用C1条件，因此我们只需要查看0.5[A]叶页面。我们还必须读取两个索引页，以找到从哪个叶开始，总共2+0.5[a]个I/O。</p>
 <p>对于备选2/3指数，公式略有不同。新公式为：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909205919692.png" alt="image-20220909205919692"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909205919692.png" alt="image-20220909205919692"><figcaption aria-hidden="true">image-20220909205919692</figcaption>
+</figure>
 <p>我们可以对读取的叶节点数和读取的数据页数应用选择性（针对建立索引的列的条件）。对于聚集索引，读取的数据页数是选择性乘以数据页总数。但是，对于非群集索引，您必须为每个记录执行IO，因此它是选择性乘以记录总数。</p>
 <p>示例：重要信息：</p>
 <ul>
-<li><p>带有[B]数据页和|B|记录的表B</p>
-</li>
-<li><p>列C1上的备选方案 2索引，高度为2页和[L]个叶子页</p>
-</li>
-<li><p>有两种情况：C1&gt;5 and C2&lt;6</p>
-</li>
-<li><p>C1和C2的值都在1-10范围内</p>
-</li>
+<li><p>带有[B]数据页和|B|记录的表B</p></li>
+<li><p>列C1上的备选方案 2索引，高度为2页和[L]个叶子页</p></li>
+<li><p>有两种情况：C1&gt;5 and C2&lt;6</p></li>
+<li><p>C1和C2的值都在1-10范围内</p></li>
 </ul>
 <p>如果索引是聚集的，则扫描将需要2个I/O才能到达叶级以上的索引节点，然后必须读取0.5[L]叶页，然后读取0.5[B]数据页。因此，总数为2+0.5[L]+0.5[B]。如果索引未群集，则公式相同，只是我们必须读取0.5 |B|数据页。因此，I/O的总数为2+0.5[L]+0.5|B|。</p>
 <p>pass 1的最后一步是决定我们将推进到后续通行证以供考虑的访问计划。对于每个表，我们将提出最佳访问计划（需要最少数量I/O的访问计划）和任何产生最佳有趣顺序的访问计划。一个有趣的顺序是当表按列排序时：</p>
 <ul>
-<li><p>在ORDER BY中使用</p>
-</li>
-<li><p>在GROUP BY中使用</p>
-</li>
-<li><p>用于下游联接（尚未评估的联接。对于第1次传递，这是所有联接）。</p>
-</li>
+<li><p>在ORDER BY中使用</p></li>
+<li><p>在GROUP BY中使用</p></li>
+<li><p>用于下游联接（尚未评估的联接。对于第1次传递，这是所有联接）。</p></li>
 </ul>
 <p>前两个是显而易见的。最后一种方法很有价值，因为它可以让我们在查询执行过程中减少排序合并连接所需的I/O数量。完整扫描永远不会产生有趣的顺序，因为其输出未排序。然而，索引扫描将在建立索引的列上按排序顺序生成输出。请记住，只有在稍后的查询中使用此顺序时，才会变得interesting！</p>
 <p>示例：假设我们正在评估以下查询：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909210621466.png" alt="image-20220909210621466"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909210621466.png" alt="image-20220909210621466"><figcaption aria-hidden="true">image-20220909210621466</figcaption>
+</figure>
 <p>我们有以下潜在的访问模式：</p>
-<ol>
-<li>Full Scan players (100 I/Os) </li>
-<li>Index Scan players.age (90 I/Os) </li>
-<li>Index Scan players.teamid (120 I/Os) </li>
-<li>Full Scan teams (300 I/Os) </li>
+<ol type="1">
+<li>Full Scan players (100 I/Os)</li>
+<li>Index Scan players.age (90 I/Os)</li>
+<li>Index Scan players.teamid (120 I/Os)</li>
+<li>Full Scan teams (300 I/Os)</li>
 <li>Index Scan teams.record (400 I/Os)</li>
 </ol>
 <p>模式2、3和4将可行。模式2和4是它们各自表的最佳模式，模式3有一个有趣的顺序，因为teamid用于下游连接。</p>
-<h2 id="6-Passes-2-n"><a href="#6-Passes-2-n" class="headerlink" title="6 Passes 2..n"></a>6 Passes 2..n</h2><p>系统R算法的其余过程涉及将表连接在一起。对于每个Pass i，我们尝试使用Pass i-1和Pass1的结果将 i 个表连接在一起。例如，在Pass 2，我们将尝试将两个表连接到一起，每个表来自Pass1。在Pass5，我们将试图将总共5个表连接起来。我们将从第4遍中得到其中的4张表（它指出了如何将4张表连接在一起），并从第1遍中得到剩余的表。请注意，这强制了我们的左深度计划启发式。我们总是用一个基表连接一组连接表。</p>
+<h2 id="passes-2..n">6 Passes 2..n</h2>
+<p>系统R算法的其余过程涉及将表连接在一起。对于每个Pass i，我们尝试使用Pass i-1和Pass1的结果将 i 个表连接在一起。例如，在Pass 2，我们将尝试将两个表连接到一起，每个表来自Pass1。在Pass5，我们将试图将总共5个表连接起来。我们将从第4遍中得到其中的4张表（它指出了如何将4张表连接在一起），并从第1遍中得到剩余的表。请注意，这强制了我们的左深度计划启发式。我们总是用一个基表连接一组连接表。</p>
 <p>Pass i 将为长度为 i 的所有表集生成至少一个查询计划，这些表集可以在没有交叉联接的情况下联接（假设至少有一个这样的集合）。就像在第1步中一样，它将为每个集合提出最优计划，也为每个集合（如果存在）的每个有趣顺序提出最优计划。当尝试将一组表与第1次Pass中的一个表联接时，我们将考虑数据库已实现的每个联接。这些联接中只有一个联接产生排序输出-排序合并联接，因此获得有趣顺序的唯一方法是对集合中的最后一个联接使用排序合并联接。排序合并联接的输出将按联接条件中的列进行排序。</p>
 <p>示例：我们正在尝试执行以下查询：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211138813.png" alt="image-20220909211138813"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211138813.png" alt="image-20220909211138813"><figcaption aria-hidden="true">image-20220909211138813</figcaption>
+</figure>
 <p>在第2遍中，我们将返回哪些表集的查询计划？在本次传递中，我们将考虑的表集只有｛A，B｝和｛B，C｝。我们不考虑{A，C}，因为没有连接条件，我们的启发式告诉我们不要考虑交叉连接。为了简化问题，假设我们在数据库中只实现了SMJ和BNLJ，并且pass 1只返回每个表的完整表扫描。以下是我们将考虑的连接（成本由问题补偿。实际上，您将使用选择性估计和连接成本公式）：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211312451.png" alt="image-20220909211312451"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211312451.png" alt="image-20220909211312451"><figcaption aria-hidden="true">image-20220909211312451</figcaption>
+</figure>
 <p>联接1、5和6可行。1是集合｛A，B｝的最佳连接。5对于集合{B，C}是最优的。6是一个有趣的顺序，因为有一个order BY子句，在查询中稍后使用c.cid。我们不提前3，因为A.aid和B.bid在连接后不使用，因此顺序不有趣。</p>
 <p>现在让我们转到第3步。我们将考虑以下连接（连接成本也是由连接成本组成的）：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211455670.png" alt="image-20220909211455670"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211455670.png" alt="image-20220909211455670"><figcaption aria-hidden="true">image-20220909211455670</figcaption>
+</figure>
 <p>请注意，现在我们不能更改连接顺序，因为我们只考虑左深度计划，所以基表必须在右侧。</p>
 <p>现在唯一可以推进的计划是2和3。对于所有3个表的集合，3是最优的。2对于C.cid上具有有趣顺序的所有3个表的集合是最佳的（这仍然很有趣，因为我们没有评估order BY子句）。产生按C.cid排序的输出的原因是连接条件为B.did=C.cid，因此输出将按B.did和C.ci排序（因为它们相同）。4和6将不会产生按C.cid排序的输出，因为它们将把A添加到联接表集合中，因此条件将是A.aid=B.bid。A.aid和B.bid都没有在查询的其他地方使用，因此它们的排序对我们来说并不有趣。</p>
-<h2 id="7-计算联接操作的I-O成本"><a href="#7-计算联接操作的I-O成本" class="headerlink" title="7.计算联接操作的I/O成本"></a>7.计算联接操作的I/O成本</h2><p>当我们估计我们试图优化的查询的I/O成本时，重要的是考虑以下几点：</p>
-<ol>
-<li><p>我们是具体化中间关系（来自先前运算符的输出）还是将它们流式传输到下一个运算符的输入。</p>
-</li>
-<li><p>如果从以前的操作符获得的有趣命令可以减少执行联接的I/O成本</p>
-</li>
+<h2 id="计算联接操作的io成本">7.计算联接操作的I/O成本</h2>
+<p>当我们估计我们试图优化的查询的I/O成本时，重要的是考虑以下几点：</p>
+<ol type="1">
+<li><p>我们是具体化中间关系（来自先前运算符的输出）还是将它们流式传输到下一个运算符的输入。</p></li>
+<li><p>如果从以前的操作符获得的有趣命令可以减少执行联接的I/O成本</p></li>
 </ol>
 <p>由于这些考虑，我们可能无法直接使用迭代器和连接模块中的公式来计算I/O成本。</p>
-<h3 id="7-1-考虑因素-1"><a href="#7-1-考虑因素-1" class="headerlink" title="7.1 考虑因素 1"></a>7.1 考虑因素 1</h3><p>无论是具体化中间关系（先前运算符的输出）还是将它们流式传输到下一个运算符的输入，都会影响查询的I/O成本。</p>
+<h3 id="考虑因素-1">7.1 考虑因素 1</h3>
+<p>无论是具体化中间关系（先前运算符的输出）还是将它们流式传输到下一个运算符的输入，都会影响查询的I/O成本。</p>
 <p>为了具体化中间关系，我们将中间运算符的输出写入磁盘（即，将其写入临时文件），这一过程会导致额外的i/O。当这些数据传递到下一个操作员时，我们必须再次将其从磁盘读取到内存中。另一方面，如果我们将一个操作符的输出流到下一个操作符中，我们不会将中间输出写入磁盘。相反，当我们处理第一个运算符时，元组一旦可用，它们就会保留在内存中，我们开始对它们应用第二个运算符。</p>
 <p>例如，当我们下推选择/投影时，我们的目标是减少数据的大小，以便在树上遍历时，需要更少的I/O来读取数据。然而，如果这些选择/预测的输出被具体化，或者如果我们执行的下一个运算符仅通过数据一次（即，S/P/BNLJ的左关系、INLJ的右关系等），我们将只看到I/O成本的影响。为了说明这一点，我们来看下面的示例。</p>
 <p>例子：</p>
 <p>假设B=5，[P]=50，[T]=100，有30页的玩家记录，其中P.teamid&gt;200，有40页的记录，其中T.tname&gt;Team5。我们正在优化以下内容：</p>
 <p>查询：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211934475.png" alt="image-20220909211934475"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211934475.png" alt="image-20220909211934475"><figcaption aria-hidden="true">image-20220909211934475</figcaption>
+</figure>
 <p>假设我们的查询优化器选择了以下查询计划：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211959068.png" alt="image-20220909211959068"></p>
-<p>此查询计划的估计I/O成本为$（50+30）+（100+40）+（30+\lceil \frac{30}{5-2} \rceil*40）= 650$</p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909211959068.png" alt="image-20220909211959068"><figcaption aria-hidden="true">image-20220909211959068</figcaption>
+</figure>
+<p>此查询计划的估计I/O成本为<span class="math inline">\(（50+30）+（100+40）+（30+\lceil \frac{30}{5-2} \rceil*40）= 650\)</span></p>
 <p>我们首先对P执行完全扫描：我们读取P的所有50页，识别P.teamid＞200的记录，并将这些记录的30页写入磁盘。发生这种情况是因为我们正在具体化选择后得到的输出。我们对T重复相同的过程：我们读入T的所有100页，识别T.tname＞Team5的记录，并将这些记录的40页写入磁盘。</p>
-<p>接下来，当我们使用BNLJ将这两个表连接在一起时，我们正在处理30页的P和40页的T，这些选择已经应用到并且当前位于磁盘上。对于P的每个B-2页块，我们读取所有T，因此$（30+ \lceil \frac{30}{5-2}\rceil * 40) $ 轮 </p>
+<p>接下来，当我们使用BNLJ将这两个表连接在一起时，我们正在处理30页的P和40页的T，这些选择已经应用到并且当前位于磁盘上。对于P的每个B-2页块，我们读取所有T，因此$（30+ ) $ 轮</p>
 <p>现在，假设我们的查询优化器选择了以下查询计划</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909212345684.png" alt="image-20220909212345684"></p>
-<p>此查询计划的估计I/O成本为$（50+30）+（30+ \lceil \frac{30}{5-2}\rceil * 100) = 1110$ I/O</p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909212345684.png" alt="image-20220909212345684"><figcaption aria-hidden="true">image-20220909212345684</figcaption>
+</figure>
+<p>此查询计划的估计I/O成本为<span class="math inline">\(（50+30）+（30+ \lceil \frac{30}{5-2}\rceil * 100) = 1110\)</span> I/O</p>
 <p>由于我们在P上执行选择后实现了我们得到的输出，我们首先读取P的所有50页，识别P.teamid＞200的记录，并将这些记录的30页写入磁盘。</p>
-<p>我们将在选择大小为B-2的块后读取剩余的30页P。对于每个P块，我们需要识别T中的匹配记录。由于我们在选择tname＜“Team5”的记录后没有具体化，因此我们必须对每个P块的整个T表执行完整扫描，逐页将T读取到内存中，找到tname＜‘Team5‘所在的记录，并在P中加入他们的记录。有$\lceil \frac{30}{5-2}\rceil$ 个P中的块需要处理，因此需要$\lceil \frac{30}{5-2}\rceil * 100$ 轮 </p>
+<p>我们将在选择大小为B-2的块后读取剩余的30页P。对于每个P块，我们需要识别T中的匹配记录。由于我们在选择tname＜“Team5”的记录后没有具体化，因此我们必须对每个P块的整个T表执行完整扫描，逐页将T读取到内存中，找到tname＜‘Team5‘所在的记录，并在P中加入他们的记录。有<span class="math inline">\(\lceil \frac{30}{5-2}\rceil\)</span> 个P中的块需要处理，因此需要<span class="math inline">\(\lceil \frac{30}{5-2}\rceil * 100\)</span> 轮</p>
 <p>在这里，我们看到，即使我们在T上下推选择，它也不会影响查询的I/O成本。如果使用此查询计划，则I/O成本将相同：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909215244521.png" alt="image-20220909215244521"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909215244521.png" alt="image-20220909215244521"><figcaption aria-hidden="true">image-20220909215244521</figcaption>
+</figure>
 <p>I/O成本保持不受影响的原因是，每次我们通过T（每P块一次），我们仍然需要访问整个T表并动态应用选择，因为我们没有保存这些中间结果。这表明，只有当下一个操作员对数据进行单次传递时，或者当中间关系的输出被具体化时，下推选择/投影如何影响我们的I/O成本。</p>
 <p>对于我们在这个类中研究的System R查询优化器，假设我们从未具体化任何中间运算符的输出，并且它们作为下一个运算符的输入流。</p>
 <p>因此，这是System R查询优化器将考虑的查询计划：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909215355957.png" alt="image-20220909215355957"></p>
-<p>此查询计划的估计I/O成本为 $50+\lceil \frac{30}{5-2}\rceil* 100 = 1050$ I/O</p>
-<p>我们对P执行全扫描，将50页中的每一页读取到内存中，并过滤P.teamid＜200的记录。由于我们按下此选择，只有30页P将传递到BNLJ运算符。对于P的每个B-2页块，其中P.teamid＜200，我们需要识别T中的匹配记录。由于我们在选择tname＜Team5的记录后没有实现，我们将不得不对P的每个块的整个T表执行完整扫描，逐页读取T到内存中，找到tname＜‘Team5’的记录，并将它们与P中的记录连接。P中有$\lceil\frac{30}{5-2}\rceil$ 个块需要处理，因此需要$\lceil\frac{30}{5-2}\rceil* 100$ 轮。</p>
-<h3 id="7-2-考虑因素-2"><a href="#7-2-考虑因素-2" class="headerlink" title="7.2 考虑因素 2"></a>7.2 考虑因素 2</h3><p>我们还必须考虑来自先前操作符的有趣命令的影响。例如，假设我们正在优化以下查询，其中玩家表包含50页，团队表包含100页：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909220525735.png" alt="image-20220909220525735"></p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909215355957.png" alt="image-20220909215355957"><figcaption aria-hidden="true">image-20220909215355957</figcaption>
+</figure>
+<p>此查询计划的估计I/O成本为 <span class="math inline">\(50+\lceil \frac{30}{5-2}\rceil* 100 = 1050\)</span> I/O</p>
+<p>我们对P执行全扫描，将50页中的每一页读取到内存中，并过滤P.teamid＜200的记录。由于我们按下此选择，只有30页P将传递到BNLJ运算符。对于P的每个B-2页块，其中P.teamid＜200，我们需要识别T中的匹配记录。由于我们在选择tname＜Team5的记录后没有实现，我们将不得不对P的每个块的整个T表执行完整扫描，逐页读取T到内存中，找到tname＜‘Team5’的记录，并将它们与P中的记录连接。P中有<span class="math inline">\(\lceil\frac{30}{5-2}\rceil\)</span> 个块需要处理，因此需要<span class="math inline">\(\lceil\frac{30}{5-2}\rceil* 100\)</span> 轮。</p>
+<h3 id="考虑因素-2">7.2 考虑因素 2</h3>
+<p>我们还必须考虑来自先前操作符的有趣命令的影响。例如，假设我们正在优化以下查询，其中玩家表包含50页，团队表包含100页：</p>
+<figure>
+<img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909220525735.png" alt="image-20220909220525735"><figcaption aria-hidden="true">image-20220909220525735</figcaption>
+</figure>
 <p>假设我们按下选择P.teamid&gt;200，选择对P.Team ID的索引扫描，花费60 I/O作为我们对P表的访问计划，并选择花费100 I/O的完整扫描作为我们对T表的访问方案。索引扫描的输出将按teamid排序，这是一个有趣的顺序，因为它可能用于P和T之间的下游连接。</p>
 <p>现在，假设我们选择SMJ作为连接P和T的连接算法。我们在迭代器和连接模块中给出的公式将估计I/O成本为：排序P的成本+排序T+（50+100）的成本，其中最后一项（[P]+[T]）是合并步骤的平均案例成本，并考虑了两个表中的读取成本。</p>
 <p>然而，如果我们在P.teamid上使用索引扫描，我们不再需要在P上运行外部排序！相反，我们将考虑使用索引扫描访问P的I/O成本，并在合并阶段的索引扫描输出中使用流。因此，该查询计划的估计成本为（T的排序成本+60+100）I/O的成本。</p>
@@ -446,7 +471,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">查询优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AF%BC%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">1 导言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%80%89%E6%8B%A9%E6%80%A7%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">2.选择性估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%80%89%E6%8B%A9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">3.连接的选择性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E5%90%AF%E5%8F%91%E5%BC%8F%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">4种常见的启发式方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%B3%BB%E7%BB%9FR%E7%9A%84%E7%AC%AC1%E9%81%8D"><span class="nav-number">1.5.</span> <span class="nav-text">5 系统R的第1遍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Passes-2-n"><span class="nav-number">1.6.</span> <span class="nav-text">6 Passes 2..n</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E8%AE%A1%E7%AE%97%E8%81%94%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%9A%84I-O%E6%88%90%E6%9C%AC"><span class="nav-number">1.7.</span> <span class="nav-text">7.计算联接操作的I&#x2F;O成本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E8%80%83%E8%99%91%E5%9B%A0%E7%B4%A0-1"><span class="nav-number">1.7.1.</span> <span class="nav-text">7.1 考虑因素 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E8%80%83%E8%99%91%E5%9B%A0%E7%B4%A0-2"><span class="nav-number">1.7.2.</span> <span class="nav-text">7.2 考虑因素 2</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">查询优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">1 导言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%80%A7%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">2.选择性估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%80%89%E6%8B%A9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">3.连接的选择性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E5%90%AF%E5%8F%91%E5%BC%8F%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">4种常见的启发式方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9Fr%E7%9A%84%E7%AC%AC1%E9%81%8D"><span class="nav-number">1.5.</span> <span class="nav-text">5 系统R的第1遍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#passes-2..n"><span class="nav-number">1.6.</span> <span class="nav-text">6 Passes 2..n</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E8%81%94%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%9A%84io%E6%88%90%E6%9C%AC"><span class="nav-number">1.7.</span> <span class="nav-text">7.计算联接操作的I&#x2F;O成本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E8%99%91%E5%9B%A0%E7%B4%A0-1"><span class="nav-number">1.7.1.</span> <span class="nav-text">7.1 考虑因素 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E8%99%91%E5%9B%A0%E7%B4%A0-2"><span class="nav-number">1.7.2.</span> <span class="nav-text">7.2 考虑因素 2</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
