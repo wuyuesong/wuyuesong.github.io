@@ -17,24 +17,24 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="webserver消息流动图   Server  监听进来的TCP字节流  Router  接受HTTP请求，并决定调用哪个Handler  Handler  处理HTTP请求，构建HTTP响应  HTTP Library  解释字节流，把它转化为HTTP请求 把HTTP响应转化回字节流">
+  <meta name="description" content="Server 监听进来的TCP字节流   Router 接受HTTP请求，并决定调用哪个Handler   Handler 处理HTTP请求，构建HTTP响应   HTTP Library 解释字节流，把它转化为HTTP请求 把HTTP响应转化回字节流">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web Server消息流动图">
-<meta property="og:url" content="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/index.html">
+<meta property="og:url" content="https://wuyuesong.github.io/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="webserver消息流动图   Server  监听进来的TCP字节流  Router  接受HTTP请求，并决定调用哪个Handler  Handler  处理HTTP请求，构建HTTP响应  HTTP Library  解释字节流，把它转化为HTTP请求 把HTTP响应转化回字节流">
+<meta property="og:description" content="Server 监听进来的TCP字节流   Router 接受HTTP请求，并决定调用哪个Handler   Handler 处理HTTP请求，构建HTTP响应   HTTP Library 解释字节流，把它转化为HTTP请求 把HTTP响应转化回字节流">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png">
 <meta property="article:published_time" content="2022-03-19T02:32:27.000Z">
 <meta property="article:modified_time" content="2022-03-21T14:21:33.621Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png">
+<meta name="twitter:image" content="https://wuyuesong.github.io/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png">
 
-<link rel="canonical" href="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
+<link rel="canonical" href="https://wuyuesong.github.io/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
 
 
 <script id="page-configurations">
@@ -167,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -220,27 +220,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <figure>
-<img src="/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png" alt="webserver消息流动图"><figcaption aria-hidden="true">webserver消息流动图</figcaption>
-</figure>
+        <p><img src="/2022/03/19/%E7%BD%91%E7%BB%9C/webserver%E6%B6%88%E6%81%AF%E6%B5%81%E5%8A%A8%E5%9B%BE/image-20220319105552186.png" alt="webserver消息流动图"></p>
 <ul>
-<li>Server
-<ul>
+<li>Server<ul>
 <li>监听进来的TCP字节流</li>
-</ul></li>
-<li>Router
-<ul>
+</ul>
+</li>
+<li>Router<ul>
 <li>接受HTTP请求，并决定调用哪个Handler</li>
-</ul></li>
-<li>Handler
-<ul>
+</ul>
+</li>
+<li>Handler<ul>
 <li>处理HTTP请求，构建HTTP响应</li>
-</ul></li>
-<li>HTTP Library
-<ul>
+</ul>
+</li>
+<li>HTTP Library<ul>
 <li>解释字节流，把它转化为HTTP请求</li>
 <li>把HTTP响应转化回字节流</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
     </div>

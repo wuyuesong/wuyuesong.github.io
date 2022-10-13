@@ -17,31 +17,31 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="缓冲区管理 1 简介 到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。  缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的">
+  <meta name="description" content="缓冲区管理1 简介到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。  缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的页面。当从内">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库————缓冲区管理">
-<meta property="og:url" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/index.html">
+<meta property="og:url" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="缓冲区管理 1 简介 到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。  缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的">
+<meta property="og:description" content="缓冲区管理1 简介到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。  缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的页面。当从内">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152212168.png">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152321653.png">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154024096.png">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154546209.png">
-<meta property="og:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220915202401656.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152212168.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152321653.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154024096.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154546209.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220915202401656.png">
 <meta property="article:published_time" content="2022-07-25T02:27:27.000Z">
 <meta property="article:modified_time" content="2022-09-15T12:42:29.334Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png">
+<meta name="twitter:image" content="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png">
 
-<link rel="canonical" href="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/">
+<link rel="canonical" href="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/">
 
 
 <script id="page-configurations">
@@ -174,7 +174,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -227,32 +227,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="缓冲区管理">缓冲区管理</h1>
-<h2 id="简介">1 简介</h2>
-<p>到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png"></p>
+        <h1 id="缓冲区管理"><a href="#缓冲区管理" class="headerlink" title="缓冲区管理"></a>缓冲区管理</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png" alt></p>
 <p>缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的页面。当从内存中逐出页面或将新页面读入内存时，缓冲区管理器与磁盘空间管理器通信以执行所需的磁盘操作。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png"></p>
-<h2 id="缓冲池">2 缓冲池</h2>
-<p>通过将空间划分为可放置页面的帧，将内存转换为缓冲池。缓冲帧可以保存与页面相同数量的数据（因此页面完全适合于帧）。为了有效地跟踪帧，缓冲区管理器为元数据表分配额外的内存空间。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png"></p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png" alt></p>
+<h2 id="2-缓冲池"><a href="#2-缓冲池" class="headerlink" title="2 缓冲池"></a>2 缓冲池</h2><p>通过将空间划分为可放置页面的帧，将内存转换为缓冲池。缓冲帧可以保存与页面相同数量的数据（因此页面完全适合于帧）。为了有效地跟踪帧，缓冲区管理器为元数据表分配额外的内存空间。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png" alt></p>
 <p>该表跟踪4条信息：</p>
 <p>1.与存储器地址唯一关联的帧ID</p>
 <p>2.用于确定帧当前包含的页面的页面ID</p>
 <p>3.用于验证页面是否已修改的脏位</p>
 <p>4.用于跟踪当前使用页面的请求者数量的Pin计数</p>
 <span id="more"></span>
-<h2 id="处理页面请求">3 处理页面请求</h2>
-<p>当从缓冲区管理器请求页面并且页面已经存在于内存中时，页面的pin计数将递增，并返回页面的内存地址。</p>
+<h2 id="3-处理页面请求"><a href="#3-处理页面请求" class="headerlink" title="3 处理页面请求"></a>3 处理页面请求</h2><p>当从缓冲区管理器请求页面并且页面已经存在于内存中时，页面的pin计数将递增，并返回页面的内存地址。</p>
 <p>如果缓冲池中不存在页，并且仍有空间，则会找到下一个空帧，并将页读入该帧。页面的pin计数设置为1，并返回页面的内存地址。如果页面不存在并且没有剩余的空帧，则必须使用替换策略来确定要退出的页面。</p>
 <p>替换策略的选择在很大程度上取决于页面访问模式，通过计算页面访问次数来选择最佳策略。页面命中是指可以在内存中找到请求的页面，而无需转到磁盘。每个页面丢失都会导致额外的IO成本，因此良好的逐出策略对性能至关重要。访问模式的命中率被定义为页面点击数#/（#of页面点击数+#页面未命中数），或者更简单地，页面点击数/页面访问数。</p>
 <p>此外，如果被逐出的页面设置了脏位，则将页面写入磁盘，以确保保持更新。当在内存中更新页面时，脏位设置为1。页面写回磁盘后，脏位设置为0。</p>
 <p>一旦请求者完成其工作负载，它负责通知缓冲区管理器减少与先前使用的页面相关联的pin数。</p>
-<h2 id="lru-置换">4 LRU 置换</h2>
-<p>常用的替换策略是LRU（最近最少使用）。当需要将新页读入满缓冲池时，将逐出最近使用最少的未固定页（pin计数=0）。为了跟踪页面使用情况，将向元数据表中添加“上次使用”列，并测量页面的pin计数减少的最新时间。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152212168.png"></p>
+<h2 id="4-LRU-置换"><a href="#4-LRU-置换" class="headerlink" title="4 LRU 置换"></a>4 LRU 置换</h2><p>常用的替换策略是LRU（最近最少使用）。当需要将新页读入满缓冲池时，将逐出最近使用最少的未固定页（pin计数=0）。为了跟踪页面使用情况，将向元数据表中添加“上次使用”列，并测量页面的pin计数减少的最新时间。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152212168.png" alt></p>
 <p>通常情况下，实现LRU可能成本高昂。时钟策略提供了一种替代实现，其使用元数据表中的ref位（最近引用的）列和时钟指针变量来有效地近似LRU，以跟踪所考虑的当前帧。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152321653.png"></p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908152321653.png" alt></p>
 <p>时钟策略算法将元数据表视为帧的循环列表。它在开始时将时钟指针设置为第一个未固定帧，并在初始读取到帧中时将每个页面对应行上的ref位设置为1。在尝试驱逐时，策略的工作方式如下：</p>
 <ul>
 <li>遍历表中的帧，跳过固定页并在到达末尾时环绕到帧0，直到找到ref位为0的第一个未固定帧</li>
@@ -260,17 +255,14 @@
 <li>到达ref位为0的帧时，退出现有页（如果设置了脏位，则将其写入磁盘；然后将脏位设置为0），读取新页，将帧的ref位设置为1，并将时钟指针移动到下一帧。</li>
 </ul>
 <p>如果访问缓冲池中当前的页面，时钟策略将页面的ref位设置为1，而不移动时钟指针。</p>
-<h3 id="顺序扫描性能-lru">4.1 顺序扫描性能-LRU</h3>
-<p>LRU总体性能良好，但当一组页S（其中|S|&gt;缓冲池大小）被多次重复访问时，性能会受到影响。</p>
+<h3 id="4-1-顺序扫描性能-LRU"><a href="#4-1-顺序扫描性能-LRU" class="headerlink" title="4.1 顺序扫描性能-LRU"></a>4.1 顺序扫描性能-LRU</h3><p>LRU总体性能良好，但当一组页S（其中|S|&gt;缓冲池大小）被多次重复访问时，性能会受到影响。</p>
 <p>为了强调这一点，考虑使用LRU的3帧缓冲池，并具有以下访问模式：</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154024096.png"></p>
-<h2 id="mru更换">5 MRU更换</h2>
-<p>另一个常用的替换策略是MRU（最近使用）。不是逐出最近使用的未固定页面，而是逐出最近一次使用的未锁定页面，该页面的pin计数是在最后一次减少时测量的。</p>
-<h3 id="顺序扫描性能-mru">5.1 顺序扫描性能-MRU</h3>
-<p>起初，使用此策略似乎有违直觉，但考虑使用MRU的3帧缓冲池具有以下访问模式的场景：</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154546209.png"></p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154024096.png" alt></p>
+<h2 id="5-MRU更换"><a href="#5-MRU更换" class="headerlink" title="5 MRU更换"></a>5 MRU更换</h2><p>另一个常用的替换策略是MRU（最近使用）。不是逐出最近使用的未固定页面，而是逐出最近一次使用的未锁定页面，该页面的pin计数是在最后一次减少时测量的。</p>
+<h3 id="5-1-顺序扫描性能-MRU"><a href="#5-1-顺序扫描性能-MRU" class="headerlink" title="5.1 顺序扫描性能-MRU"></a>5.1 顺序扫描性能-MRU</h3><p>起初，使用此策略似乎有违直觉，但考虑使用MRU的3帧缓冲池具有以下访问模式的场景：</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220908154546209.png" alt></p>
 <p>显然，无论何时出现顺序洪泛访问模式，MRU在页面命中率方面都远远优于LRU。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220915202401656.png"></p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220915202401656.png" alt></p>
 
     </div>
 
@@ -351,7 +343,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">缓冲区管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="nav-number">1.2.</span> <span class="nav-text">2 缓冲池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82"><span class="nav-number">1.3.</span> <span class="nav-text">3 处理页面请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lru-%E7%BD%AE%E6%8D%A2"><span class="nav-number">1.4.</span> <span class="nav-text">4 LRU 置换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%BA%E5%BA%8F%E6%89%AB%E6%8F%8F%E6%80%A7%E8%83%BD-lru"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 顺序扫描性能-LRU</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mru%E6%9B%B4%E6%8D%A2"><span class="nav-number">1.5.</span> <span class="nav-text">5 MRU更换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%BA%E5%BA%8F%E6%89%AB%E6%8F%8F%E6%80%A7%E8%83%BD-mru"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 顺序扫描性能-MRU</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">缓冲区管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="nav-number">1.2.</span> <span class="nav-text">2 缓冲池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%A4%84%E7%90%86%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82"><span class="nav-number">1.3.</span> <span class="nav-text">3 处理页面请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-LRU-%E7%BD%AE%E6%8D%A2"><span class="nav-number">1.4.</span> <span class="nav-text">4 LRU 置换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E9%A1%BA%E5%BA%8F%E6%89%AB%E6%8F%8F%E6%80%A7%E8%83%BD-LRU"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 顺序扫描性能-LRU</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-MRU%E6%9B%B4%E6%8D%A2"><span class="nav-number">1.5.</span> <span class="nav-text">5 MRU更换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E9%A1%BA%E5%BA%8F%E6%89%AB%E6%8F%8F%E6%80%A7%E8%83%BD-MRU"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 顺序扫描性能-MRU</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

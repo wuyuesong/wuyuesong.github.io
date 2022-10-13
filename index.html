@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="wys的个人博客">
-<meta property="og:url" content="https://101.35.161.126/index.html">
+<meta property="og:url" content="https://wuyuesong.github.io/index.html">
 <meta property="og:site_name" content="wys的个人博客">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://101.35.161.126/">
+<link rel="canonical" href="https://wuyuesong.github.io/">
 
 
 <script id="page-configurations">
@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -214,15 +214,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="恢复">恢复</h1>
-<h2 id="动机">1. 动机</h2>
-<p>在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：</p>
-<ol type="1">
-<li><p>持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。</p></li>
-<li><p>原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据库在添加新类之前崩溃，您实际上不想从旧类中删除。</p></li>
+          <h1 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h1><h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1. 动机"></a>1. 动机</h2><p>在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：</p>
+<ol>
+<li><p>持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。</p>
+</li>
+<li><p>原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据库在添加新类之前崩溃，您实际上不想从旧类中删除。</p>
+</li>
 </ol>
-<h2 id="强制非强制">2 .强制非强制</h2>
-<p>如果我们使用强制策略，持久性可以是一个非常简单的属性。强制策略声明，当事务完成时，在事务提交之前，强制将所有修改的数据页发送到磁盘。这将确保持久性，因为磁盘是persistent1；换句话说，一旦页面进入磁盘，它将被永久保存。这种方法的缺点是性能。我们最终做了很多不必要的写入。我们更喜欢的策略是不强制，即只在页面需要从缓冲池中退出时才写回磁盘。虽然这有助于减少不必要的写入，但会使持久性复杂化，因为如果在事务提交后数据库崩溃，某些页面可能尚未写入磁盘，因此会从内存中丢失，因为内存是易失性的。为了解决此问题，我们将在恢复期间重新执行某些操作</p>
+<h2 id="2-强制非强制"><a href="#2-强制非强制" class="headerlink" title="2 .强制非强制"></a>2 .强制非强制</h2><p>如果我们使用强制策略，持久性可以是一个非常简单的属性。强制策略声明，当事务完成时，在事务提交之前，强制将所有修改的数据页发送到磁盘。这将确保持久性，因为磁盘是persistent1；换句话说，一旦页面进入磁盘，它将被永久保存。这种方法的缺点是性能。我们最终做了很多不必要的写入。我们更喜欢的策略是不强制，即只在页面需要从缓冲池中退出时才写回磁盘。虽然这有助于减少不必要的写入，但会使持久性复杂化，因为如果在事务提交后数据库崩溃，某些页面可能尚未写入磁盘，因此会从内存中丢失，因为内存是易失性的。为了解决此问题，我们将在恢复期间重新执行某些操作</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/#more" rel="contents">
@@ -249,7 +248,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -303,29 +302,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="事务与并发-ii">事务与并发 II</h1>
-<h2 id="导言">1 导言</h2>
-<p>在最后一个注释中，我们介绍了作为ACID性质之一的隔离概念。让我们在这里重新审视我们的定义：</p>
+          <h1 id="事务与并发-II"><a href="#事务与并发-II" class="headerlink" title="事务与并发 II"></a>事务与并发 II</h1><h2 id="1-导言"><a href="#1-导言" class="headerlink" title="1 导言"></a>1 导言</h2><p>在最后一个注释中，我们介绍了作为ACID性质之一的隔离概念。让我们在这里重新审视我们的定义：</p>
 <ul>
 <li>隔离：每个Xact的执行与其他执行隔离。实际上，DBMS将交错许多XACT的动作，而不是按顺序依次执行。DBMS将确保每个Xact的执行就像它自己运行一样。</li>
 </ul>
 <p>本说明将详细介绍DBMS如何能够在保证隔离的同时交错许多事务的操作。</p>
-<h2 id="两阶段锁">2.两阶段锁</h2>
-<p>什么是锁，为什么它们有用？锁基本上允许事务读取和写入数据。例如，如果事务T1正在从资源A读取数据，则需要确保没有其他事务同时修改资源A。因此，想要读取数据的事务将请求在适当资源上的共享（S）锁，而想要写入数据的事务则将请求在相应资源上的排他（X）锁。只有一个事务可以对资源持有独占锁，但许多事务可以对数据持有共享锁。两阶段锁定（2PL）是一种确保数据库使用冲突可串行化调度的方案。2PL的两个规则是：</p>
+<h2 id="2-两阶段锁"><a href="#2-两阶段锁" class="headerlink" title="2.两阶段锁"></a>2.两阶段锁</h2><p>什么是锁，为什么它们有用？锁基本上允许事务读取和写入数据。例如，如果事务T1正在从资源A读取数据，则需要确保没有其他事务同时修改资源A。因此，想要读取数据的事务将请求在适当资源上的共享（S）锁，而想要写入数据的事务则将请求在相应资源上的排他（X）锁。只有一个事务可以对资源持有独占锁，但许多事务可以对数据持有共享锁。两阶段锁定（2PL）是一种确保数据库使用冲突可串行化调度的方案。2PL的两个规则是：</p>
 <ul>
-<li><p>交易必须在读取前获得S（共享）锁，在写入前获得X（独占）锁。</p></li>
-<li><p>在释放任何锁后，事务无法获取新锁——这是通过锁定实现可串行化的关键！</p></li>
+<li><p>交易必须在读取前获得S（共享）锁，在写入前获得X（独占）锁。</p>
+</li>
+<li><p>在释放任何锁后，事务无法获取新锁——这是通过锁定实现可串行化的关键！</p>
+</li>
 </ul>
-<p><img src="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910085705898.png"></p>
+<p><img src="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910085705898.png" alt></p>
 <p>这样做的问题是它不能防止级联中止。例如</p>
 <ul>
-<li><p>T1更新资源A，然后释放对A的锁定。</p></li>
-<li><p>T2从A读取。</p></li>
-<li><p>T1中断。</p></li>
-<li><p>在这种情况下，T2也必须中止，因为它读取了未提交的值A。</p></li>
+<li><p>T1更新资源A，然后释放对A的锁定。</p>
+</li>
+<li><p>T2从A读取。</p>
+</li>
+<li><p>T1中断。</p>
+</li>
+<li><p>在这种情况下，T2也必须中止，因为它读取了未提交的值A。</p>
+</li>
 </ul>
 <p>为了解决这个问题，我们将使用严格的两相锁定。严格的2PL与2PL相同，只是当事务完成时所有锁一起释放。</p>
-<p><img src="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910090520577.png"></p>
+<p><img src="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910090520577.png" alt></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/#more" rel="contents">
@@ -352,7 +354,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/08/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_9/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -406,32 +408,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="事务和并发i">事务和并发I</h1>
-<h2 id="导言">1 导言</h2>
-<p>在现实中，我们通常不会一次只有一个人访问数据库。许多用户可以一次向数据库发出请求，这可能会导致并发问题。当一个用户写入，然后另一个用户从同一资源读取时会发生什么？如果两个用户都试图写入同一资源，会怎么样？如果不小心，当几个用户同时使用数据库时，我们可能会遇到几个问题：</p>
+          <h1 id="事务和并发I"><a href="#事务和并发I" class="headerlink" title="事务和并发I"></a>事务和并发I</h1><h2 id="1-导言"><a href="#1-导言" class="headerlink" title="1 导言"></a>1 导言</h2><p>在现实中，我们通常不会一次只有一个人访问数据库。许多用户可以一次向数据库发出请求，这可能会导致并发问题。当一个用户写入，然后另一个用户从同一资源读取时会发生什么？如果两个用户都试图写入同一资源，会怎么样？如果不小心，当几个用户同时使用数据库时，我们可能会遇到几个问题：</p>
 <ul>
 <li>读取不一致：用户仅读取更新内容的一部分。</li>
 </ul>
-<p>​ –用户1更新表1，然后更新表2。</p>
-<p>​ –用户2读取表2（用户1尚未更新），然后读取表1（用户1已更新），因此它以中间状态读取数据库</p>
+<p>​                –用户1更新表1，然后更新表2。</p>
+<p>​                –用户2读取表2（用户1尚未更新），然后读取表1（用户1已更新），因此它以中间状态读取数据库</p>
 <ul>
 <li>丢失更新：两个用户试图更新同一记录，因此其中一个更新丢失。对于</li>
 </ul>
-<p>​ 例子：</p>
-<p>​ –用户1将玩具的价格更新为价格*2。</p>
-<p>​ –用户2将玩具的价格更新为价格+5，取消了用户1的更新</p>
+<p>​            例子：</p>
+<p>​                –用户1将玩具的价格更新为价格*2。</p>
+<p>​                –用户2将玩具的价格更新为价格+5，取消了用户1的更新</p>
 <ul>
 <li>脏读：一个用户读取从未提交的更新。</li>
 </ul>
-<p>​ –用户1更新玩具的价格，但这会被中止。</p>
-<p>​ –用户2在回滚之前读取更新。</p>
-<h2 id="事务">2 事务</h2>
-<p>我们解决这些问题的方法是定义一组关于操作的规则和保证。我们将通过使用事务来实现这一点。transaction1是应作为单个逻辑原子单元执行的多个动作的序列。交易保证ACID特性，以避免上述问题：</p>
+<p>​                –用户1更新玩具的价格，但这会被中止。</p>
+<p>​                –用户2在回滚之前读取更新。</p>
+<h2 id="2-事务"><a href="#2-事务" class="headerlink" title="2 事务"></a>2 事务</h2><p>我们解决这些问题的方法是定义一组关于操作的规则和保证。我们将通过使用事务来实现这一点。transaction1是应作为单个逻辑原子单元执行的多个动作的序列。交易保证ACID特性，以避免上述问题：</p>
 <ul>
-<li><p>原子性：事务以两种方式结束：提交或中止。原子性意味着Xact中的所有动作都发生，或者没有发生。</p></li>
-<li><p>一致性：如果DB开始一致，则在Xact结束时结束一致。</p></li>
-<li><p>隔离：每个Xact的执行与其他执行隔离。实际上，DBMS将交错许多XACT的动作，而不是按顺序依次执行。DBMS将确保每个Xact的执行就像它自己运行一样。</p></li>
-<li><p>持续性：如果Xact提交，其影响将持续。承诺的Xact的效果必须在失败后仍然存在。</p></li>
+<li><p>原子性：事务以两种方式结束：提交或中止。原子性意味着Xact中的所有动作都发生，或者没有发生。</p>
+</li>
+<li><p>一致性：如果DB开始一致，则在Xact结束时结束一致。</p>
+</li>
+<li><p>隔离：每个Xact的执行与其他执行隔离。实际上，DBMS将交错许多XACT的动作，而不是按顺序依次执行。DBMS将确保每个Xact的执行就像它自己运行一样。</p>
+</li>
+<li><p>持续性：如果Xact提交，其影响将持续。承诺的Xact的效果必须在失败后仍然存在。</p>
+</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -459,7 +462,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -513,13 +516,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="查询优化">查询优化</h1>
-<h2 id="导言">1 导言</h2>
-<p>当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I/O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所需的I/O数量。查询计划只是一系列操作，这些操作将为查询获得正确的结果。我们使用关系代数来表示它。这是查询计划的示例：</p>
-<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909190834709.png"></p>
+          <h1 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h1><h2 id="1-导言"><a href="#1-导言" class="headerlink" title="1 导言"></a>1 导言</h2><p>当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I/O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所需的I/O数量。查询计划只是一系列操作，这些操作将为查询获得正确的结果。我们使用关系代数来表示它。这是查询计划的示例：</p>
+<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909190834709.png" alt></p>
 <p>首先，它将两个表连接在一起，然后过滤掉行，最后只投影所需的列。我们很快就会看到，我们可以提出更好的查询计划！</p>
-<h2 id="选择性估计">2.选择性估计</h2>
-<p>查询优化的一个重要特性是，在执行一个计划之前，我们无法知道该计划将花费多少I/O。这有两个重要的含义。首先，我们不可能保证找到最佳查询计划-我们只能希望使用启发式和估计找到一个好的（足够的）查询计划。第二，我们需要某种方法来估计查询计划的成本。我们将用来估计查询计划成本的一个工具称为选择性估计。运算符的选择性是一个近似值，表示通过运算符到达其上的运算符的页面百分比。这一点很重要，因为如果我们有一个操作符可以大大减少进入下一阶段的页面数量（如WHERE子句），我们可能希望尽快这样做，以便其他操作符必须处理更少的页面。</p>
+<h2 id="2-选择性估计"><a href="#2-选择性估计" class="headerlink" title="2.选择性估计"></a>2.选择性估计</h2><p>查询优化的一个重要特性是，在执行一个计划之前，我们无法知道该计划将花费多少I/O。这有两个重要的含义。首先，我们不可能保证找到最佳查询计划-我们只能希望使用启发式和估计找到一个好的（足够的）查询计划。第二，我们需要某种方法来估计查询计划的成本。我们将用来估计查询计划成本的一个工具称为选择性估计。运算符的选择性是一个近似值，表示通过运算符到达其上的运算符的页面百分比。这一点很重要，因为如果我们有一个操作符可以大大减少进入下一阶段的页面数量（如WHERE子句），我们可能希望尽快这样做，以便其他操作符必须处理更少的页面。</p>
 <p>大多数选择性估算公式相当简单。例如，为了估计X=3形式的条件的选择性，公式为1/（X的唯一值的数量）。本说明中使用的公式如下所示，但完整列表请参见讲座/讨论幻灯片。在这些示例中，大写字母表示列，小写字母表示常量。以下示例中的所有值都是整数，因为浮点具有不同的公式。</p>
 <ul>
 <li>X=a: 1/(unique vals in X)</li>
@@ -553,7 +553,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -607,25 +607,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="迭代器和连接">迭代器和连接</h1>
-<h2 id="导言">1 导言</h2>
-<p>让我们从最简单的问题开始：连接到底是什么？如果您还记得SQL项目，您将记得在R.name=S.name上编写R内部连接S和其他类似的语句。</p>
-<p>实际上，这意味着，你需要两个关系，R和S，并从它们在连接条件上的匹配中创建一个新关系——也就是说，对于R中的每个记录<span class="math inline">\(r_i\)</span>，找到S中与我们指定的连接条件匹配的所有记录<span class="math inline">\(s_j\)</span>，并将＜<span class="math inline">\(r_i\)</span>，<span class="math inline">\(s_j\)</span>＞写入输出中的新行（R的所有字段后面跟着S的所有字段）。SQL讲座幻灯片是一个很好的资源，可以让您更清楚地了解连接实际上是什么。</p>
-<p>在讨论不同的连接算法之前，我们需要讨论当由＜<span class="math inline">\(r_i\)</span>，<span class="math inline">\(s_j\)</span>＞组成的新连接关系形成时会发生什么。无论何时计算联接的成本，我们都会忽略将联接关系写入磁盘的成本。这是因为我们假设连接的输出将被稍后执行SQL查询时涉及的另一个操作符使用。通常，此运算符可以直接从内存中使用连接的记录。如果这听起来让人困惑，不要担心；我们将在查询优化模块中重新讨论它，但现在需要记住的重要一点是，最终写入成本不包括在联接成本模型中</p>
+          <h1 id="迭代器和连接"><a href="#迭代器和连接" class="headerlink" title="迭代器和连接"></a>迭代器和连接</h1><h2 id="1-导言"><a href="#1-导言" class="headerlink" title="1 导言"></a>1 导言</h2><p>让我们从最简单的问题开始：连接到底是什么？如果您还记得SQL项目，您将记得在R.name=S.name上编写R内部连接S和其他类似的语句。</p>
+<p>实际上，这意味着，你需要两个关系，R和S，并从它们在连接条件上的匹配中创建一个新关系——也就是说，对于R中的每个记录$r_i$，找到S中与我们指定的连接条件匹配的所有记录$s_j$，并将＜$r_i$，$s_j$＞写入输出中的新行（R的所有字段后面跟着S的所有字段）。SQL讲座幻灯片是一个很好的资源，可以让您更清楚地了解连接实际上是什么。</p>
+<p>在讨论不同的连接算法之前，我们需要讨论当由＜$r_i$，$s_j$＞组成的新连接关系形成时会发生什么。无论何时计算联接的成本，我们都会忽略将联接关系写入磁盘的成本。这是因为我们假设连接的输出将被稍后执行SQL查询时涉及的另一个操作符使用。通常，此运算符可以直接从内存中使用连接的记录。如果这听起来让人困惑，不要担心；我们将在查询优化模块中重新讨论它，但现在需要记住的重要一点是，最终写入成本不包括在联接成本模型中</p>
 <p>求和并没有告诉我们任何我们不知道的事情；我们需要通过每一轮，准确地找出读写的内容。最后的2X部分表示，为了构建哈希表，我们需要在分区通过后读取和写入每个页面。</p>
 <p>以下是一些重要属性：</p>
-<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220912160812006.png"></p>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220912160812006.png" alt></p>
 <p>属性1表示我们必须在第一次分区过程中读取每个页面。这直接来自算法。</p>
 <p>属性2表示，在分区过程中，我们将写出至少与读入一样多的页面。这直接来自上面的解释——我们可以在分区过程中创建额外的页面。</p>
 <p>属性3表示我们不会读取比之前分区过程中写入的页面更多的页面。在最坏的情况下，pass i中的每个分区都需要重新分区，因此这需要我们读取每个页面。然而，在大多数情况下，一些分区将足够小，以容纳内存，因此我们可以读取比上一次生成的页面更少的页面。</p>
 <p>属性4表示我们将构建哈希表的页面数量至少与我们开始时的数据页面数量一样多。这是因为分区过程只能增加数据页的数量，而不能减少它们。</p>
-<h2 id="简单嵌套循环连接-snlj">2 简单嵌套循环连接 SNLJ</h2>
-<p>让我们从最简单的策略开始。假设我们有一个B页缓冲区，我们希望在连接条件θ下连接两个表R和s。从最自然的策略开始，我们可以在R中获取每个记录，在S中搜索其所有匹配项，然后生成每个匹配项。</p>
+<h2 id="2-简单嵌套循环连接-SNLJ"><a href="#2-简单嵌套循环连接-SNLJ" class="headerlink" title="2 简单嵌套循环连接 SNLJ"></a>2 简单嵌套循环连接 SNLJ</h2><p>让我们从最简单的策略开始。假设我们有一个B页缓冲区，我们希望在连接条件θ下连接两个表R和s。从最自然的策略开始，我们可以在R中获取每个记录，在S中搜索其所有匹配项，然后生成每个匹配项。</p>
 <p>这称为简单嵌套循环连接（SNLJ）。您可以将其视为两个嵌套的for循环：</p>
-<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232319911.png"></p>
-<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232327205.png"></p>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232319911.png" alt></p>
+<p><img src="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/image-20220908232327205.png" alt></p>
 <p>这将是一件很好的事情，但该类的主题实际上是围绕优化和最小化I/O。因此，这是一个非常糟糕的方案，因为我们在R中获取每个记录，并在S中读取每个页面以搜索匹配项。这样做的I/O成本将是[R]+|R|[S]，其中[R]是R中的页数，|R|是R中记录的数量。虽然我们可以通过在for循环中切换R和S的顺序来稍微优化，但这确实不是一个很好的策略。</p>
-<p>注意：SNLJ不会产生|R| I/o来读取R中的每一条记录。这将花费[R]I/o，因为它实际上更像是“R中的每个页面<span class="math inline">\(p_r\)</span>:<span class="math inline">\(p_r\)</span>中的每个记录r:S中的每个页<span class="math inline">\(p_s\)</span>:<span class="math inline">\(p_s\)</span>中每个记录s:join”，因为我们不能一次读取少于一页。</p>
+<p>注意：SNLJ不会产生|R| I/o来读取R中的每一条记录。这将花费[R]I/o，因为它实际上更像是“R中的每个页面$p_r$:$p_r$中的每个记录r:S中的每个页$p_s$:$p_s$中每个记录s:join”，因为我们不能一次读取少于一页。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/#more" rel="contents">
@@ -652,7 +649,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -706,11 +703,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="哈希">哈希</h1>
-<h2 id="动机">1 动机</h2>
-<p>有时，排序对于这个问题来说有点过分。在许多情况下，我们只想将相同的值分组在一起，但实际上并不关心值的出现顺序（考虑分组方式或重复数据消除）。在数据库中，将类似的值分组在一起称为哈希。我们无法以您在61B中学习的标准方式构建哈希表，原因与我们无法在最后一个注释中使用快速排序相同；我们无法将所有数据存储在内存中！让我们看看如何构建一个高效的基于外存的散列算法。</p>
-<h2 id="总体战略">2 总体战略</h2>
-<p>因为我们不能一次将所有数据放入内存，所以我们需要构建几个不同的哈希表并将它们连接在一起。但这个想法有一个问题。如果我们构建两个单独的哈希表，每个哈希表中都有相同的值（例如，“Brian”出现在两个表中），会发生什么？连接这些表将导致一些“Brian”不在彼此旁边。</p>
+          <h1 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h1><h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1 动机"></a>1 动机</h2><p>有时，排序对于这个问题来说有点过分。在许多情况下，我们只想将相同的值分组在一起，但实际上并不关心值的出现顺序（考虑分组方式或重复数据消除）。在数据库中，将类似的值分组在一起称为哈希。我们无法以您在61B中学习的标准方式构建哈希表，原因与我们无法在最后一个注释中使用快速排序相同；我们无法将所有数据存储在内存中！让我们看看如何构建一个高效的基于外存的散列算法。</p>
+<h2 id="2-总体战略"><a href="#2-总体战略" class="headerlink" title="2 总体战略"></a>2 总体战略</h2><p>因为我们不能一次将所有数据放入内存，所以我们需要构建几个不同的哈希表并将它们连接在一起。但这个想法有一个问题。如果我们构建两个单独的哈希表，每个哈希表中都有相同的值（例如，“Brian”出现在两个表中），会发生什么？连接这些表将导致一些“Brian”不在彼此旁边。</p>
 <p>为了解决这个问题，在用内存中的数据构建哈希表之前，我们需要保证，如果某个值在内存中，那么它的所有出现都在内存中。换句话说，如果“Brian”至少在内存中出现一次，那么我们只能在数据中每次出现“Brian”，当前都在内存中的情况下构建哈希表。这确保了值只能出现在一个哈希表中，从而使哈希表可以安全连接。</p>
           <!--noindex-->
             <div class="post-button">
@@ -738,7 +732,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -792,16 +786,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="排序">排序</h1>
-<p>在CS61B中，您了解了许多不同的排序算法。为什么我们在这节课上又学了一个新的？所有传统的排序算法（即快速排序、插入排序等）都依赖于我们能够将所有数据存储在内存中。这是我们在开发数据库时没有的奢侈。事实上，在大多数情况下，我们的数据将比我们可用的内存大一个数量级。</p>
-<h2 id="io-review">1 I/O Review</h2>
-<p>请记住，无论何时从内存向磁盘写入页面或从磁盘向内存读取页面，都会产生1个I/O。由于进入磁盘非常耗时，在分析算法性能时，我们只考虑算法产生的I/O数量，而不是像big-O这样的传统算法复杂性度量。因此，在开发我们的排序算法时，我们将尝试最小化它将导致的I/O数量。在计算I/O时，我们忽略缓冲区管理器进行的任何潜在缓存。这意味着，一旦我们解开页面并说我们已经使用它，下一次尝试访问页面时，它将总是花费1个I/O。</p>
-<h2 id="双向外部合并排序">2.双向外部合并排序</h2>
-<p>让我们从开发一个排序算法开始，该算法可以工作，但不尽可能好。因为我们不能一次将所有数据保存在内存中，所以我们知道我们将分别对数据的不同部分进行排序，然后将它们合并在一起。</p>
+          <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><p>在CS61B中，您了解了许多不同的排序算法。为什么我们在这节课上又学了一个新的？所有传统的排序算法（即快速排序、插入排序等）都依赖于我们能够将所有数据存储在内存中。这是我们在开发数据库时没有的奢侈。事实上，在大多数情况下，我们的数据将比我们可用的内存大一个数量级。</p>
+<h2 id="1-I-O-Review"><a href="#1-I-O-Review" class="headerlink" title="1 I/O Review"></a>1 I/O Review</h2><p>请记住，无论何时从内存向磁盘写入页面或从磁盘向内存读取页面，都会产生1个I/O。由于进入磁盘非常耗时，在分析算法性能时，我们只考虑算法产生的I/O数量，而不是像big-O这样的传统算法复杂性度量。因此，在开发我们的排序算法时，我们将尝试最小化它将导致的I/O数量。在计算I/O时，我们忽略缓冲区管理器进行的任何潜在缓存。这意味着，一旦我们解开页面并说我们已经使用它，下一次尝试访问页面时，它将总是花费1个I/O。</p>
+<h2 id="2-双向外部合并排序"><a href="#2-双向外部合并排序" class="headerlink" title="2.双向外部合并排序"></a>2.双向外部合并排序</h2><p>让我们从开发一个排序算法开始，该算法可以工作，但不尽可能好。因为我们不能一次将所有数据保存在内存中，所以我们知道我们将分别对数据的不同部分进行排序，然后将它们合并在一起。</p>
 <p>为了有效地合并两个列表，必须首先对它们进行排序。这意味着排序算法的第一步应该是对每个页面上的记录进行排序。我们将第一阶段称为“控制”阶段，因为我们正在控制单个页面。</p>
 <p>之后，让我们开始使用合并排序中的合并算法将页面合并在一起。我们将调用这些合并排序运行的结果。排序运行是一系列已排序的页面。</p>
 <p>算法的其余部分将只是继续合并这些排序运行，直到只剩下一个排序运行。一次排序运行意味着我们的数据已完全排序！请参阅下一页的图像，了解算法运行到完成的图表。</p>
-<p><img src="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908210736344.png"></p>
+<p><img src="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/image-20220908210736344.png" alt></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/#more" rel="contents">
@@ -828,7 +819,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -882,16 +873,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="关系代数">关系代数</h1>
-<h2 id="动机">1 动机</h2>
-<p>在前面的注释中，我们讨论了SQL是一种声明性编程语言。这意味着您可以指定想要什么，但不必指定如何执行。从用户的角度来看，这很好，因为它使查询更容易编写。然而，作为数据库工程师，我们通常需要一种更具表现力的语言。当我们在几周内研究查询优化时，我们将需要一种方法来表达数据库可以用来执行查询的许多不同的有效计划。为此，我们将使用关系代数，这是一种过程编程语言（这意味着查询将精确指定要使用的运算符和顺序）。</p>
-<h2 id="关系代数导论">2 关系代数导论</h2>
-<p>关系代数中的所有运算符都取一个关系并输出一个关系。基本查询如下所示：</p>
-<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161602181.png"></p>
+          <h1 id="关系代数"><a href="#关系代数" class="headerlink" title="关系代数"></a>关系代数</h1><h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1 动机"></a>1 动机</h2><p>在前面的注释中，我们讨论了SQL是一种声明性编程语言。这意味着您可以指定想要什么，但不必指定如何执行。从用户的角度来看，这很好，因为它使查询更容易编写。然而，作为数据库工程师，我们通常需要一种更具表现力的语言。当我们在几周内研究查询优化时，我们将需要一种方法来表达数据库可以用来执行查询的许多不同的有效计划。为此，我们将使用关系代数，这是一种过程编程语言（这意味着查询将精确指定要使用的运算符和顺序）。</p>
+<h2 id="2-关系代数导论"><a href="#2-关系代数导论" class="headerlink" title="2 关系代数导论"></a>2 关系代数导论</h2><p>关系代数中的所有运算符都取一个关系并输出一个关系。基本查询如下所示：</p>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161602181.png" alt></p>
 <p>π运算符只选择要前进到下一个运算符的列（就像SQL SELECT）。在这种情况下，运算符将dogs关系作为参数，并返回一个仅具有dogs关系的name列的关系。关于关系代数的一个重要事实是，关系是元组的集合，这意味着它们不能有重复。如果dogs关系最初为：</p>
-<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161805215.png"></p>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161805215.png" alt></p>
 <p>上述查询将返回：</p>
-<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161823675.png"></p>
+<p><img src="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/image-20220908161823675.png" alt></p>
 <p>最初，这两个buster是不同的，因为它们具有不同的年龄，但一旦去掉年龄列，它们就会变成重复的，因此输出关系中只保留一个。</p>
 <p>让我们正式介绍关系代数运算符。</p>
           <!--noindex-->
@@ -920,7 +908,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -974,15 +962,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="缓冲区管理">缓冲区管理</h1>
-<h2 id="简介">1 简介</h2>
-<p>到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png"></p>
+          <h1 id="缓冲区管理"><a href="#缓冲区管理" class="headerlink" title="缓冲区管理"></a>缓冲区管理</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png" alt></p>
 <p>缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的页面。当从内存中逐出页面或将新页面读入内存时，缓冲区管理器与磁盘空间管理器通信以执行所需的磁盘操作。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png"></p>
-<h2 id="缓冲池">2 缓冲池</h2>
-<p>通过将空间划分为可放置页面的帧，将内存转换为缓冲池。缓冲帧可以保存与页面相同数量的数据（因此页面完全适合于帧）。为了有效地跟踪帧，缓冲区管理器为元数据表分配额外的内存空间。</p>
-<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png"></p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png" alt></p>
+<h2 id="2-缓冲池"><a href="#2-缓冲池" class="headerlink" title="2 缓冲池"></a>2 缓冲池</h2><p>通过将空间划分为可放置页面的帧，将内存转换为缓冲池。缓冲帧可以保存与页面相同数量的数据（因此页面完全适合于帧）。为了有效地跟踪帧，缓冲区管理器为元数据表分配额外的内存空间。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png" alt></p>
 <p>该表跟踪4条信息：</p>
 <p>1.与存储器地址唯一关联的帧ID</p>
 <p>2.用于确定帧当前包含的页面的页面ID</p>
@@ -1014,7 +999,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1068,28 +1053,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="b-树">B+ 树</h1>
-<h2 id="简介">1 简介</h2>
-<p>在前面的笔记中，我们讨论了数据存储的不同文件和记录表示。本周，我们将介绍索引，它是一种在数据文件之上运行的数据结构，有助于加快对特定键的读取。您可以将数据文件视为书籍的实际内容，将索引视为快速查找的内容表。我们使用索引使查询运行得更快，尤其是那些频繁运行的查询。考虑一个web应用程序，它在登录过程中根据用户名在用户表中查找用户的记录。用户名列上的索引将通过快速查找试图登录的用户的行来加快登录速度。在本课程注释中，我们将学习B+树，这是一种特定类型的索引。下面是一个B+树的示例：</p>
-<figure>
-<img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png" alt="image-20220907182641290"><figcaption aria-hidden="true">image-20220907182641290</figcaption>
-</figure>
-<h2 id="属性">2 属性</h2>
-<ul>
-<li>d是B+树的阶，每个节点（根节点除外）必须有 <span class="math inline">\(d \leq x \leq 2d\)</span> 项，如果没有删除发生的话（删除数据后叶子节点可能少于d项）。节点中的项必须排序。</li>
+          <h1 id="B-树"><a href="#B-树" class="headerlink" title="B+ 树"></a>B+ 树</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>在前面的笔记中，我们讨论了数据存储的不同文件和记录表示。本周，我们将介绍索引，它是一种在数据文件之上运行的数据结构，有助于加快对特定键的读取。您可以将数据文件视为书籍的实际内容，将索引视为快速查找的内容表。我们使用索引使查询运行得更快，尤其是那些频繁运行的查询。考虑一个web应用程序，它在登录过程中根据用户名在用户表中查找用户的记录。用户名列上的索引将通过快速查找试图登录的用户的行来加快登录速度。在本课程注释中，我们将学习B+树，这是一种特定类型的索引。下面是一个B+树的示例：</p>
+<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png" alt="image-20220907182641290"></p>
+<h2 id="2-属性"><a href="#2-属性" class="headerlink" title="2 属性"></a>2 属性</h2><ul>
+<li>d是B+树的阶，每个节点（根节点除外）必须有 $d \leq x \leq 2d$  项，如果没有删除发生的话（删除数据后叶子节点可能少于d项）。节点中的项必须排序。</li>
 <li>在内节点的两项之间有一个指针指向孩子节点，因为最多有2d项在节点中，内节点最多有2d+1个指针指向孩子节点。这也被称为树的扇出。</li>
 <li>条目左侧子结点中的键必须小于条目，而右侧子节点中键必须大于或等于条目。</li>
 <li>•所有叶片深度相同，且具有d和2d个条目（即至少半满）</li>
 </ul>
 <p>举个例子，一个阶为2的树：</p>
-<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184154927.png"></p>
+<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184154927.png" alt></p>
 <p>请注意，节点满足阶要求（d≤ x≤ 2d），因为d=2并且该节点具有3个条目满足2≤ x≤ 4.</p>
 <ul>
 <li>由于sorted和children属性，我们可以遍历树到叶子，以找到所需的记录。这类似于BST（二进制搜索树）。</li>
 <li>每个根到叶路径都有相同数量的边-这是树的高度。从这个意义上说，B+树总是平衡的。换句话说，只有根节点的B+树的高度为0。</li>
 <li>只有叶节点包含记录（或指向记录的指针-这将在后面解释）。内部节点（即非叶节点）不包含实际记录。</li>
 </ul>
-<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184919816.png"></p>
+<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184919816.png" alt></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/#more" rel="contents">

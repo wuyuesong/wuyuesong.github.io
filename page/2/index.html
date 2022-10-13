@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"101.35.161.126","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="wys的个人博客">
-<meta property="og:url" content="https://101.35.161.126/page/2/index.html">
+<meta property="og:url" content="https://wuyuesong.github.io/page/2/index.html">
 <meta property="og:site_name" content="wys的个人博客">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://101.35.161.126/page/2/">
+<link rel="canonical" href="https://wuyuesong.github.io/page/2/">
 
 
 <script id="page-configurations">
@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -214,11 +214,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="磁盘和文件">磁盘和文件</h1>
-<h2 id="内存和硬盘">1 内存和硬盘</h2>
-<p>不论数据库什么时候使用数据，数据必须在内存中，访问这些数据相对较快，但是一旦数据量变得很大，将所有数据装进内存将变得不可能。磁盘配用来便宜的储存数据库的数据，但无论何时访问数据或写入新数据，它们都会产生巨大的成本。</p>
-<h2 id="文件页面记录">2 文件、页面、记录</h2>
-<p>关系型数据库最基本的单位是记录（行）。这些记录被组织成关系（表），他们可以被修改，删除或者在内存中创建。</p>
+          <h1 id="磁盘和文件"><a href="#磁盘和文件" class="headerlink" title="磁盘和文件"></a>磁盘和文件</h1><h2 id="1-内存和硬盘"><a href="#1-内存和硬盘" class="headerlink" title="1 内存和硬盘"></a>1 内存和硬盘</h2><p>不论数据库什么时候使用数据，数据必须在内存中，访问这些数据相对较快，但是一旦数据量变得很大，将所有数据装进内存将变得不可能。磁盘配用来便宜的储存数据库的数据，但无论何时访问数据或写入新数据，它们都会产生巨大的成本。</p>
+<h2 id="2-文件、页面、记录"><a href="#2-文件、页面、记录" class="headerlink" title="2 文件、页面、记录"></a>2 文件、页面、记录</h2><p>关系型数据库最基本的单位是记录（行）。这些记录被组织成关系（表），他们可以被修改，删除或者在内存中创建。</p>
 <p>对磁盘来说基本的单位是页，是从磁盘到内存传输的最小单位，反之亦然。为了以与磁盘兼容的格式表示关系数据库，每个关系都存储在自己的文件中，其记录被组织到文件中的页面中。基于关系的模式和访问模式，数据库将确定：（1）使用的文件类型，（2）文件中页面的组织方式，（3）每个页面上记录的组织方式，以及（4）每个记录的格式。</p>
           <!--noindex-->
             <div class="post-button">
@@ -246,7 +243,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/05/30/Linear%20Algebra/S1.2SOL/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/05/30/Linear%20Algebra/S1.2SOL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -301,7 +298,6 @@
 
       
           <div class="pdfobject-container" data-target="pdf/S1.2SOL.pdf" data-height="500px"></div>
-
       
     </div>
 
@@ -320,7 +316,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/05/30/Linear%20Algebra/UNIT1_1/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/05/30/Linear%20Algebra/UNIT1_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -388,7 +384,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -442,9 +438,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="cs61a难题摘录">CS61A难题摘录</h1>
-<h2 id="hw02">HW02</h2>
-<p><strong>problem</strong></p>
+          <h1 id="CS61A难题摘录"><a href="#CS61A难题摘录" class="headerlink" title="CS61A难题摘录"></a>CS61A难题摘录</h1><h2 id="HW02"><a href="#HW02" class="headerlink" title="HW02"></a>HW02</h2><p><strong>problem</strong></p>
 <p>The logician Alonzo Church invented a system of representing non-negative integers entirely using functions. The purpose was to show that functions are sufficient to describe all of number theory: if we have functions, we do not need to assume that numbers exist, but instead we can invent them.</p>
 <p>Your goal in this problem is to rediscover this representation known as <em>Church numerals</em>. Here are the definitions of <code>zero</code>, as well as a function that returns one more than its argument:</p>
           <!--noindex-->
@@ -473,7 +467,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/04/01/cs61a/cs61a/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/04/01/cs61a/cs61a/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -527,9 +521,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="cs61a-2020summer">CS61A (2020summer)</h1>
-<p><code>from operator import truediv,floordiv</code></p>
-<p><code>truediv</code> == /</p>
+          <h1 id="CS61A-2020summer"><a href="#CS61A-2020summer" class="headerlink" title="CS61A (2020summer)"></a>CS61A (2020summer)</h1><p><code>from operator import truediv,floordiv</code></p>
+<p><code>truediv</code> == /  </p>
 <p><code>floordiv</code> == //</p>
 <p>可以编写文档进行测试：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;Our first Python source file&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">from operator import floordiv,mod</span><br><span class="line"></span><br><span class="line">def divide_exact(n,d):</span><br><span class="line">    &quot;&quot;&quot;Return the quotient and remainder of dividing N by D.</span><br><span class="line"></span><br><span class="line">    &gt;&gt;&gt; q, r = divide_exact(2013,10)</span><br><span class="line">    &gt;&gt;&gt; q</span><br><span class="line">    201</span><br><span class="line">    &gt;&gt;&gt; r</span><br><span class="line">    3</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    return floordiv(n, d),mod(n, d)</span><br></pre></td></tr></table></figure>
@@ -544,8 +537,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">s = []</span>):</span></span><br><span class="line"><span class="meta">... </span>    s.append(<span class="number">5</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> <span class="built_in">len</span>(s)</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f()</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 <p>迭代器的<code>for</code> 语句只能迭代一次。</p>
 <p>迭代器可以迭代字典的<code>key</code>、<code>value</code>、<code>item</code> ，当字典的结构发生变化时，迭代器失效。</p>
-<p><strong>Built-in Functions for Iteration</strong></p>
-<p><img src="/2022/04/01/cs61a/cs61a/image-20220411213249514.png"></p>
+<p><strong>Built-in  Functions for Iteration</strong></p>
+<p><img src="/2022/04/01/cs61a/cs61a/image-20220411213249514.png" alt></p>
 <p>返回 <code>yield</code> 语句的是 <code>generator</code> ，一个 <code>generator</code> 可以返回多个 <code>yield</code> 语句。</p>
 
       
@@ -566,7 +559,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/30/missing-semester/Version%20Control%20(Git)/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/30/missing-semester/Version%20Control%20(Git)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -622,14 +615,11 @@
       
           <h1 id="Version-Control-Git"><a href="#Version-Control-Git" class="headerlink" title="Version Control (Git)"></a>Version Control (Git)</h1><p><code>git init</code>创建仓库 </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/rust/missing/playgroud/demo/.git/</span><br></pre></td></tr></table></figure>
-
 <p><code>git help</code> 查看帮助，后面要加上参数，比如说<code>git init</code></p>
 <p>我们创建一个文件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello world&quot;</span> &gt; hello.txt</span><br></pre></td></tr></table></figure>
-
 <p>这个时候查看 <code>git status</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">No commits yet</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use <span class="string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="keyword">in</span> what will be committed)</span><br><span class="line"></span><br><span class="line">        hello.txt</span><br></pre></td></tr></table></figure>
-
 <p>我们可以看到一个`Untracked files 。</p>
           <!--noindex-->
             <div class="post-button">
@@ -657,7 +647,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/29/missing-semester/Command-line%20Environment/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/29/missing-semester/Command-line%20Environment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -711,9 +701,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="command-line-environment">Command-line Environment</h1>
-<h2 id="signal">SIGNAL</h2>
-<p>您的 <code>shell</code> 会使用 <code>UNIX</code> 提供的信号机制执行进程间通信。</p>
+          <h1 id="Command-line-Environment"><a href="#Command-line-Environment" class="headerlink" title="Command-line Environment"></a>Command-line Environment</h1><h2 id="SIGNAL"><a href="#SIGNAL" class="headerlink" title="SIGNAL"></a>SIGNAL</h2><p>您的 <code>shell</code> 会使用 <code>UNIX</code> 提供的信号机制执行进程间通信。</p>
 <p>我们可以使用<code>man signal</code> 来查看<code>signal</code>的帮助文档。</p>
 <p>对于如下的 <code>python</code> 程序</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> signal, time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handler</span>(<span class="params">signum, time</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nI got a SIGINT, but I am not stopping&quot;</span>)</span><br><span class="line"></span><br><span class="line">signal.signal(signal.SIGINT, handler)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    time.sleep(<span class="number">.1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\r&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
@@ -745,7 +733,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/28/missing-semester/Data%20Wrangling/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/28/missing-semester/Data%20Wrangling/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -799,12 +787,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="data-wrangling">Data Wrangling</h1>
-<p>以下代码可以查看服务器的日志 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br></pre></td></tr></table></figure></p>
-<p>需要注意的是 <code>myserver</code> 由，<用户名>@&lt;<span class="math inline">\(ip\)</span>地址构成&gt;</用户名></p>
-<p><code>sed</code> 是一种匹配工具，<code>s</code> 命令的形式如下：<code>s/REGEX/SUBSTITUTION/</code> 其中 <code>REGEX</code> 是正则表达式，而<code>SUBSTITUTION</code> 是替代文本，也就是将匹配到的正则表达式转换为代替文本，默认只替代一遍。在后面加上<code>g</code> 可以多次匹配。</p>
+          <h1 id="Data-Wrangling"><a href="#Data-Wrangling" class="headerlink" title="Data Wrangling"></a>Data Wrangling</h1><p>以下代码可以查看服务器的日志<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是 <code>myserver</code> 由，&lt;用户名&gt;@&lt;$ip$地址构成&gt;</p>
+<p><code>sed</code> 是一种匹配工具，<code>s</code> 命令的形式如下：<code>s/REGEX/SUBSTITUTION/</code>  其中 <code>REGEX</code> 是正则表达式，而<code>SUBSTITUTION</code> 是替代文本，也就是将匹配到的正则表达式转换为代替文本，默认只替代一遍。在后面加上<code>g</code> 可以多次匹配。</p>
 <p>为了支持更不用加上<code>\</code> 我们需要在<code>sed</code>后加上<code>-E</code></p>
-<p>以下是该命令的一些示例用法：</p>
+<p>以下是该命令的一些示例用法：<br></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/28/missing-semester/Data%20Wrangling/#more" rel="contents">
@@ -831,7 +818,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -879,20 +866,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="shell-tools-and-scripting课后练习">Shell Tools and Scripting课后练习</h1>
-<ol type="1">
-<li></li>
+          <h1 id="Shell-Tools-and-Scripting课后练习"><a href="#Shell-Tools-and-Scripting课后练习" class="headerlink" title="Shell Tools and Scripting课后练习"></a>Shell Tools and Scripting课后练习</h1><ol>
+<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ ls -lhat --color</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r-- 1 rust rust    7 Mar 27 16:18 foo1</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 22:01 ..</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:55 .</span><br><span class="line">-rwxrwxrwx 1 rust rust   83 Mar 26 18:55 script.py</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 bar</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 foo</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo10</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo2</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 17:14 b</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ ls -lhat --color</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r-- 1 rust rust    7 Mar 27 16:18 foo1</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 22:01 ..</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:55 .</span><br><span class="line">-rwxrwxrwx 1 rust rust   83 Mar 26 18:55 script.py</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 bar</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 foo</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo10</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo2</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 17:14 b</span><br></pre></td></tr></table></figure>
-<ol start="2" type="1">
-<li></li>
+<ol>
+<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">marco.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">marco() &#123;</span><br><span class="line">    export MARCO=$(pwd)</span><br><span class="line">&#125;</span><br><span class="line">polo() &#123;</span><br><span class="line">    cd &quot;$MARCO&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">marco.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">marco() &#123;</span><br><span class="line">    export MARCO=$(pwd)</span><br><span class="line">&#125;</span><br><span class="line">polo() &#123;</span><br><span class="line">    cd &quot;$MARCO&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ source marco.sh</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ cd ..</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ marco</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ cd</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ polo</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$</span><br></pre></td></tr></table></figure>
-<ol start="3" type="1">
-<li></li>
+<ol>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">count=1</span><br><span class="line"></span><br><span class="line"> <span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"> <span class="keyword">do</span></span><br><span class="line">     ./buggy.sh 2&gt; out.log</span><br><span class="line">     <span class="keyword">if</span> [[ $? -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">         <span class="built_in">echo</span> <span class="string">&quot;failed after <span class="variable">$count</span> times&quot;</span></span><br><span class="line">         cat out.log</span><br><span class="line">         <span class="built_in">break</span></span><br><span class="line">     <span class="keyword">fi</span></span><br><span class="line">     ((count++))</span><br><span class="line"></span><br><span class="line"> <span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">count=1</span><br><span class="line"></span><br><span class="line"> <span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"> <span class="keyword">do</span></span><br><span class="line">     ./buggy.sh 2&gt; out.log</span><br><span class="line">     <span class="keyword">if</span> [[ $? -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">         <span class="built_in">echo</span> <span class="string">&quot;failed after <span class="variable">$count</span> times&quot;</span></span><br><span class="line">         cat out.log</span><br><span class="line">         <span class="built_in">break</span></span><br><span class="line">     <span class="keyword">fi</span></span><br><span class="line">     ((count++))</span><br><span class="line"></span><br><span class="line"> <span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -912,7 +898,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://101.35.161.126/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -966,8 +952,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="shell-tools-and-scripting">Shell Tools and Scripting</h1>
-<p>shell可以定义变量</p>
+          <h1 id="Shell-Tools-and-Scripting"><a href="#Shell-Tools-and-Scripting" class="headerlink" title="Shell Tools and Scripting"></a>Shell Tools and Scripting</h1><p>shell可以定义变量</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo=bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ <span class="built_in">echo</span> <span class="variable">$foo</span></span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
 <p>用空格分开会被认为是可执行程序</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo = bar</span><br><span class="line">Command &#x27;foo&#x27; not found, did you mean:</span><br></pre></td></tr></table></figure>
