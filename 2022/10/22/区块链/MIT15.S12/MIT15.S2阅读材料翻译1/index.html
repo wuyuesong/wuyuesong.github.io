@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/%5Cimages/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/%5Cimages/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/%5Cimages/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/%5Cimages/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="冲突支配着货币的历史和起源 考古学家和人类学家说，几千年前，金钱是偿还债务的一种手段  无论你走到哪里，金钱都会说话。这已经持续了很长时间。 然而，可悲的是，资金对其来源一直保持沉默。对于我们生活中如此重要的元素，金钱的古老根源及其发明的原因尚不清楚。 随着像比特币这样的加密货币成群结队的出现，研究人员仍在为钱是怎么来的以及在哪里来的而争论不休。一些人将最新的、流行的加密货币与密克罗尼西亚一个岛屿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT15.S2阅读材料翻译1">
+<meta property="og:url" content="https://wuyuesong.github.io/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/index.html">
+<meta property="og:site_name" content="wys的个人博客">
+<meta property="og:description" content="冲突支配着货币的历史和起源 考古学家和人类学家说，几千年前，金钱是偿还债务的一种手段  无论你走到哪里，金钱都会说话。这已经持续了很长时间。 然而，可悲的是，资金对其来源一直保持沉默。对于我们生活中如此重要的元素，金钱的古老根源及其发明的原因尚不清楚。 随着像比特币这样的加密货币成群结队的出现，研究人员仍在为钱是怎么来的以及在哪里来的而争论不休。一些人将最新的、流行的加密货币与密克罗尼西亚一个岛屿">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wuyuesong.github.io/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/image-20221023174054886.png">
+<meta property="article:published_time" content="2022-10-22T15:27:27.000Z">
+<meta property="article:modified_time" content="2022-10-23T14:26:30.068Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wuyuesong.github.io/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/image-20221023174054886.png">
+
+<link rel="canonical" href="https://wuyuesong.github.io/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>MIT15.S2阅读材料翻译1 | wys的个人博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?176038d5e76ea511f3c7ecd6a3813b97";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wys的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">你有很多事放不下？做人要潇洒一点~</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MIT15.S2阅读材料翻译1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-10-22 23:27:27" itemprop="dateCreated datePublished" datetime="2022-10-22T23:27:27+08:00">2022-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-10-23 22:26:30" itemprop="dateModified" datetime="2022-10-23T22:26:30+08:00">2022-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" itemprop="url" rel="index"><span itemprop="name">区块链</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="冲突支配着货币的历史和起源"><a href="#冲突支配着货币的历史和起源" class="headerlink" title="冲突支配着货币的历史和起源"></a>冲突支配着货币的历史和起源</h1><blockquote>
+<p>考古学家和人类学家说，几千年前，金钱是偿还债务的一种手段</p>
+</blockquote>
+<p>无论你走到哪里，金钱都会说话。这已经持续了很长时间。</p>
+<p>然而，可悲的是，资金对其来源一直保持沉默。对于我们生活中如此重要的元素，金钱的古老根源及其发明的原因尚不清楚。</p>
+<p>随着像比特币这样的加密货币成群结队的出现，研究人员仍在为钱是怎么来的以及在哪里来的而争论不休。一些人将最新的、流行的加密货币与密克罗尼西亚一个岛屿社区开发的一种不适合任何人的钱包、口袋或钱包的货币进行了有趣的比较。</p>
+<p>然而，当谈到钱的来源时，冲突占主导地位。数百年来，经济学家对货币的起源持有一种观点。但越来越多的人类学家和考古学家持修正主义观点，认为经济学家的标准故事已经破产。</p>
+<p>经济学家和修正主义者一致认为，被定义为货币的物体有四种作用：首先，它是交换商品和服务的一种手段。货币能够偿还债务。它代表了一种通用的价值衡量标准，使得计算各种物品的价格成为可能。最后，钱可以作为财富储备储存。</p>
+<p>从那里，两组人分裂了。主流经济学家认为，商品和服务的易货交易激发了货币的发明。人类学家和考古学家认为，早期国家发明了货币作为偿还债务的手段。</p>
+<p>弗雷德里克斯堡哥本哈根商学院的社会文化人类学家丹尼尔·苏莱尔斯表示：“许多学术研究都假定（货币体系）在过去200至400年内在民族国家兴起。”。但金融化交易和债务在更远的时间里出现在许多地方。</p>
+<p>来自美洲的最新研究为辩论增添了新的问题。这些调查表明，从几千年前开始，在世界许多地方，货币独立出现的原因不同，并呈现出不同的有形形式。</p>
+<p><strong>债务押注</strong></p>
+<p>自1776年亚当·斯密（Adam Smith）的《国富论》（the Wealth of Nations）出版以来，经济学家们达成了一个共识，即人们的自利贸易决定会自动平衡供需，几乎不需要或根本不需要政府参与。经济学家认为，人类以一种产品换取另一种产品的自然倾向，比如用土豆换取陶器，导致了古代欧亚国家货币的发明。</p>
+<p>人类学家和考古学家说，这个老生常谈的故事让人大错特错。纽约奥尔巴尼大学的考古学家罗伯特·罗森斯威格（Robert Rosenswig）表示：“亚当·斯密（Adam Smith）对金融系统的“创造神话”是基于对过去实际发生的事情的无知。”。</p>
+<p>罗森斯威格认为，早期政府创造资金来偿还公共工程债务和征税。易货与此无关。取而代之的是，货币来源于古老的信用和债务体系，人类学家已经记录了一个多世纪。在小规模社会中，债务涉及对他人的义务。例如，在狩猎采集者和农场主群体中，婚后送出的女儿会产生债务，这些债务可以用称为“新娘财富”的商品部分偿还。全额还款要求第一位新娘的接受者提供新娘作为回报。不需要现金。</p>
+<p>修正主义者认为，至少5500年前，美索不达米亚和埃及的农业州开始向新形式的货币友好型债务过渡。在美索不达米亚，银谢克尔（一块金属，而不是一枚硬币）是一种基本的货币计量。统治者颁布法令，一谢克尔的银币重量相当于一蒲式耳的大麦。银、金和其他金属的谢克尔用于其他古代社会。谢克尔的精确重量似乎各不相同，难以确定。农民被征税以支持王室生活方式和公共工程。农民和其他平民无法支付的货物被记为以谢克尔为单位的债务。商人和商人从寺庙和宫廷官员那里赊购货物。</p>
+<p>美索不达米亚时代的商人在欧亚大陆旅行时，可能会用银块来支付一些交易，银块以粗略标准化的谢克尔衡量。但这些银块能否解决债务尚不得而知。</p>
+<p>大约2600年前，印有动物或统治者形象的硬币首次出现在现在的土耳其的利迪亚王国。不久之后，希腊、波斯、印度和中国的城市和国家开始铸造自己的硬币。从一开始，硬币就资助了军队和征服战争。在此过程中，硬币成为各种交易的法定货币。修正主义者认为，市场是这一制度的结果，而不是其原因。</p>
+<p>伦敦经济与政治学院（London School of Economics and Political Science）的人类学家大卫·格雷伯（David Graeber）在2011年出版的《债务：前5000年》（Debt:the First 5000 Years）一书中提出了这一观点。</p>
+<p>格雷伯主要依靠来自非洲、亚洲和欧洲社会的证据。但他的书激发了越来越多的人对金钱在美洲的模糊起源进行研究。4月，在华盛顿举行的美国考古学学会年会上，许多研究人员会面讨论了他们的发现。</p>
+<p>一些人认为，格雷伯对债务的关注对于理解古代玛雅和附近社会何时以及如何将可可豆和纺织棉等商品转化为货币至关重要。但在同样的社会中，易货交易不能被排除为易腐支付的前兆。目前，问题多于答案。</p>
+<p>新泽西州纽瓦克巴德高中早期学院的人类学考古学家乔安娜·巴伦说：“债务在古中美洲和墨西哥扮演了巨大的角色，但不清楚货币是如何出现的。”。</p>
+<p><strong>玛雅市场</strong></p>
+<p>在16世纪，西班牙人写道，在从墨西哥到中美洲的社会中，包括阿兹特克人和玛雅人，他们观察到了一个繁荣的市场体系。西班牙编年史者描述了货币，尤其是可可豆和编织布，广泛用于购买商品、纳税和债务、计算货币价值和存储家庭财富。</p>
+<p>研究人员长期以来一直怀疑，玛雅市场和商人以及各种用作货币的商品早在1100年左右就出现了，这是在经典玛雅文明的国王和城邦垮台之后。然而，现在的证据表明，这种易腐烂的货币形式出现得更早，在经典玛雅全盛时期，从250到900。</p>
+<p>伊利诺伊州立大学（Illinois State University in Normal）人类学考古学家凯瑟琳·桑佩克（Kathryn Sampeck）表示，将各种物品转换成法定货币“发生在古美洲，而不仅仅是欧洲”。想想十年前在墨西哥卡拉克穆尔的一个小金字塔里发现的一组七世纪中期的壁画。这些场景展示了一个强大的经典玛雅中心的市场交易，该中心控制着一系列卫星站点（SN Online:4/17/18）。考古学家怀疑，卡拉克穆尔绘制的金字塔位于一片空地的中央，其中包括一个大市场。</p>
+<p>金字塔墙壁上的壁画描绘了不同社会阶层的人，从他们的衣服和珠宝可以看出，他们显然在交换玉米粉饼、烟草和陶器。一些绘画场景展示了各种尺寸和颜色的织物，供交换。其中一幅画描绘了一名妇女穿着村民的简单衣服，向一名男子提供一杯热巧克力，以换取塔梅尔面团。</p>
+<p>巴伦在考古学会议上表示，在接下来的几十年里，玛雅统治者要求可可和纺织品作为贡品，这是一种向臣民征收的税收，这两种产品成为了具有标准价值的货币。一个可追溯到691年的彩绘花瓶描绘了已知最早的纺织品和可可豆作为对国王的致敬。国王脚下的一个袋子被标为“3 pik”，研究人员将其翻译为24000可可豆的术语。</p>
+<p>691年后，其他经典玛雅遗址的彩陶和雕刻纪念碑越来越多地在贡品场景中展示可可豆袋和布袋。巴伦说，皇家法庭可能储存了贡品，并用它来支付法庭成员和购买市场商品。</p>
+<p>巴伦在三月的《人类学考古学杂志》上提出，在经典的玛雅人中，易货交易可能是可可和布料货币的直接先驱。在对考古证据和西班牙官员的描述进行分析后，她得出结论，在国王开始收集布匹贡品之前，所有社会阶层的人都在卡拉克穆尔市场交易精美的纺织品。巴伦说，在卡拉克穆尔的竞争中心蒂卡尔，在各个社会阶层的家庭中发现的专门织布工具表明，高质量的缝纫始于国家建立市场和收集布匹之前的几十年或更长时间。从600年代后期到700年代的贡品收藏，导致在卡拉克穆尔、蒂卡尔和相关的玛雅遗址为纺织品的特定尺寸和颜色设定了价值。与此同时，玛雅精英对可可作为贡品的需求不断增加，影响了以可可豆计数计算的货币价值的出现。</p>
+<p>巴伦说：“最初的易货物品可能已经成为经典玛雅人的货币。”。</p>
+<h4 id="State-money"><a href="#State-money" class="headerlink" title="State money"></a>State money</h4><p>奥尔巴尼的罗森斯威格在4月的会议上提出，货币体系可能在传统玛雅文明出现之前几个世纪就在墨西哥南部和中美洲的一些人口中发展起来了。但罗森斯威格表示，在世界上的那个地区，确定货币的出生地尤其困难，因为可可和布料等货币通常不会保存在古代遗址。</p>
+<p>他从陶器和壁画中寻找关键证据，再加上大型宫殿建筑的遗迹、公共工程和战争的书面记录。他说，中央集权政府和他们需要对主体征税，并将贵重物品转化为货币，以支付战争和昂贵的建筑费用，这为玛雅货币体系奠定了基础。这些类型的政府活动可以在考古遗址记录下来。</p>
+<blockquote>
+<p><strong>可可现金</strong></p>
+<p>在条件允许的情况下，经典时代的玛雅货币在树上生长。可可树在塔巴斯科和其他地方生长茂盛，河谷潮湿，雨量充沛，不受阳光和风的影响。卡拉克穆尔和蒂卡尔的玛雅统治者每年都会用可可豆来致敬。</p>
+<img src="/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/image-20221023174054886.png" class title="image-20221023174054886">
+</blockquote>
+<p>以伊萨帕为例，它是墨西哥南部、危地马拉和萨尔瓦多太平洋沿岸的一个城邦网络，大约在2800年至2100年前崛起。伊扎帕位于可可、棉花和其他资源丰富的地区。那里的统治者显然委托修建寺庙和其他大型建筑。雕刻的纪念碑显示了国王为了维护统治而进行的仪式性杀戮。伊扎帕和邻近地区的国王要求大量可可、棉花和其他两种物品作为贡品，而经典玛雅人后来可能会将其用作货币：脊椎贝壳和盐。</p>
+<p>罗森斯威格说：“货币对于这些距离很近的王国之间的贸易是有用的。”。</p>
+<p>雅典乔治亚大学的人类学考古学家斯蒂芬·科瓦列夫斯基表示，从墨西哥中部到中美洲大部分地区的中美洲古代城邦似乎在欧洲人和亚洲人开始制造硬币的同时建立了自己的货币体系。科瓦列夫斯基对古希腊和中美洲的国家规模、政治组织和商品交易市场进行了调查。</p>
+<p>他表示，越来越多的玛雅研究人员认为，旧世界和新世界的社会独立地创造了自己的货币体系和货币。</p>
+<p>科瓦列夫斯基在考古学会议上断言，流通易腐货币的古代美国社会无法让一些个人和家庭积累古希腊人那样的财富，或许是最著名的早期铸币厂。在希腊世界，个人可以将土地、货物和奴隶作为私人财产进行积累和出售。这使得一些希腊人从卑微的出身走向了巨大的财富。科瓦列夫斯基说，在中美洲，农业社区管理土地所有权，特别是在土壤肥沃的地方。这使得皇室以外的个人更难致富。</p>
+<p>随着货币体系的繁荣和财富的积累，奴隶制应运而生。并不是每个人都同意，被迫成为奴隶的人被视为货币的血肉单位。但列克星敦肯塔基大学的考古学家斯科特·哈森在4月的会议上表示，在欧洲人抵达中美洲之前，商业交易包括使用奴隶作为人类货币。</p>
+<p>例如，经典时代的玛雅铭文表明，战俘可以作为贡品送给国王。一些俘虏被勒索以换取可可和其他被认为对玛雅王室有价值的物品，包括尖刺的脊椎贝壳。在大约500年前阿兹特克帝国的一部分，墨西哥中部的纳华社会，农民家庭有时会在困难时期把孩子作为奴隶卖给富人。即使他们的财富有所改善，纳华农民也往往无法获得足够的贵重物品来买回他们的孩子。</p>
+<p>但科瓦列夫斯基说，奴隶制是中美洲统治者的副业。在希腊和其他古代地中海社会，奴隶被大量出售和交易。学者估计，奴隶约占古希腊雅典城邦人口的一半或更多。希腊奴隶开采银币，耕种土地，甚至成为高级公务员。</p>
+<p>科瓦列夫斯基说，奴隶制可能为地中海最早的民主和资本主义形式提供了资金。</p>
+<p><strong>贝壳游戏</strong></p>
+<p>然而，地中海和中美洲的古代国家并不能解释关于金钱根源的一切。以丘马什印第安人为例，他们生活在中美洲社会以北2000多公里的地方，现在是加利福尼亚南部。</p>
+<p>从大约800年前开始，Chumash集团开始用橄榄形蜗牛壳厚厚的中心雕刻的货币向其首领偿还债务。居住在加利福尼亚海岸附近的海峡群岛上的Chumash人越来越多，对大陆商品的需求激增，这可能刺激了空壳货币的发明。</p>
+<p>加州大学圣巴巴拉分校的考古学家林恩·甘布尔（Lynn Gamble）在今年4月提出了一个案例。</p>
+<p>甘布尔说：“Chumash贝壳钱是在海峡群岛大量生产的，而海峡群岛在大陆上缺乏很多可用资源。”。她建议，海峡岛民可能会用货币来换取结婚伴侣以及各种商品，比如鸟羽毛作为仪式服装。</p>
+<p>甘布尔说，丘马什人在把杯状珠子变成钱之前很久就用各种珠子装饰和交易。在Chumash遗址的挖掘中发现了8000多年前由石头、骨头和贝壳制成的珠子。甘布尔解释说，这些珠子并不像后来用作货币的珠子那样大量分布在整个定居点。</p>
+<p>她说，贝壳钱珠出现得很晚。当时，许多家庭都出现了成堆雕刻成杯状的贝壳珠。贝壳钱也散落在Chumash墓地，并埋在坟墓里。被视为金钱的珠子直到当时的Chumash定居点人口达到800至1000人时才出现。Gamble怀疑，这种规模的团体需要一种标准货币来简化越来越多的经济交易。</p>
+<p>甘布尔补充道，从空壳货币一开始，Chumash平民可能就一直欠酋长及其助手的债。18世纪末的西班牙记述描述了Chumash酋长组织的盛宴，在那里，工作人员被要求携带食物、贝壳和其他贵重物品来支付活动费用，并作为贡品送给领导人。</p>
+<p>Chumash人主要用他们的海洋货币购买和销售商品，这种货币与长期的贸易惯例共存。甘布尔怀疑，一旦空壳资金发展成为追随者，它可能会被包括在支付给酋长的债务中。</p>
+<p>Chumash的钱是否更多地来自经济交换，而不是主要的债务，一个更大的谜团仍然存在。一些古代社会，如印加和安第斯山脉的早期帝国，对各种货物和贡品都有详细的会计记录，但没有钱。Gamble说，研究人员不知道为什么钱在Chumash人相对简单的狩猎采集社会中发展起来，而不是在16世纪早期的印加州。</p>
+<p>在古代，金钱在某些地方说话，在其他地方却一言不发。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/" rel="prev" title="数据库————恢复">
+      <i class="fa fa-chevron-left"></i> 数据库————恢复
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/23/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%912/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B2%E7%AA%81%E6%94%AF%E9%85%8D%E7%9D%80%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8E%86%E5%8F%B2%E5%92%8C%E8%B5%B7%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">冲突支配着货币的历史和起源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#State-money"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">State money</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
