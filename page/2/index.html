@@ -160,6 +160,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/" class="post-title-link" itemprop="url">数据库————哈希</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-08-10 10:27:27" itemprop="dateCreated datePublished" datetime="2022-08-10T10:27:27+08:00">2022-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-15 20:42:12" itemprop="dateModified" datetime="2022-09-15T20:42:12+08:00">2022-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h1><h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1 动机"></a>1 动机</h2><p>有时，排序对于这个问题来说有点过分。在许多情况下，我们只想将相同的值分组在一起，但实际上并不关心值的出现顺序（考虑分组方式或重复数据消除）。在数据库中，将类似的值分组在一起称为哈希。我们无法以您在61B中学习的标准方式构建哈希表，原因与我们无法在最后一个注释中使用快速排序相同；我们无法将所有数据存储在内存中！让我们看看如何构建一个高效的基于外存的散列算法。</p>
+<h2 id="2-总体战略"><a href="#2-总体战略" class="headerlink" title="2 总体战略"></a>2 总体战略</h2><p>因为我们不能一次将所有数据放入内存，所以我们需要构建几个不同的哈希表并将它们连接在一起。但这个想法有一个问题。如果我们构建两个单独的哈希表，每个哈希表中都有相同的值（例如，“Brian”出现在两个表中），会发生什么？连接这些表将导致一些“Brian”不在彼此旁边。</p>
+<p>为了解决这个问题，在用内存中的数据构建哈希表之前，我们需要保证，如果某个值在内存中，那么它的所有出现都在内存中。换句话说，如果“Brian”至少在内存中出现一次，那么我们只能在数据中每次出现“Brian”，当前都在内存中的情况下构建哈希表。这确保了值只能出现在一个哈希表中，从而使哈希表可以安全连接。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/10/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_6/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -919,94 +1002,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/30/missing-semester/Version%20Control%20(Git)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/30/missing-semester/Version%20Control%20(Git)/" class="post-title-link" itemprop="url">Version Control (Git)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-30 14:31:27" itemprop="dateCreated datePublished" datetime="2022-03-30T14:31:27+08:00">2022-03-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-07 11:26:21" itemprop="dateModified" datetime="2022-09-07T11:26:21+08:00">2022-09-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Version-Control-Git"><a href="#Version-Control-Git" class="headerlink" title="Version Control (Git)"></a>Version Control (Git)</h1><p><code>git init</code>创建仓库 </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/rust/missing/playgroud/demo/.git/</span><br></pre></td></tr></table></figure>
-<p><code>git help</code> 查看帮助，后面要加上参数，比如说<code>git init</code></p>
-<p>我们创建一个文件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello world&quot;</span> &gt; hello.txt</span><br></pre></td></tr></table></figure>
-<p>这个时候查看 <code>git status</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">No commits yet</span><br><span class="line"></span><br><span class="line">Untracked files:</span><br><span class="line">  (use <span class="string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="keyword">in</span> what will be committed)</span><br><span class="line"></span><br><span class="line">        hello.txt</span><br></pre></td></tr></table></figure>
-<p>我们可以看到一个`Untracked files 。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/30/missing-semester/Version%20Control%20(Git)/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1076,7 +1071,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
