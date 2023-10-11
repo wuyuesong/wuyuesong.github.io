@@ -160,6 +160,97 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/" class="post-title-link" itemprop="url">数据库————查询优化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-08-20 10:27:27" itemprop="dateCreated datePublished" datetime="2022-08-20T10:27:27+08:00">2022-08-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-15 20:42:00" itemprop="dateModified" datetime="2022-09-15T20:42:00+08:00">2022-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h1><h2 id="1-导言"><a href="#1-导言" class="headerlink" title="1 导言"></a>1 导言</h2><p>当我们讨论SQL时，我们为您提供了一个关于如何执行查询的有用的心理模型。首先在FROM子句中获取所有行，然后在WHERE子句中过滤出不需要的列，依此类推。这很有用，因为它可以确保您将获得查询的正确结果，但数据库实际上并不是这样做的。数据库可以更改它们执行操作的顺序，以获得最佳性能。记住，在这个类中，我们根据I/O的数量来衡量性能。查询优化就是寻找查询计划，以最小化执行查询所需的I/O数量。查询计划只是一系列操作，这些操作将为查询获得正确的结果。我们使用关系代数来表示它。这是查询计划的示例：</p>
+<p><img src="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/image-20220909190834709.png" alt></p>
+<p>首先，它将两个表连接在一起，然后过滤掉行，最后只投影所需的列。我们很快就会看到，我们可以提出更好的查询计划！</p>
+<h2 id="2-选择性估计"><a href="#2-选择性估计" class="headerlink" title="2.选择性估计"></a>2.选择性估计</h2><p>查询优化的一个重要特性是，在执行一个计划之前，我们无法知道该计划将花费多少I/O。这有两个重要的含义。首先，我们不可能保证找到最佳查询计划-我们只能希望使用启发式和估计找到一个好的（足够的）查询计划。第二，我们需要某种方法来估计查询计划的成本。我们将用来估计查询计划成本的一个工具称为选择性估计。运算符的选择性是一个近似值，表示通过运算符到达其上的运算符的页面百分比。这一点很重要，因为如果我们有一个操作符可以大大减少进入下一阶段的页面数量（如WHERE子句），我们可能希望尽快这样做，以便其他操作符必须处理更少的页面。</p>
+<p>大多数选择性估算公式相当简单。例如，为了估计X=3形式的条件的选择性，公式为1/（X的唯一值的数量）。本说明中使用的公式如下所示，但完整列表请参见讲座/讨论幻灯片。在这些示例中，大写字母表示列，小写字母表示常量。以下示例中的所有值都是整数，因为浮点具有不同的公式。</p>
+<ul>
+<li>X=a: 1/(unique vals in X)</li>
+<li>X=Y: 1/max(unique vals in X, unique vals in Y)</li>
+<li>X&gt;a: (max(X) - a) / (max(X) - min(X) + 1)</li>
+<li>cond1 AND cond2: Selectivity(cond1) * Selectivity(cond2)</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_8/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -923,89 +1014,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/" class="post-title-link" itemprop="url">cs61a难题摘录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-04-06 09:40:27" itemprop="dateCreated datePublished" datetime="2022-04-06T09:40:27+08:00">2022-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-12 20:24:01" itemprop="dateModified" datetime="2022-04-12T20:24:01+08:00">2022-04-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cs61a/" itemprop="url" rel="index"><span itemprop="name">cs61a</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="CS61A难题摘录"><a href="#CS61A难题摘录" class="headerlink" title="CS61A难题摘录"></a>CS61A难题摘录</h1><h2 id="HW02"><a href="#HW02" class="headerlink" title="HW02"></a>HW02</h2><p><strong>problem</strong></p>
-<p>The logician Alonzo Church invented a system of representing non-negative integers entirely using functions. The purpose was to show that functions are sufficient to describe all of number theory: if we have functions, we do not need to assume that numbers exist, but instead we can invent them.</p>
-<p>Your goal in this problem is to rediscover this representation known as <em>Church numerals</em>. Here are the definitions of <code>zero</code>, as well as a function that returns one more than its argument:</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1075,7 +1083,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
