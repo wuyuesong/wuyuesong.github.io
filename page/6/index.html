@@ -160,6 +160,101 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2021/09/11/CF/C3-B%20lucky%20probability/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/11/CF/C3-B%20lucky%20probability/" class="post-title-link" itemprop="url">B. lucky probability</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-11T00:00:00+08:00">2021-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-27 18:11:11" itemprop="dateModified" datetime="2021-09-27T18:11:11+08:00">2021-09-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Codeforces%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">Codeforces题解</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>Codeforces Beta Round #84 (Div. 1 Only)</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>我们先考虑生成所有九位以内的仅有4和7组成的数。</p>
+<p>对于我们考虑枚举起点，取其中连续的k个数。</p>
+<p>我们假设起始数为 <em>a[i]</em>。则终止数为 <em>a[i+k-1]</em>。</p>
+<p>我们设 <em>f(x,y,u)</em> 为 <em>[x,y]</em> 中<strong>大于等于u</strong>的数的个数。</p>
+<p>​            <em>g(x,y,u)</em> 为<em>[x,y]</em> 中<strong>小于等于u</strong>的数的个数。</p>
+<p>则总的数量为</p>
+<script type="math/tex; mode=display">
+(f(p_l,p_r,a[i])-f(p_l,p_r,a[i-1]))*(g(v_l,v_r,a[i+k-1])-g(v_l,v_r,a[i+k]))</script><script type="math/tex; mode=display">
++</script><script type="math/tex; mode=display">
+(f(v_l,v_r,a[i])-f(v_l,v_r,a[i-1]))*(g(p_l,p_r,a[i+k-1])-g(p_l,p_r,a[i+k]))</script><p><strong><em>最后我们需要特判一种情况</em></strong></p>
+<p>即当k为1时，如果设这个数为x，如果<em>x∈[p<sub>l</sub>,p<sub>r</sub>]</em>,并且<em>x∈[v<sub>l</sub>,v<sub>r</sub>]</em>，那么总的数量需要<strong>减一</strong>。因为第一个区间取x，第二个区间取x 和 第二个区间取x，第一个区间取x重复。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/11/CF/C3-B%20lucky%20probability/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2021/09/09/CF/B.%20Kavi%20on%20Pairing%20Duty/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -402,7 +497,7 @@ dp[x][flag]=max(dp[it][0]+abs(nd[it][0]-nd[x][flag]),dp[it][1]+abs(nd[it][1]-nd[
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

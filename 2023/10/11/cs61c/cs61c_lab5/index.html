@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/%5Cimages/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/%5Cimages/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/%5Cimages/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/%5Cimages/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="cs61c_lab5Part 1: Sub-CircuitsNAND1   NOR1   XOR1   MUX2 通过列真值表可以得到以下逻辑式： $\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel&#x3D;RESULT$ 可以画出如下电路：   参考大佬的电路图后发现可以化简^1：$$RESULT&#x3D;\neg{A}BSel+A\neg{B}\neg{Sel}+">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cs61c_lab4">
+<meta property="og:url" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/index.html">
+<meta property="og:site_name" content="wys的个人博客">
+<meta property="og:description" content="cs61c_lab5Part 1: Sub-CircuitsNAND1   NOR1   XOR1   MUX2 通过列真值表可以得到以下逻辑式： $\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel&#x3D;RESULT$ 可以画出如下电路：   参考大佬的电路图后发现可以化简^1：$$RESULT&#x3D;\neg{A}BSel+A\neg{B}\neg{Sel}+">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185639742.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185627597.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185715957.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012190645123.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012191657270.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192127480.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192506866.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200417731.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200723560.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012220746818.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224925252.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224950683.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225018085.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225041596.png">
+<meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225116094.png">
+<meta property="article:published_time" content="2023-10-11T12:04:27.000Z">
+<meta property="article:modified_time" content="2023-10-12T14:51:24.923Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185639742.png">
+
+<link rel="canonical" href="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>cs61c_lab4 | wys的个人博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?176038d5e76ea511f3c7ecd6a3813b97";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wys的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">你有很多事放不下？做人要潇洒一点~</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cs61c_lab4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-11 20:04:27" itemprop="dateCreated datePublished" datetime="2023-10-11T20:04:27+08:00">2023-10-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-12 22:51:24" itemprop="dateModified" datetime="2023-10-12T22:51:24+08:00">2023-10-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61c/" itemprop="url" rel="index"><span itemprop="name">cs61c</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="cs61c-lab5"><a href="#cs61c-lab5" class="headerlink" title="cs61c_lab5"></a>cs61c_lab5</h1><h3 id="Part-1-Sub-Circuits"><a href="#Part-1-Sub-Circuits" class="headerlink" title="Part 1: Sub-Circuits"></a>Part 1: Sub-Circuits</h3><p><strong>NAND1</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185639742.png" class title="image-20231012185639742">
+
+<p><strong>NOR1</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185627597.png" class title="image-20231012185627597">
+
+<p><strong>XOR1</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185715957.png" class title="image-20231012185715957">
+
+<p><strong>MUX2</strong></p>
+<p>通过列真值表可以得到以下逻辑式：</p>
+<p>$\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel=RESULT$</p>
+<p>可以画出如下电路：</p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012190645123.png" class title="image-20231012190645123">
+
+<p>参考大佬的电路图后发现可以化简<a target="_blank" rel="noopener" href="https://github.com/PKUFlyingPig/CS61C-labs/blob/master/lab05_Logism/ex1.circ">^1</a>：<br>$$<br>RESULT=\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel<br>\=BSel(A+\neg{A})+A\neg{Sel}(B+\neg{B})\=A\neg{Sel}+BSel<br>$$<br>化简后电路图如下：</p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012191657270.png" class title="image-20231012191657270">
+
+<p><strong>MUX4</strong></p>
+<p>两个MUX2可以组成一个MUX4</p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192127480.png" class title="image-20231012192127480">
+
+<h3 id="Part-2-Storing-State"><a href="#Part-2-Storing-State" class="headerlink" title="Part 2: Storing State"></a>Part 2: Storing State</h3><img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192506866.png" class title="image-20231012192506866">
+
+<h3 id="Part-3-FSMs-to-Digital-Logic"><a href="#Part-3-FSMs-to-Digital-Logic" class="headerlink" title="Part 3: FSMs to Digital Logic"></a>Part 3: FSMs to Digital Logic</h3><p><strong>StateBitOne</strong></p>
+<p>根据真值表化简后可得<br>$$<br>st1_{next} = input + st0\neg{input}<br>$$</p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200417731.png" class title="image-20231012200417731">
+
+<p><strong>StateBitZero</strong></p>
+<p>根据真值表化简后可得<br>$$<br>st0_{next} = \neg{input} + st1\dot{input}<br>$$</p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200723560.png" class title="image-20231012200723560">
+
+<h3 id="Part-4-Practice-with-Splitters"><a href="#Part-4-Practice-with-Splitters" class="headerlink" title="Part 4: Practice with Splitters"></a>Part 4: Practice with Splitters</h3><p>如下：</p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012220746818.png" class title="image-20231012220746818">
+
+<h3 id="Part-5-Rotate-Right"><a href="#Part-5-Rotate-Right" class="headerlink" title="Part 5: Rotate Right"></a>Part 5: Rotate Right</h3><p><strong>rot8</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224925252.png" class title="image-20231012224925252">
+
+<p><strong>rot4</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224950683.png" class title="image-20231012224950683">
+
+<p><strong>rot2</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225018085.png" class title="image-20231012225018085">
+
+<p><strong>rot1</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225041596.png" class title="image-20231012225041596">
+
+<p><strong>rotr</strong></p>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225116094.png" class title="image-20231012225116094">
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/30/cs61c/cs61c_lab3/" rel="prev" title="cs61c_lab3">
+      <i class="fa fa-chevron-left"></i> cs61c_lab3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/10/11/cs61c/cs61c_lab4/" rel="next" title="cs61c_lab4">
+      cs61c_lab4 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cs61c-lab5"><span class="nav-number">1.</span> <span class="nav-text">cs61c_lab5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-1-Sub-Circuits"><span class="nav-number">1.0.1.</span> <span class="nav-text">Part 1: Sub-Circuits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-2-Storing-State"><span class="nav-number">1.0.2.</span> <span class="nav-text">Part 2: Storing State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-3-FSMs-to-Digital-Logic"><span class="nav-number">1.0.3.</span> <span class="nav-text">Part 3: FSMs to Digital Logic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-4-Practice-with-Splitters"><span class="nav-number">1.0.4.</span> <span class="nav-text">Part 4: Practice with Splitters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-5-Rotate-Right"><span class="nav-number">1.0.5.</span> <span class="nav-text">Part 5: Rotate Right</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
