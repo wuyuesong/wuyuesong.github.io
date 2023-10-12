@@ -281,7 +281,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-12 22:51:24" itemprop="dateModified" datetime="2023-10-12T22:51:24+08:00">2023-10-12</time>
+                <time title="Modified: 2023-10-12 22:55:50" itemprop="dateModified" datetime="2023-10-12T22:55:50+08:00">2023-10-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,57 +304,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="cs61c-lab5"><a href="#cs61c-lab5" class="headerlink" title="cs61c_lab5"></a>cs61c_lab5</h1><h3 id="Part-1-Sub-Circuits"><a href="#Part-1-Sub-Circuits" class="headerlink" title="Part 1: Sub-Circuits"></a>Part 1: Sub-Circuits</h3><p><strong>NAND1</strong></p>
+          <h1 id="cs61c_lab5">cs61c_lab5</h1>
+<h3 id="part-1-sub-circuits">Part 1: Sub-Circuits</h3>
+<p><strong>NAND1</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185639742.png" class title="image-20231012185639742">
-
 <p><strong>NOR1</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185627597.png" class title="image-20231012185627597">
-
 <p><strong>XOR1</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185715957.png" class title="image-20231012185715957">
-
 <p><strong>MUX2</strong></p>
 <p>通过列真值表可以得到以下逻辑式：</p>
-<p>$\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel=RESULT$</p>
+<p><span class="math inline">\(\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel=RESULT\)</span></p>
 <p>可以画出如下电路：</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012190645123.png" class title="image-20231012190645123">
-
-<p>参考大佬的电路图后发现可以化简<a target="_blank" rel="noopener" href="https://github.com/PKUFlyingPig/CS61C-labs/blob/master/lab05_Logism/ex1.circ">^1</a>：<br>$$<br>RESULT=\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel<br>\=BSel(A+\neg{A})+A\neg{Sel}(B+\neg{B})\=A\neg{Sel}+BSel<br>$$<br>化简后电路图如下：</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012191657270.png" class title="image-20231012191657270">
-
-<p><strong>MUX4</strong></p>
-<p>两个MUX2可以组成一个MUX4</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192127480.png" class title="image-20231012192127480">
-
-<h3 id="Part-2-Storing-State"><a href="#Part-2-Storing-State" class="headerlink" title="Part 2: Storing State"></a>Part 2: Storing State</h3><img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192506866.png" class title="image-20231012192506866">
-
-<h3 id="Part-3-FSMs-to-Digital-Logic"><a href="#Part-3-FSMs-to-Digital-Logic" class="headerlink" title="Part 3: FSMs to Digital Logic"></a>Part 3: FSMs to Digital Logic</h3><p><strong>StateBitOne</strong></p>
-<p>根据真值表化简后可得<br>$$<br>st1_{next} = input + st0\neg{input}<br>$$</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200417731.png" class title="image-20231012200417731">
-
-<p><strong>StateBitZero</strong></p>
-<p>根据真值表化简后可得<br>$$<br>st0_{next} = \neg{input} + st1\dot{input}<br>$$</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200723560.png" class title="image-20231012200723560">
-
-<h3 id="Part-4-Practice-with-Splitters"><a href="#Part-4-Practice-with-Splitters" class="headerlink" title="Part 4: Practice with Splitters"></a>Part 4: Practice with Splitters</h3><p>如下：</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012220746818.png" class title="image-20231012220746818">
-
-<h3 id="Part-5-Rotate-Right"><a href="#Part-5-Rotate-Right" class="headerlink" title="Part 5: Rotate Right"></a>Part 5: Rotate Right</h3><p><strong>rot8</strong></p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224925252.png" class title="image-20231012224925252">
-
-<p><strong>rot4</strong></p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224950683.png" class title="image-20231012224950683">
-
-<p><strong>rot2</strong></p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225018085.png" class title="image-20231012225018085">
-
-<p><strong>rot1</strong></p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225041596.png" class title="image-20231012225041596">
-
-<p><strong>rotr</strong></p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225116094.png" class title="image-20231012225116094">
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/11/cs61c/cs61c_lab5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

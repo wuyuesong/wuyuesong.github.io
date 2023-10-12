@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="cs61c_lab5Part 1: Sub-CircuitsNAND1   NOR1   XOR1   MUX2 通过列真值表可以得到以下逻辑式： $\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel&#x3D;RESULT$ 可以画出如下电路：   参考大佬的电路图后发现可以化简^1：$$RESULT&#x3D;\neg{A}BSel+A\neg{B}\neg{Sel}+">
+  <meta name="description" content="cs61c_lab5 Part 1: Sub-Circuits NAND1  NOR1  XOR1  MUX2 通过列真值表可以得到以下逻辑式： \(\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel&#x3D;RESULT\) 可以画出如下电路：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cs61c_lab4">
 <meta property="og:url" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/index.html">
 <meta property="og:site_name" content="wys的个人博客">
-<meta property="og:description" content="cs61c_lab5Part 1: Sub-CircuitsNAND1   NOR1   XOR1   MUX2 通过列真值表可以得到以下逻辑式： $\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel&#x3D;RESULT$ 可以画出如下电路：   参考大佬的电路图后发现可以化简^1：$$RESULT&#x3D;\neg{A}BSel+A\neg{B}\neg{Sel}+">
+<meta property="og:description" content="cs61c_lab5 Part 1: Sub-Circuits NAND1  NOR1  XOR1  MUX2 通过列真值表可以得到以下逻辑式： \(\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel&#x3D;RESULT\) 可以画出如下电路：">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185639742.png">
 <meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185627597.png">
@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225041596.png">
 <meta property="og:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225116094.png">
 <meta property="article:published_time" content="2023-10-11T12:04:27.000Z">
-<meta property="article:modified_time" content="2023-10-12T14:51:24.923Z">
+<meta property="article:modified_time" content="2023-10-12T14:55:50.801Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wuyuesong.github.io/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185639742.png">
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-12 22:51:24" itemprop="dateModified" datetime="2023-10-12T22:51:24+08:00">2023-10-12</time>
+                <time title="Modified: 2023-10-12 22:55:50" itemprop="dateModified" datetime="2023-10-12T22:55:50+08:00">2023-10-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,56 +234,59 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="cs61c-lab5"><a href="#cs61c-lab5" class="headerlink" title="cs61c_lab5"></a>cs61c_lab5</h1><h3 id="Part-1-Sub-Circuits"><a href="#Part-1-Sub-Circuits" class="headerlink" title="Part 1: Sub-Circuits"></a>Part 1: Sub-Circuits</h3><p><strong>NAND1</strong></p>
+        <h1 id="cs61c_lab5">cs61c_lab5</h1>
+<h3 id="part-1-sub-circuits">Part 1: Sub-Circuits</h3>
+<p><strong>NAND1</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185639742.png" class title="image-20231012185639742">
-
 <p><strong>NOR1</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185627597.png" class title="image-20231012185627597">
-
 <p><strong>XOR1</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012185715957.png" class title="image-20231012185715957">
-
 <p><strong>MUX2</strong></p>
 <p>通过列真值表可以得到以下逻辑式：</p>
-<p>$\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel=RESULT$</p>
+<p><span class="math inline">\(\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel=RESULT\)</span></p>
 <p>可以画出如下电路：</p>
+<span id="more"></span>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012190645123.png" class title="image-20231012190645123">
-
-<p>参考大佬的电路图后发现可以化简<a target="_blank" rel="noopener" href="https://github.com/PKUFlyingPig/CS61C-labs/blob/master/lab05_Logism/ex1.circ">^1</a>：<br>$$<br>RESULT=\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel<br>\=BSel(A+\neg{A})+A\neg{Sel}(B+\neg{B})\=A\neg{Sel}+BSel<br>$$<br>化简后电路图如下：</p>
+<p>参考大佬的电路图后发现可以化简<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>： <span class="math display">\[
+RESULT=\neg{A}BSel+A\neg{B}\neg{Sel}+AB\neg{Sel}+ABSel
+\\=BSel(A+\neg{A})+A\neg{Sel}(B+\neg{B})\\=A\neg{Sel}+BSel
+\]</span> 化简后电路图如下：</p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012191657270.png" class title="image-20231012191657270">
-
 <p><strong>MUX4</strong></p>
 <p>两个MUX2可以组成一个MUX4</p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192127480.png" class title="image-20231012192127480">
-
-<h3 id="Part-2-Storing-State"><a href="#Part-2-Storing-State" class="headerlink" title="Part 2: Storing State"></a>Part 2: Storing State</h3><img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192506866.png" class title="image-20231012192506866">
-
-<h3 id="Part-3-FSMs-to-Digital-Logic"><a href="#Part-3-FSMs-to-Digital-Logic" class="headerlink" title="Part 3: FSMs to Digital Logic"></a>Part 3: FSMs to Digital Logic</h3><p><strong>StateBitOne</strong></p>
-<p>根据真值表化简后可得<br>$$<br>st1_{next} = input + st0\neg{input}<br>$$</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200417731.png" class title="image-20231012200417731">
-
+<h3 id="part-2-storing-state">Part 2: Storing State</h3>
+<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012192506866.png" class title="image-20231012192506866">
+<h3 id="part-3-fsms-to-digital-logic">Part 3: FSMs to Digital Logic</h3>
+<p><strong>StateBitOne</strong></p>
+<p>根据真值表化简后可得 <span class="math display">\[
+st1_{next} = input + st0\neg{input}
+\]</span> <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200417731.png" class title="image-20231012200417731"></p>
 <p><strong>StateBitZero</strong></p>
-<p>根据真值表化简后可得<br>$$<br>st0_{next} = \neg{input} + st1\dot{input}<br>$$</p>
-<img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200723560.png" class title="image-20231012200723560">
-
-<h3 id="Part-4-Practice-with-Splitters"><a href="#Part-4-Practice-with-Splitters" class="headerlink" title="Part 4: Practice with Splitters"></a>Part 4: Practice with Splitters</h3><p>如下：</p>
+<p>根据真值表化简后可得 <span class="math display">\[
+st0_{next} = \neg{input} + st1\dot{input}
+\]</span> <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012200723560.png" class title="image-20231012200723560"></p>
+<h3 id="part-4-practice-with-splitters">Part 4: Practice with Splitters</h3>
+<p>如下：</p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012220746818.png" class title="image-20231012220746818">
-
-<h3 id="Part-5-Rotate-Right"><a href="#Part-5-Rotate-Right" class="headerlink" title="Part 5: Rotate Right"></a>Part 5: Rotate Right</h3><p><strong>rot8</strong></p>
+<h3 id="part-5-rotate-right">Part 5: Rotate Right</h3>
+<p><strong>rot8</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224925252.png" class title="image-20231012224925252">
-
 <p><strong>rot4</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012224950683.png" class title="image-20231012224950683">
-
 <p><strong>rot2</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225018085.png" class title="image-20231012225018085">
-
 <p><strong>rot1</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225041596.png" class title="image-20231012225041596">
-
 <p><strong>rotr</strong></p>
 <img src="/2023/10/11/cs61c/cs61c_lab5/10/11/cs61c/cs61c_lab5/image-20231012225116094.png" class title="image-20231012225116094">
-
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>https://github.com/PKUFlyingPig/CS61C-labs/blob/master/lab05_Logism/ex1.circ<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
     </div>
 
@@ -364,7 +367,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cs61c-lab5"><span class="nav-number">1.</span> <span class="nav-text">cs61c_lab5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-1-Sub-Circuits"><span class="nav-number">1.0.1.</span> <span class="nav-text">Part 1: Sub-Circuits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-2-Storing-State"><span class="nav-number">1.0.2.</span> <span class="nav-text">Part 2: Storing State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-3-FSMs-to-Digital-Logic"><span class="nav-number">1.0.3.</span> <span class="nav-text">Part 3: FSMs to Digital Logic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-4-Practice-with-Splitters"><span class="nav-number">1.0.4.</span> <span class="nav-text">Part 4: Practice with Splitters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-5-Rotate-Right"><span class="nav-number">1.0.5.</span> <span class="nav-text">Part 5: Rotate Right</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cs61c_lab5"><span class="nav-number">1.</span> <span class="nav-text">cs61c_lab5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#part-1-sub-circuits"><span class="nav-number">1.0.1.</span> <span class="nav-text">Part 1: Sub-Circuits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part-2-storing-state"><span class="nav-number">1.0.2.</span> <span class="nav-text">Part 2: Storing State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part-3-fsms-to-digital-logic"><span class="nav-number">1.0.3.</span> <span class="nav-text">Part 3: FSMs to Digital Logic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part-4-practice-with-splitters"><span class="nav-number">1.0.4.</span> <span class="nav-text">Part 4: Practice with Splitters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part-5-rotate-right"><span class="nav-number">1.0.5.</span> <span class="nav-text">Part 5: Rotate Right</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
