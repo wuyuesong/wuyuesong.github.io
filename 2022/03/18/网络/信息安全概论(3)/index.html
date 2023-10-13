@@ -439,6 +439,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 <script>
   if (typeof MathJax === 'undefined') {
+    /*
     window.MathJax = {
       loader: {
           load: ['[tex]/mhchem'],
@@ -474,6 +475,12 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
             });
           }, '', false]
         }
+      }
+    };*/
+    window.MathJax = {
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
       }
     };
     (function () {
