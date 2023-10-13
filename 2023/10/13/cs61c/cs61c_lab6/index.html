@@ -20,15 +20,21 @@
     var CONFIG = {"hostname":"wuyuesong.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="wys的个人博客">
-<meta property="og:url" content="https://wuyuesong.github.io/archives/2022/page/2/index.html">
+  <meta name="description" content="cs61c_lab6Exercise 1 - Inefficiencies Everywhere 1. Max Delay $$Max_Delay&#x3D;CLK_to_Q_Delay + CL_Delay + Setup_Time\&#x3D;CLK_to_Q_Delay + (Adder_Delay + Multiplication_Delay) + Setup_Time\&#x3D;10ns+(45ns+60ns)+1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cs61c_lab6">
+<meta property="og:url" content="https://wuyuesong.github.io/2023/10/13/cs61c/cs61c_lab6/index.html">
 <meta property="og:site_name" content="wys的个人博客">
+<meta property="og:description" content="cs61c_lab6Exercise 1 - Inefficiencies Everywhere 1. Max Delay $$Max_Delay&#x3D;CLK_to_Q_Delay + CL_Delay + Setup_Time\&#x3D;CLK_to_Q_Delay + (Adder_Delay + Multiplication_Delay) + Setup_Time\&#x3D;10ns+(45ns+60ns)+1">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2023/10/13/OzoTLkb9MUsZfdP.png">
+<meta property="article:published_time" content="2023-10-13T02:21:27.000Z">
+<meta property="article:modified_time" content="2023-10-13T07:28:01.630Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/13/OzoTLkb9MUsZfdP.png">
 
-<link rel="canonical" href="https://wuyuesong.github.io/archives/2022/page/2/">
+<link rel="canonical" href="https://wuyuesong.github.io/2023/10/13/cs61c/cs61c_lab6/">
 
 
 <script id="page-configurations">
@@ -36,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | wys的个人博客</title>
+  <title>cs61c_lab6 | wys的个人博客</title>
   
 
 
@@ -154,235 +160,94 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">Nice! 54 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/13/cs61c/cs61c_lab6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cs61c_lab6
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-13 10:21:27 / Modified: 15:28:01" itemprop="dateCreated datePublished" datetime="2023-10-13T10:21:27+08:00">2023-10-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61c/" itemprop="url" rel="index"><span itemprop="name">cs61c</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-07-30T10:27:27+08:00"
-              content="2022-07-30">
-          07-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_4/" itemprop="url">
-            <span itemprop="name">数据库————关系代数</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-07-25T10:27:27+08:00"
-              content="2022-07-25">
-          07-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/" itemprop="url">
-            <span itemprop="name">数据库————缓冲区管理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-07-20T10:27:27+08:00"
-              content="2022-07-20">
-          07-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/" itemprop="url">
-            <span itemprop="name">数据库————B+树</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-07-15T10:27:27+08:00"
-              content="2022-07-15">
-          07-15
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/" itemprop="url">
-            <span itemprop="name">数据库————磁盘和文件</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-05-30T13:28:27+08:00"
-              content="2022-05-30">
-          05-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/05/30/Linear%20Algebra/S1.2SOL/" itemprop="url">
-            <span itemprop="name">S1.2SOL</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-05-30T13:28:27+08:00"
-              content="2022-05-30">
-          05-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/05/30/Linear%20Algebra/UNIT1_1/" itemprop="url">
-            <span itemprop="name">U1_1 THE GEOMETRY OF LINEAR EQUATIONS</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-06T09:40:27+08:00"
-              content="2022-04-06">
-          04-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/06/cs61a/cs61a%E9%9A%BE%E9%A2%98%E6%91%98%E5%BD%95/" itemprop="url">
-            <span itemprop="name">cs61a难题摘录</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-04-01T22:21:27+08:00"
-              content="2022-04-01">
-          04-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/01/cs61a/cs61a/" itemprop="url">
-            <span itemprop="name">cs61a</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-30T14:31:27+08:00"
-              content="2022-03-30">
-          03-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/30/missing-semester/Version%20Control%20(Git)/" itemprop="url">
-            <span itemprop="name">Version Control (Git)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-29T13:28:27+08:00"
-              content="2022-03-29">
-          03-29
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/29/missing-semester/Command-line%20Environment/" itemprop="url">
-            <span itemprop="name">Command-line Environment</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <h1 id="cs61c-lab6"><a href="#cs61c-lab6" class="headerlink" title="cs61c_lab6"></a>cs61c_lab6</h1><p><strong>Exercise 1 - Inefficiencies Everywhere</strong></p>
+<p><strong>1. Max Delay</strong></p>
+<p>$$<br>Max_Delay=CLK_to_Q_Delay + CL_Delay + Setup_Time\<br>=CLK_to_Q_Delay + (Adder_Delay + Multiplication_Delay) + Setup_Time\<br>=10ns+(45ns+60ns)+10ns\<br>=125ns<br>$$</p>
+<p><strong>2. Min Period</strong><br>$$<br>Min_Period = Max_Delay=125ns<br>$$<br><strong>3. Max Freq</strong><br>$$<br>Max_Freq \= 1/Min_Period\=1/125ns\=8MHz<br>$$<br><strong>Exercise 2 - Pipe that Line</strong></p>
+<p><strong>TASK 1</strong></p>
+<p><img src="https://s2.loli.net/2023/10/13/OzoTLkb9MUsZfdP.png" alt="QQ图片20231013152523"></p>
+<p><strong>TASK 2</strong><br>$$<br>Max_Delay=max(CLK_to_Q_Delay + Adder_Delay + Setup_Time,\CLK_to_Q_Delay + multiplication_Delay + Setup_Time)<br>\=max(10ns+45ns+10ns,10ns+60ns+10ns)\<br>=80ns\\<br>Min_Period = Max_Delay=80ns\\<br>Max_Freq \= 1/Min_Period\=1/80ns\=12.5MHz<br>$$<br><strong>TASK 3</strong></p>
+<p>因为该流水线没有并行执行</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/12/cs61c/cs61c_lab5/" rel="prev" title="cs61c_lab5">
+      <i class="fa fa-chevron-left"></i> cs61c_lab5
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2022/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/2022/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2022/page/3/">3</a><a class="page-number" href="/archives/2022/page/4/">4</a><a class="extend next" rel="next" href="/archives/2022/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  
+  
 
 
 
@@ -434,6 +299,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cs61c-lab6"><span class="nav-number">1.</span> <span class="nav-text">cs61c_lab6</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -560,6 +426,61 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

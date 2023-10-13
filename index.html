@@ -160,6 +160,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/13/cs61c/cs61c_lab6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/13/cs61c/cs61c_lab6/" class="post-title-link" itemprop="url">cs61c_lab6</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-13 10:21:27 / Modified: 15:28:01" itemprop="dateCreated datePublished" datetime="2023-10-13T10:21:27+08:00">2023-10-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61c/" itemprop="url" rel="index"><span itemprop="name">cs61c</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cs61c-lab6"><a href="#cs61c-lab6" class="headerlink" title="cs61c_lab6"></a>cs61c_lab6</h1><p><strong>Exercise 1 - Inefficiencies Everywhere</strong></p>
+<p><strong>1. Max Delay</strong></p>
+<p>$$<br>Max_Delay=CLK_to_Q_Delay + CL_Delay + Setup_Time\<br>=CLK_to_Q_Delay + (Adder_Delay + Multiplication_Delay) + Setup_Time\<br>=10ns+(45ns+60ns)+10ns\<br>=125ns<br>$$</p>
+<p><strong>2. Min Period</strong><br>$$<br>Min_Period = Max_Delay=125ns<br>$$<br><strong>3. Max Freq</strong><br>$$<br>Max_Freq \= 1/Min_Period\=1/125ns\=8MHz<br>$$<br><strong>Exercise 2 - Pipe that Line</strong></p>
+<p><strong>TASK 1</strong></p>
+<p><img src="https://s2.loli.net/2023/10/13/OzoTLkb9MUsZfdP.png" alt="QQ图片20231013152523"></p>
+<p><strong>TASK 2</strong><br>$$<br>Max_Delay=max(CLK_to_Q_Delay + Adder_Delay + Setup_Time,\CLK_to_Q_Delay + multiplication_Delay + Setup_Time)<br>\=max(10ns+45ns+10ns,10ns+60ns+10ns)\<br>=80ns\\<br>Min_Period = Max_Delay=80ns\\<br>Max_Freq \= 1/Min_Period\=1/80ns\=12.5MHz<br>$$<br><strong>TASK 3</strong></p>
+<p>因为该流水线没有并行执行</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/12/cs61c/cs61c_lab5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1050,112 +1125,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/" class="post-title-link" itemprop="url">数据库————事务与并发 II</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-08-30 10:27:27" itemprop="dateCreated datePublished" datetime="2022-08-30T10:27:27+08:00">2022-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:41:49" itemprop="dateModified" datetime="2022-09-15T20:41:49+08:00">2022-09-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="事务与并发-II"><a href="#事务与并发-II" class="headerlink" title="事务与并发 II"></a>事务与并发 II</h1><h2 id="1-导言"><a href="#1-导言" class="headerlink" title="1 导言"></a>1 导言</h2><p>在最后一个注释中，我们介绍了作为ACID性质之一的隔离概念。让我们在这里重新审视我们的定义：</p>
-<ul>
-<li>隔离：每个Xact的执行与其他执行隔离。实际上，DBMS将交错许多XACT的动作，而不是按顺序依次执行。DBMS将确保每个Xact的执行就像它自己运行一样。</li>
-</ul>
-<p>本说明将详细介绍DBMS如何能够在保证隔离的同时交错许多事务的操作。</p>
-<h2 id="2-两阶段锁"><a href="#2-两阶段锁" class="headerlink" title="2.两阶段锁"></a>2.两阶段锁</h2><p>什么是锁，为什么它们有用？锁基本上允许事务读取和写入数据。例如，如果事务T1正在从资源A读取数据，则需要确保没有其他事务同时修改资源A。因此，想要读取数据的事务将请求在适当资源上的共享（S）锁，而想要写入数据的事务则将请求在相应资源上的排他（X）锁。只有一个事务可以对资源持有独占锁，但许多事务可以对数据持有共享锁。两阶段锁定（2PL）是一种确保数据库使用冲突可串行化调度的方案。2PL的两个规则是：</p>
-<ul>
-<li><p>交易必须在读取前获得S（共享）锁，在写入前获得X（独占）锁。</p>
-</li>
-<li><p>在释放任何锁后，事务无法获取新锁——这是通过锁定实现可串行化的关键！</p>
-</li>
-</ul>
-<p><img src="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910085705898.png" alt></p>
-<p>这样做的问题是它不能防止级联中止。例如</p>
-<ul>
-<li><p>T1更新资源A，然后释放对A的锁定。</p>
-</li>
-<li><p>T2从A读取。</p>
-</li>
-<li><p>T1中断。</p>
-</li>
-<li><p>在这种情况下，T2也必须中止，因为它读取了未提交的值A。</p>
-</li>
-</ul>
-<p>为了解决这个问题，我们将使用严格的两相锁定。严格的2PL与2PL相同，只是当事务完成时所有锁一起释放。</p>
-<p><img src="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/image-20220910090520577.png" alt></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/08/30/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_10/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1225,7 +1194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

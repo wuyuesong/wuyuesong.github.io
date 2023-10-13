@@ -160,6 +160,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2021/09/13/XCPC/I-%20Error%20Correction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/13/XCPC/I-%20Error%20Correction/" class="post-title-link" itemprop="url">I- Error Correction</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-13T00:00:00+08:00">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-27 18:11:28" itemprop="dateModified" datetime="2021-09-27T18:11:28+08:00">2021-09-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/XCPC%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">XCPC题解</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>2019-2020 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)</p>
+</blockquote>
+<p>题目是给定一个字符串集合，求一个最大的集合，该集合中的元素满足不能交换任意两个字符，使之成为集合中的另一个元素。</p>
+<p>我们考虑将能交换两个字符使其中一个字符串$s1$变为另一个字符串$s2$,的两个字符串连边。那么题中的条件可以转化为求一个最大的点集，使这个点集中的元素两两没有连边。即求该图的<strong>最大独立集</strong>。判断两个字符串是否可以连边，我们可以判断两个字符串是否只有两个字符不同。因为所有字符串之间为$anagram$<sup><a href="#fn_footnote" id="reffn_footnote">footnote</a></sup>。</p>
+<p>我们考虑朴素的最大独立集算法，时间复杂度为$\mathcal{O}(3^{n/3})$，提交后收获一发$TLE$。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/13/XCPC/I-%20Error%20Correction/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2021/09/11/CF/C3-B%20lucky%20probability/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -497,7 +583,7 @@ dp[x][flag]=max(dp[it][0]+abs(nd[it][0]-nd[x][flag]),dp[it][1]+abs(nd[it][1]-nd[
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
