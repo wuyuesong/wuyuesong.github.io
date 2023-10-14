@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-10-14 22:29:27 / Modified: 22:19:54" itemprop="dateCreated datePublished" datetime="2023-10-14T22:29:27+08:00">2023-10-14</time>
+              <time title="Created: 2023-10-14 22:29:27 / Modified: 22:32:28" itemprop="dateCreated datePublished" datetime="2023-10-14T22:29:27+08:00">2023-10-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,20 +218,14 @@
 Hits，因为实验环境中frame的数量和TLB中页面的数量是一样的。</li>
 <li>首先访问TLB，TLB没有命中。接着访问页表，页表中有效位为0，物理内存中没有该帧，引发缺页错误，从磁盘中将该帧载入物理内存，然后将物理地址写入页表和TLB。</li>
 </ol>
-<p><strong>Exercise 2 - Misses</strong></p>
-<ol type="1">
-<li>访问序列可以为 00, 20, 40, 60, 80, A0, C0, E0, 00, 20.
-因为每一次访问都不在物理内存中。</li>
-</ol>
-<p><strong>Exercise 3 - Fixing our Faults</strong></p>
-<ol type="1">
-<li>可以把内存大小改为容纳16帧</li>
-</ol>
-<p><strong>Exercise 4 - Bringing it All Together</strong></p>
-<ol type="1">
-<li>因为有多个程序在执行，切换程序执行时TLB会清空。</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/14/cs61c/cs61c_lab8/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -275,7 +269,7 @@ Hits，因为实验环境中frame的数量和TLB中页面的数量是一样的�
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-10-14 22:20:27 / Modified: 22:28:47" itemprop="dateCreated datePublished" datetime="2023-10-14T22:20:27+08:00">2023-10-14</time>
+              <time title="Created: 2023-10-14 22:20:27 / Modified: 22:32:29" itemprop="dateCreated datePublished" datetime="2023-10-14T22:20:27+08:00">2023-10-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -306,55 +300,14 @@ be zero. because the index portion is always 00, and the address we
 access is always mapped to the first set.However the tag portion is
 always different, so the first cache line is always evicted so that the
 hit rate will always be zero. 3. Change Step Size to 1</p>
-<p><strong>Scenario 2</strong> 1. There are two memory accesses. 2. One
-miss followed by three hit. Because every four accesses will increase
-index portion by one which lead one miss, and the next there accesses
-will not change the flag and index portion. 3. The hit rate is 75%. 4.
-When Rep Count goes to infinity, the hit rate will be very closed to
-100%. Because all data in array has been cached. 5. We can access part
-of the array which size is equal to the size of cache size at a time and
-apply all of the function to the part of the array so we can be
-completely done with it before moving on, thereby keeping that the data
-of portion hot in the cache and not having to circle back to it later
-on.</p>
-<p><strong>Scenario 3</strong> 1. The hit rate of our L1 cache is 50%
-and the hit rate of L2 cache is 0%. Overall hit rate is 50%. 2. We have
-32 accesses to L1 cache total. 16 of them misses. 3. We have 16 accesses
-to L2 cache total. They are the accesses which missed in L1 cache. 4. We
-can increase Rep Count to increase our L2 hit rate.Because the first
-iteration cache all the data to L2 cache, so L2 hit rate has increased.
-However the tag portion changed in L1 cache and the data are not cached,
-so our L1 hit rate will not change. 5. When we increase the number of
-blocks in L1, the hit rates for L1 and L2 will not change. When We
-increase the L1 block size, the hit rate for L1 will increase and for L2
-will not change.</p>
-<h4 id="exercise-2"><strong>Exercise 2:</strong></h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ijk:    n = 1000, 1.702 Gflop/s</span><br><span class="line">ikj:    n = 1000, 0.160 Gflop/s</span><br><span class="line">jik:    n = 1000, 1.647 Gflop/s</span><br><span class="line">jki:    n = 1000, 9.107 Gflop/s</span><br><span class="line">kij:    n = 1000, 0.155 Gflop/s</span><br><span class="line">kji:    n = 1000, 8.787 Gflop/s</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>jki loop order performs best. Because in the innermost iteration, it
-moves through B with stride 0 and moves through A and C with stride
-1.<br>
-</li>
-<li>kij loop order performs worst. Because in the innermost iteration,
-it moves through B and C with stride n.</li>
-<li>We stride through the matrices with respect to the innermost loop
-continuous can reduce the time to multiply the matrices.</li>
-</ol>
-<h4 id="exercise-3"><strong>Exercise 3:</strong></h4>
-<p>代码实现如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">transpose_blocking</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> blocksize, <span class="keyword">int</span> *dst, <span class="keyword">int</span> *src)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// YOUR CODE HERE</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> bx = <span class="number">0</span>; bx + blocksize &lt;= n; bx += blocksize) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> by = <span class="number">0</span>; by + blocksize &lt;= n; by += blocksize) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; blocksize; x ++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt; blocksize; y ++) &#123;</span><br><span class="line">                    dst[by + y + (bx + x) * n] = src[bx + x + (by + y) * n];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (n % blocksize == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> ex = (n / blocksize) * blocksize;</span><br><span class="line">    <span class="keyword">int</span> ey = ex;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = ex; x &lt; n; x ++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt; ey; y ++) &#123;</span><br><span class="line">            dst[y + x * n] = src[x + y * n];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; ex; x ++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = ey; y &lt; n; y ++) &#123;</span><br><span class="line">            dst[y + x * n] = src[x + y * n];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = ex; x &lt; n; x ++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = ey; y &lt; n; y ++) &#123;</span><br><span class="line">            dst[y + x * n] = src[x + y * n];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Part 1</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">blocksize = 20, n = 100:    0.004 milliseconds, 0.023 milliseconds</span><br><span class="line">blocksize = 20, n = 1000:   0.898 milliseconds, 1.816 milliseconds</span><br><span class="line">blocksize = 20, n = 2000:   28.081 milliseconds, 4.874 milliseconds</span><br><span class="line">blocksize = 20, n = 5000:   207.785 milliseconds, 30.871 milliseconds</span><br><span class="line">blocksize = 20, n = 10000:  1103.16 milliseconds, 157.027 milliseconds</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>N is big.</li>
-<li>Because there are more operations in the blocked version.</li>
-</ol>
-<p><strong>Part 2</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">blocksize = 50, n = 10000:      1405.15 milliseconds, 161.008 milliseconds</span><br><span class="line">blocksize = 100, n = 10000:     888.638 milliseconds, 147.19 milliseconds</span><br><span class="line">blocksize = 500, n = 10000:     951.018 milliseconds, 131.87 milliseconds</span><br><span class="line">blocksize = 1000, n = 10000:    974.174 milliseconds, 174.938 milliseconds</span><br><span class="line">blocksize = 5000, n = 10000:    938.069 milliseconds, 891.538 milliseconds</span><br></pre></td></tr></table></figure>
-<ol type="1">
-<li>First it gets better, then it gets worse.</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/14/cs61c/cs61c_lab7/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
