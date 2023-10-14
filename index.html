@@ -160,6 +160,219 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/14/cs61c/cs61c_lab8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/14/cs61c/cs61c_lab8/" class="post-title-link" itemprop="url">cs61c_lab8</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-14 22:29:27 / Modified: 22:19:54" itemprop="dateCreated datePublished" datetime="2023-10-14T22:29:27+08:00">2023-10-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61c/" itemprop="url" rel="index"><span itemprop="name">cs61c</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cs61c_lab8">cs61c_lab8</h1>
+<p><strong>Exercise 1 - Working with CAMERA</strong> 地址序列为 4D, 1E,
+7F, 4C, 8E, CF, 6D, D8, 3B, E2</p>
+<ol type="1">
+<li>32字节。</li>
+<li>TLB Hits: 3, TLB Misses: 7. Page Hits 0, Page Faults 7.</li>
+<li>没有Page Hits，也不会有Page
+Hits，因为实验环境中frame的数量和TLB中页面的数量是一样的。</li>
+<li>首先访问TLB，TLB没有命中。接着访问页表，页表中有效位为0，物理内存中没有该帧，引发缺页错误，从磁盘中将该帧载入物理内存，然后将物理地址写入页表和TLB。</li>
+</ol>
+<p><strong>Exercise 2 - Misses</strong></p>
+<ol type="1">
+<li>访问序列可以为 00, 20, 40, 60, 80, A0, C0, E0, 00, 20.
+因为每一次访问都不在物理内存中。</li>
+</ol>
+<p><strong>Exercise 3 - Fixing our Faults</strong></p>
+<ol type="1">
+<li>可以把内存大小改为容纳16帧</li>
+</ol>
+<p><strong>Exercise 4 - Bringing it All Together</strong></p>
+<ol type="1">
+<li>因为有多个程序在执行，切换程序执行时TLB会清空。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/14/cs61c/cs61c_lab7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/14/cs61c/cs61c_lab7/" class="post-title-link" itemprop="url">cs61c_lab7</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-14 22:20:27 / Modified: 22:28:47" itemprop="dateCreated datePublished" datetime="2023-10-14T22:20:27+08:00">2023-10-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61c/" itemprop="url" rel="index"><span itemprop="name">cs61c</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cs61c_lab7">cs61c_lab7</h1>
+<h4 id="exercise-1"><strong>Exercise 1:</strong></h4>
+<p><strong>Scenario 1:</strong> 1. Because (Step Size) * 4 in bytes (32
+bytes) is exactly equal to Cache Size in bytes. 2. hit rate will always
+be zero. because the index portion is always 00, and the address we
+access is always mapped to the first set.However the tag portion is
+always different, so the first cache line is always evicted so that the
+hit rate will always be zero. 3. Change Step Size to 1</p>
+<p><strong>Scenario 2</strong> 1. There are two memory accesses. 2. One
+miss followed by three hit. Because every four accesses will increase
+index portion by one which lead one miss, and the next there accesses
+will not change the flag and index portion. 3. The hit rate is 75%. 4.
+When Rep Count goes to infinity, the hit rate will be very closed to
+100%. Because all data in array has been cached. 5. We can access part
+of the array which size is equal to the size of cache size at a time and
+apply all of the function to the part of the array so we can be
+completely done with it before moving on, thereby keeping that the data
+of portion hot in the cache and not having to circle back to it later
+on.</p>
+<p><strong>Scenario 3</strong> 1. The hit rate of our L1 cache is 50%
+and the hit rate of L2 cache is 0%. Overall hit rate is 50%. 2. We have
+32 accesses to L1 cache total. 16 of them misses. 3. We have 16 accesses
+to L2 cache total. They are the accesses which missed in L1 cache. 4. We
+can increase Rep Count to increase our L2 hit rate.Because the first
+iteration cache all the data to L2 cache, so L2 hit rate has increased.
+However the tag portion changed in L1 cache and the data are not cached,
+so our L1 hit rate will not change. 5. When we increase the number of
+blocks in L1, the hit rates for L1 and L2 will not change. When We
+increase the L1 block size, the hit rate for L1 will increase and for L2
+will not change.</p>
+<h4 id="exercise-2"><strong>Exercise 2:</strong></h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ijk:    n = 1000, 1.702 Gflop/s</span><br><span class="line">ikj:    n = 1000, 0.160 Gflop/s</span><br><span class="line">jik:    n = 1000, 1.647 Gflop/s</span><br><span class="line">jki:    n = 1000, 9.107 Gflop/s</span><br><span class="line">kij:    n = 1000, 0.155 Gflop/s</span><br><span class="line">kji:    n = 1000, 8.787 Gflop/s</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>jki loop order performs best. Because in the innermost iteration, it
+moves through B with stride 0 and moves through A and C with stride
+1.<br>
+</li>
+<li>kij loop order performs worst. Because in the innermost iteration,
+it moves through B and C with stride n.</li>
+<li>We stride through the matrices with respect to the innermost loop
+continuous can reduce the time to multiply the matrices.</li>
+</ol>
+<h4 id="exercise-3"><strong>Exercise 3:</strong></h4>
+<p>代码实现如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">transpose_blocking</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> blocksize, <span class="keyword">int</span> *dst, <span class="keyword">int</span> *src)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// YOUR CODE HERE</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> bx = <span class="number">0</span>; bx + blocksize &lt;= n; bx += blocksize) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> by = <span class="number">0</span>; by + blocksize &lt;= n; by += blocksize) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; blocksize; x ++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt; blocksize; y ++) &#123;</span><br><span class="line">                    dst[by + y + (bx + x) * n] = src[bx + x + (by + y) * n];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (n % blocksize == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> ex = (n / blocksize) * blocksize;</span><br><span class="line">    <span class="keyword">int</span> ey = ex;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = ex; x &lt; n; x ++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt; ey; y ++) &#123;</span><br><span class="line">            dst[y + x * n] = src[x + y * n];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; ex; x ++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = ey; y &lt; n; y ++) &#123;</span><br><span class="line">            dst[y + x * n] = src[x + y * n];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = ex; x &lt; n; x ++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = ey; y &lt; n; y ++) &#123;</span><br><span class="line">            dst[y + x * n] = src[x + y * n];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Part 1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">blocksize = 20, n = 100:    0.004 milliseconds, 0.023 milliseconds</span><br><span class="line">blocksize = 20, n = 1000:   0.898 milliseconds, 1.816 milliseconds</span><br><span class="line">blocksize = 20, n = 2000:   28.081 milliseconds, 4.874 milliseconds</span><br><span class="line">blocksize = 20, n = 5000:   207.785 milliseconds, 30.871 milliseconds</span><br><span class="line">blocksize = 20, n = 10000:  1103.16 milliseconds, 157.027 milliseconds</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>N is big.</li>
+<li>Because there are more operations in the blocked version.</li>
+</ol>
+<p><strong>Part 2</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">blocksize = 50, n = 10000:      1405.15 milliseconds, 161.008 milliseconds</span><br><span class="line">blocksize = 100, n = 10000:     888.638 milliseconds, 147.19 milliseconds</span><br><span class="line">blocksize = 500, n = 10000:     951.018 milliseconds, 131.87 milliseconds</span><br><span class="line">blocksize = 1000, n = 10000:    974.174 milliseconds, 174.938 milliseconds</span><br><span class="line">blocksize = 5000, n = 10000:    938.069 milliseconds, 891.538 milliseconds</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>First it gets better, then it gets worse.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/13/cs61c/cs61c_lab6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -183,10 +396,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-10-13 10:21:27 / Modified: 16:06:56" itemprop="dateCreated datePublished" datetime="2023-10-13T10:21:27+08:00">2023-10-13</time>
+              <time title="Created: 2023-10-13 10:21:27" itemprop="dateCreated datePublished" datetime="2023-10-13T10:21:27+08:00">2023-10-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-14 19:00:06" itemprop="dateModified" datetime="2023-10-14T19:00:06+08:00">2023-10-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -915,225 +1134,6 @@ Setup\_Time\\
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/" class="post-title-link" itemprop="url">MIT15.S2阅读材料翻译1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-10-22 23:27:27" itemprop="dateCreated datePublished" datetime="2022-10-22T23:27:27+08:00">2022-10-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-10-23 22:26:30" itemprop="dateModified" datetime="2022-10-23T22:26:30+08:00">2022-10-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" itemprop="url" rel="index"><span itemprop="name">区块链</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="冲突支配着货币的历史和起源"><a href="#冲突支配着货币的历史和起源" class="headerlink" title="冲突支配着货币的历史和起源"></a>冲突支配着货币的历史和起源</h1><blockquote>
-<p>考古学家和人类学家说，几千年前，金钱是偿还债务的一种手段</p>
-</blockquote>
-<p>无论你走到哪里，金钱都会说话。这已经持续了很长时间。</p>
-<p>然而，可悲的是，资金对其来源一直保持沉默。对于我们生活中如此重要的元素，金钱的古老根源及其发明的原因尚不清楚。</p>
-<p>随着像比特币这样的加密货币成群结队的出现，研究人员仍在为钱是怎么来的以及在哪里来的而争论不休。一些人将最新的、流行的加密货币与密克罗尼西亚一个岛屿社区开发的一种不适合任何人的钱包、口袋或钱包的货币进行了有趣的比较。</p>
-<p>然而，当谈到钱的来源时，冲突占主导地位。数百年来，经济学家对货币的起源持有一种观点。但越来越多的人类学家和考古学家持修正主义观点，认为经济学家的标准故事已经破产。</p>
-<p>经济学家和修正主义者一致认为，被定义为货币的物体有四种作用：首先，它是交换商品和服务的一种手段。货币能够偿还债务。它代表了一种通用的价值衡量标准，使得计算各种物品的价格成为可能。最后，钱可以作为财富储备储存。</p>
-<p>从那里，两组人分裂了。主流经济学家认为，商品和服务的易货交易激发了货币的发明。人类学家和考古学家认为，早期国家发明了货币作为偿还债务的手段。</p>
-<p>弗雷德里克斯堡哥本哈根商学院的社会文化人类学家丹尼尔·苏莱尔斯表示：“许多学术研究都假定（货币体系）在过去200至400年内在民族国家兴起。”。但金融化交易和债务在更远的时间里出现在许多地方。</p>
-<p>来自美洲的最新研究为辩论增添了新的问题。这些调查表明，从几千年前开始，在世界许多地方，货币独立出现的原因不同，并呈现出不同的有形形式。</p>
-<p><strong>债务押注</strong></p>
-<p>自1776年亚当·斯密（Adam Smith）的《国富论》（the Wealth of Nations）出版以来，经济学家们达成了一个共识，即人们的自利贸易决定会自动平衡供需，几乎不需要或根本不需要政府参与。经济学家认为，人类以一种产品换取另一种产品的自然倾向，比如用土豆换取陶器，导致了古代欧亚国家货币的发明。</p>
-<p>人类学家和考古学家说，这个老生常谈的故事让人大错特错。纽约奥尔巴尼大学的考古学家罗伯特·罗森斯威格（Robert Rosenswig）表示：“亚当·斯密（Adam Smith）对金融系统的“创造神话”是基于对过去实际发生的事情的无知。”。</p>
-<p>罗森斯威格认为，早期政府创造资金来偿还公共工程债务和征税。易货与此无关。取而代之的是，货币来源于古老的信用和债务体系，人类学家已经记录了一个多世纪。在小规模社会中，债务涉及对他人的义务。例如，在狩猎采集者和农场主群体中，婚后送出的女儿会产生债务，这些债务可以用称为“新娘财富”的商品部分偿还。全额还款要求第一位新娘的接受者提供新娘作为回报。不需要现金。</p>
-<p>修正主义者认为，至少5500年前，美索不达米亚和埃及的农业州开始向新形式的货币友好型债务过渡。在美索不达米亚，银谢克尔（一块金属，而不是一枚硬币）是一种基本的货币计量。统治者颁布法令，一谢克尔的银币重量相当于一蒲式耳的大麦。银、金和其他金属的谢克尔用于其他古代社会。谢克尔的精确重量似乎各不相同，难以确定。农民被征税以支持王室生活方式和公共工程。农民和其他平民无法支付的货物被记为以谢克尔为单位的债务。商人和商人从寺庙和宫廷官员那里赊购货物。</p>
-<p>美索不达米亚时代的商人在欧亚大陆旅行时，可能会用银块来支付一些交易，银块以粗略标准化的谢克尔衡量。但这些银块能否解决债务尚不得而知。</p>
-<p>大约2600年前，印有动物或统治者形象的硬币首次出现在现在的土耳其的利迪亚王国。不久之后，希腊、波斯、印度和中国的城市和国家开始铸造自己的硬币。从一开始，硬币就资助了军队和征服战争。在此过程中，硬币成为各种交易的法定货币。修正主义者认为，市场是这一制度的结果，而不是其原因。</p>
-<p>伦敦经济与政治学院（London School of Economics and Political Science）的人类学家大卫·格雷伯（David Graeber）在2011年出版的《债务：前5000年》（Debt:the First 5000 Years）一书中提出了这一观点。</p>
-<p>格雷伯主要依靠来自非洲、亚洲和欧洲社会的证据。但他的书激发了越来越多的人对金钱在美洲的模糊起源进行研究。4月，在华盛顿举行的美国考古学学会年会上，许多研究人员会面讨论了他们的发现。</p>
-<p>一些人认为，格雷伯对债务的关注对于理解古代玛雅和附近社会何时以及如何将可可豆和纺织棉等商品转化为货币至关重要。但在同样的社会中，易货交易不能被排除为易腐支付的前兆。目前，问题多于答案。</p>
-<p>新泽西州纽瓦克巴德高中早期学院的人类学考古学家乔安娜·巴伦说：“债务在古中美洲和墨西哥扮演了巨大的角色，但不清楚货币是如何出现的。”。</p>
-<p><strong>玛雅市场</strong></p>
-<p>在16世纪，西班牙人写道，在从墨西哥到中美洲的社会中，包括阿兹特克人和玛雅人，他们观察到了一个繁荣的市场体系。西班牙编年史者描述了货币，尤其是可可豆和编织布，广泛用于购买商品、纳税和债务、计算货币价值和存储家庭财富。</p>
-<p>研究人员长期以来一直怀疑，玛雅市场和商人以及各种用作货币的商品早在1100年左右就出现了，这是在经典玛雅文明的国王和城邦垮台之后。然而，现在的证据表明，这种易腐烂的货币形式出现得更早，在经典玛雅全盛时期，从250到900。</p>
-<p>伊利诺伊州立大学（Illinois State University in Normal）人类学考古学家凯瑟琳·桑佩克（Kathryn Sampeck）表示，将各种物品转换成法定货币“发生在古美洲，而不仅仅是欧洲”。想想十年前在墨西哥卡拉克穆尔的一个小金字塔里发现的一组七世纪中期的壁画。这些场景展示了一个强大的经典玛雅中心的市场交易，该中心控制着一系列卫星站点（SN Online:4/17/18）。考古学家怀疑，卡拉克穆尔绘制的金字塔位于一片空地的中央，其中包括一个大市场。</p>
-<p>金字塔墙壁上的壁画描绘了不同社会阶层的人，从他们的衣服和珠宝可以看出，他们显然在交换玉米粉饼、烟草和陶器。一些绘画场景展示了各种尺寸和颜色的织物，供交换。其中一幅画描绘了一名妇女穿着村民的简单衣服，向一名男子提供一杯热巧克力，以换取塔梅尔面团。</p>
-<p>巴伦在考古学会议上表示，在接下来的几十年里，玛雅统治者要求可可和纺织品作为贡品，这是一种向臣民征收的税收，这两种产品成为了具有标准价值的货币。一个可追溯到691年的彩绘花瓶描绘了已知最早的纺织品和可可豆作为对国王的致敬。国王脚下的一个袋子被标为“3 pik”，研究人员将其翻译为24000可可豆的术语。</p>
-<p>691年后，其他经典玛雅遗址的彩陶和雕刻纪念碑越来越多地在贡品场景中展示可可豆袋和布袋。巴伦说，皇家法庭可能储存了贡品，并用它来支付法庭成员和购买市场商品。</p>
-<p>巴伦在三月的《人类学考古学杂志》上提出，在经典的玛雅人中，易货交易可能是可可和布料货币的直接先驱。在对考古证据和西班牙官员的描述进行分析后，她得出结论，在国王开始收集布匹贡品之前，所有社会阶层的人都在卡拉克穆尔市场交易精美的纺织品。巴伦说，在卡拉克穆尔的竞争中心蒂卡尔，在各个社会阶层的家庭中发现的专门织布工具表明，高质量的缝纫始于国家建立市场和收集布匹之前的几十年或更长时间。从600年代后期到700年代的贡品收藏，导致在卡拉克穆尔、蒂卡尔和相关的玛雅遗址为纺织品的特定尺寸和颜色设定了价值。与此同时，玛雅精英对可可作为贡品的需求不断增加，影响了以可可豆计数计算的货币价值的出现。</p>
-<p>巴伦说：“最初的易货物品可能已经成为经典玛雅人的货币。”。</p>
-<h4 id="State-money"><a href="#State-money" class="headerlink" title="State money"></a>State money</h4><p>奥尔巴尼的罗森斯威格在4月的会议上提出，货币体系可能在传统玛雅文明出现之前几个世纪就在墨西哥南部和中美洲的一些人口中发展起来了。但罗森斯威格表示，在世界上的那个地区，确定货币的出生地尤其困难，因为可可和布料等货币通常不会保存在古代遗址。</p>
-<p>他从陶器和壁画中寻找关键证据，再加上大型宫殿建筑的遗迹、公共工程和战争的书面记录。他说，中央集权政府和他们需要对主体征税，并将贵重物品转化为货币，以支付战争和昂贵的建筑费用，这为玛雅货币体系奠定了基础。这些类型的政府活动可以在考古遗址记录下来。</p>
-<blockquote>
-<p><strong>可可现金</strong></p>
-<p>在条件允许的情况下，经典时代的玛雅货币在树上生长。可可树在塔巴斯科和其他地方生长茂盛，河谷潮湿，雨量充沛，不受阳光和风的影响。卡拉克穆尔和蒂卡尔的玛雅统治者每年都会用可可豆来致敬。</p>
-<img src="/2022/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/10/22/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%911/image-20221023174054886.png" class title="image-20221023174054886">
-</blockquote>
-<p>以伊萨帕为例，它是墨西哥南部、危地马拉和萨尔瓦多太平洋沿岸的一个城邦网络，大约在2800年至2100年前崛起。伊扎帕位于可可、棉花和其他资源丰富的地区。那里的统治者显然委托修建寺庙和其他大型建筑。雕刻的纪念碑显示了国王为了维护统治而进行的仪式性杀戮。伊扎帕和邻近地区的国王要求大量可可、棉花和其他两种物品作为贡品，而经典玛雅人后来可能会将其用作货币：脊椎贝壳和盐。</p>
-<p>罗森斯威格说：“货币对于这些距离很近的王国之间的贸易是有用的。”。</p>
-<p>雅典乔治亚大学的人类学考古学家斯蒂芬·科瓦列夫斯基表示，从墨西哥中部到中美洲大部分地区的中美洲古代城邦似乎在欧洲人和亚洲人开始制造硬币的同时建立了自己的货币体系。科瓦列夫斯基对古希腊和中美洲的国家规模、政治组织和商品交易市场进行了调查。</p>
-<p>他表示，越来越多的玛雅研究人员认为，旧世界和新世界的社会独立地创造了自己的货币体系和货币。</p>
-<p>科瓦列夫斯基在考古学会议上断言，流通易腐货币的古代美国社会无法让一些个人和家庭积累古希腊人那样的财富，或许是最著名的早期铸币厂。在希腊世界，个人可以将土地、货物和奴隶作为私人财产进行积累和出售。这使得一些希腊人从卑微的出身走向了巨大的财富。科瓦列夫斯基说，在中美洲，农业社区管理土地所有权，特别是在土壤肥沃的地方。这使得皇室以外的个人更难致富。</p>
-<p>随着货币体系的繁荣和财富的积累，奴隶制应运而生。并不是每个人都同意，被迫成为奴隶的人被视为货币的血肉单位。但列克星敦肯塔基大学的考古学家斯科特·哈森在4月的会议上表示，在欧洲人抵达中美洲之前，商业交易包括使用奴隶作为人类货币。</p>
-<p>例如，经典时代的玛雅铭文表明，战俘可以作为贡品送给国王。一些俘虏被勒索以换取可可和其他被认为对玛雅王室有价值的物品，包括尖刺的脊椎贝壳。在大约500年前阿兹特克帝国的一部分，墨西哥中部的纳华社会，农民家庭有时会在困难时期把孩子作为奴隶卖给富人。即使他们的财富有所改善，纳华农民也往往无法获得足够的贵重物品来买回他们的孩子。</p>
-<p>但科瓦列夫斯基说，奴隶制是中美洲统治者的副业。在希腊和其他古代地中海社会，奴隶被大量出售和交易。学者估计，奴隶约占古希腊雅典城邦人口的一半或更多。希腊奴隶开采银币，耕种土地，甚至成为高级公务员。</p>
-<p>科瓦列夫斯基说，奴隶制可能为地中海最早的民主和资本主义形式提供了资金。</p>
-<p><strong>贝壳游戏</strong></p>
-<p>然而，地中海和中美洲的古代国家并不能解释关于金钱根源的一切。以丘马什印第安人为例，他们生活在中美洲社会以北2000多公里的地方，现在是加利福尼亚南部。</p>
-<p>从大约800年前开始，Chumash集团开始用橄榄形蜗牛壳厚厚的中心雕刻的货币向其首领偿还债务。居住在加利福尼亚海岸附近的海峡群岛上的Chumash人越来越多，对大陆商品的需求激增，这可能刺激了空壳货币的发明。</p>
-<p>加州大学圣巴巴拉分校的考古学家林恩·甘布尔（Lynn Gamble）在今年4月提出了一个案例。</p>
-<p>甘布尔说：“Chumash贝壳钱是在海峡群岛大量生产的，而海峡群岛在大陆上缺乏很多可用资源。”。她建议，海峡岛民可能会用货币来换取结婚伴侣以及各种商品，比如鸟羽毛作为仪式服装。</p>
-<p>甘布尔说，丘马什人在把杯状珠子变成钱之前很久就用各种珠子装饰和交易。在Chumash遗址的挖掘中发现了8000多年前由石头、骨头和贝壳制成的珠子。甘布尔解释说，这些珠子并不像后来用作货币的珠子那样大量分布在整个定居点。</p>
-<p>她说，贝壳钱珠出现得很晚。当时，许多家庭都出现了成堆雕刻成杯状的贝壳珠。贝壳钱也散落在Chumash墓地，并埋在坟墓里。被视为金钱的珠子直到当时的Chumash定居点人口达到800至1000人时才出现。Gamble怀疑，这种规模的团体需要一种标准货币来简化越来越多的经济交易。</p>
-<p>甘布尔补充道，从空壳货币一开始，Chumash平民可能就一直欠酋长及其助手的债。18世纪末的西班牙记述描述了Chumash酋长组织的盛宴，在那里，工作人员被要求携带食物、贝壳和其他贵重物品来支付活动费用，并作为贡品送给领导人。</p>
-<p>Chumash人主要用他们的海洋货币购买和销售商品，这种货币与长期的贸易惯例共存。甘布尔怀疑，一旦空壳资金发展成为追随者，它可能会被包括在支付给酋长的债务中。</p>
-<p>Chumash的钱是否更多地来自经济交换，而不是主要的债务，一个更大的谜团仍然存在。一些古代社会，如印加和安第斯山脉的早期帝国，对各种货物和贡品都有详细的会计记录，但没有钱。Gamble说，研究人员不知道为什么钱在Chumash人相对简单的狩猎采集社会中发展起来，而不是在16世纪早期的印加州。</p>
-<p>在古代，金钱在某些地方说话，在其他地方却一言不发。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/" class="post-title-link" itemprop="url">数据库————恢复</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-09-05 10:27:27" itemprop="dateCreated datePublished" datetime="2022-09-05T10:27:27+08:00">2022-09-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-15 20:41:42" itemprop="dateModified" datetime="2022-09-15T20:41:42+08:00">2022-09-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h1><h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1. 动机"></a>1. 动机</h2><p>在前面的模块中，我们讨论了事务的ACID属性。在本文中，我们将讨论如何使数据库具有故障恢复能力。我们将在本注释中学习如何实施的两个ACID属性是：</p>
-<ol>
-<li><p>持久性：如果事务完成（提交），我们将永远不会丢失事务的结果。</p>
-</li>
-<li><p>原子性：事务中的所有或所有操作都将保持。这意味着我们永远不会让数据库处于中间状态。例如，在CalCentral中交换类。有两个操作：删除旧类和添加新类。如果数据库在添加新类之前崩溃，您实际上不想从旧类中删除。</p>
-</li>
-</ol>
-<h2 id="2-强制非强制"><a href="#2-强制非强制" class="headerlink" title="2 .强制非强制"></a>2 .强制非强制</h2><p>如果我们使用强制策略，持久性可以是一个非常简单的属性。强制策略声明，当事务完成时，在事务提交之前，强制将所有修改的数据页发送到磁盘。这将确保持久性，因为磁盘是persistent1；换句话说，一旦页面进入磁盘，它将被永久保存。这种方法的缺点是性能。我们最终做了很多不必要的写入。我们更喜欢的策略是不强制，即只在页面需要从缓冲池中退出时才写回磁盘。虽然这有助于减少不必要的写入，但会使持久性复杂化，因为如果在事务提交后数据库崩溃，某些页面可能尚未写入磁盘，因此会从内存中丢失，因为内存是易失性的。为了解决此问题，我们将在恢复期间重新执行某些操作</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/09/05/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_11/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1203,7 +1203,7 @@ Setup\_Time\\
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

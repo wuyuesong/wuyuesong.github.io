@@ -160,6 +160,186 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/" class="post-title-link" itemprop="url">数据库————B+树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-20 10:27:27" itemprop="dateCreated datePublished" datetime="2022-07-20T10:27:27+08:00">2022-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-15 20:42:33" itemprop="dateModified" datetime="2022-09-15T20:42:33+08:00">2022-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="B-树"><a href="#B-树" class="headerlink" title="B+ 树"></a>B+ 树</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>在前面的笔记中，我们讨论了数据存储的不同文件和记录表示。本周，我们将介绍索引，它是一种在数据文件之上运行的数据结构，有助于加快对特定键的读取。您可以将数据文件视为书籍的实际内容，将索引视为快速查找的内容表。我们使用索引使查询运行得更快，尤其是那些频繁运行的查询。考虑一个web应用程序，它在登录过程中根据用户名在用户表中查找用户的记录。用户名列上的索引将通过快速查找试图登录的用户的行来加快登录速度。在本课程注释中，我们将学习B+树，这是一种特定类型的索引。下面是一个B+树的示例：</p>
+<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907182641290.png" alt="image-20220907182641290"></p>
+<h2 id="2-属性"><a href="#2-属性" class="headerlink" title="2 属性"></a>2 属性</h2><ul>
+<li>d是B+树的阶，每个节点（根节点除外）必须有 $d \leq x \leq 2d$  项，如果没有删除发生的话（删除数据后叶子节点可能少于d项）。节点中的项必须排序。</li>
+<li>在内节点的两项之间有一个指针指向孩子节点，因为最多有2d项在节点中，内节点最多有2d+1个指针指向孩子节点。这也被称为树的扇出。</li>
+<li>条目左侧子结点中的键必须小于条目，而右侧子节点中键必须大于或等于条目。</li>
+<li>•所有叶片深度相同，且具有d和2d个条目（即至少半满）</li>
+</ul>
+<p>举个例子，一个阶为2的树：</p>
+<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184154927.png" alt></p>
+<p>请注意，节点满足阶要求（d≤ x≤ 2d），因为d=2并且该节点具有3个条目满足2≤ x≤ 4.</p>
+<ul>
+<li>由于sorted和children属性，我们可以遍历树到叶子，以找到所需的记录。这类似于BST（二进制搜索树）。</li>
+<li>每个根到叶路径都有相同数量的边-这是树的高度。从这个意义上说，B+树总是平衡的。换句话说，只有根节点的B+树的高度为0。</li>
+<li>只有叶节点包含记录（或指向记录的指针-这将在后面解释）。内部节点（即非叶节点）不包含实际记录。</li>
+</ul>
+<p><img src="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/image-20220907184919816.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/" class="post-title-link" itemprop="url">数据库————磁盘和文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-15 10:27:27" itemprop="dateCreated datePublished" datetime="2022-07-15T10:27:27+08:00">2022-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-15 20:42:37" itemprop="dateModified" datetime="2022-09-15T20:42:37+08:00">2022-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="磁盘和文件"><a href="#磁盘和文件" class="headerlink" title="磁盘和文件"></a>磁盘和文件</h1><h2 id="1-内存和硬盘"><a href="#1-内存和硬盘" class="headerlink" title="1 内存和硬盘"></a>1 内存和硬盘</h2><p>不论数据库什么时候使用数据，数据必须在内存中，访问这些数据相对较快，但是一旦数据量变得很大，将所有数据装进内存将变得不可能。磁盘配用来便宜的储存数据库的数据，但无论何时访问数据或写入新数据，它们都会产生巨大的成本。</p>
+<h2 id="2-文件、页面、记录"><a href="#2-文件、页面、记录" class="headerlink" title="2 文件、页面、记录"></a>2 文件、页面、记录</h2><p>关系型数据库最基本的单位是记录（行）。这些记录被组织成关系（表），他们可以被修改，删除或者在内存中创建。</p>
+<p>对磁盘来说基本的单位是页，是从磁盘到内存传输的最小单位，反之亦然。为了以与磁盘兼容的格式表示关系数据库，每个关系都存储在自己的文件中，其记录被组织到文件中的页面中。基于关系的模式和访问模式，数据库将确定：（1）使用的文件类型，（2）文件中页面的组织方式，（3）每个页面上记录的组织方式，以及（4）每个记录的格式。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/15/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/05/30/Linear%20Algebra/S1.2SOL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -811,172 +991,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/" class="post-title-link" itemprop="url">Shell Tools and Scripting</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-26 14:01:27" itemprop="dateCreated datePublished" datetime="2022-03-26T14:01:27+08:00">2022-03-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-30 21:43:15" itemprop="dateModified" datetime="2022-03-30T21:43:15+08:00">2022-03-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Shell-Tools-and-Scripting"><a href="#Shell-Tools-and-Scripting" class="headerlink" title="Shell Tools and Scripting"></a>Shell Tools and Scripting</h1><p>shell可以定义变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo=bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ <span class="built_in">echo</span> <span class="variable">$foo</span></span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
-<p>用空格分开会被认为是可执行程序</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ foo = bar</span><br><span class="line">Command &#x27;foo&#x27; not found, did you mean:</span><br></pre></td></tr></table></figure>
-<p>在打印字符串的时候，单引号和双引号相同</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Hello&quot;</span><br><span class="line">Hello</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;World&#x27;</span><br><span class="line">World</span><br></pre></td></tr></table></figure>
-<p>但是在打印变量的时候，单引号不会替换变量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &quot;Value is $foo&quot;</span><br><span class="line">Value is bar</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ echo &#x27;Value is $foo&#x27;</span><br><span class="line">Value is $foo</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/26/missing-semester/Shell%20Tools%20and%20Scripting/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/25/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(8)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/25/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(8)/" class="post-title-link" itemprop="url">信息安全概论（8）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-25 16:41:27 / Modified: 21:38:37" itemprop="dateCreated datePublished" datetime="2022-03-25T16:41:27+08:00">2022-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论（8）"><a href="#信息安全概论（8）" class="headerlink" title="信息安全概论（8）"></a>信息安全概论（8）</h1><h2 id="病毒的特性"><a href="#病毒的特性" class="headerlink" title="病毒的特性"></a>病毒的特性</h2><ul>
-<li>传染性</li>
-<li>隐蔽性</li>
-<li>危害性</li>
-</ul>
-<h2 id="恶意代码的种类"><a href="#恶意代码的种类" class="headerlink" title="恶意代码的种类"></a>恶意代码的种类</h2><p><strong>病毒</strong>：寄生存在。</p>
-<p><strong>木马</strong>：独立存在。</p>
-<p><strong>蠕虫</strong>：强传染性、常利用漏洞自动感染别人。</p>
-<p><strong>寄生生存</strong>：</p>
-<p><img src="/2022/03/25/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(8)/信息安全概论(8" alt="image-20220325171126332">/image-20220325171126332.png)</p>
-<p>由于早期的DOS系统，文件很少，如果多出一个文件很容易被发现，所以当时寄生病毒比较流行，但由于代码编写难度较大，逐渐不再流行。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1046,7 +1060,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
