@@ -160,6 +160,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/20/cs61c/cs61c_lab9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/20/cs61c/cs61c_lab9/" class="post-title-link" itemprop="url">cs61c_lab9</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-20 11:16:27 / Modified: 15:55:26" itemprop="dateCreated datePublished" datetime="2023-10-20T11:16:27+08:00">2023-10-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs61c/" itemprop="url" rel="index"><span itemprop="name">cs61c</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cs61c_lab8">cs61c_lab8</h1>
+<h3 id="exercise-1---familiarize-yourself-with-the-simd-functions">Exercise
+1 - Familiarize Yourself with the SIMD Functions</h3>
+<ol type="1">
+<li><p>__m128 _mm_div_ps (__m128 a, __m128 b)</p></li>
+<li><p>__m128i _mm_max_epi8 (__m128i a, __m128i b)</p></li>
+<li><p>__m128i _mm_sra_epi16 (__m128i a, __m128i count)</p></li>
+</ol>
+<h3 id="exercise-2---writing-simd-code">Exercise 2 - Writing SIMD
+Code</h3>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">sum_simd</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> vals[NUM_ELEMS])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">clock_t</span> start = <span class="built_in">clock</span>();</span><br><span class="line">	__m128i _127 = _mm_set1_epi32(<span class="number">127</span>);		<span class="comment">// This is a vector with 127s in it... Why might you need this?</span></span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> result = <span class="number">0</span>;				   <span class="comment">// This is where you should put your final result!</span></span><br><span class="line">	<span class="comment">/* DO NOT DO NOT DO NOT DO NOT WRITE ANYTHING ABOVE THIS LINE. */</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> w = <span class="number">0</span>; w &lt; OUTER_ITERATIONS; w++) &#123;</span><br><span class="line">		<span class="comment">/* YOUR CODE GOES HERE */</span></span><br><span class="line">        __m128i result_itr = _mm_setzero_si128();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NUM_ELEMS / <span class="number">4</span> * <span class="number">4</span>; i += <span class="number">4</span>) &#123;</span><br><span class="line">            __m128i vals_m128i = _mm_loadu_si128((__m128i *) &amp;vals[i]);</span><br><span class="line">            result_itr = _mm_add_epi32(result_itr ,_mm_and_si128(vals_m128i, _mm_cmpgt_epi32(vals_m128i, _127)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span> results[<span class="number">4</span>] = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        _mm_storeu_si128((__m128i *)results, result_itr);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++) &#123;</span><br><span class="line">            result += results[i];</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">/* You&#x27;ll need a tail case. */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = NUM_ELEMS / <span class="number">4</span> * <span class="number">4</span>; i &lt; NUM_ELEMS; i ++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(vals[i] &gt;= <span class="number">128</span>) result += vals[i];</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">clock_t</span> end = <span class="built_in">clock</span>();</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Time taken: %Lf s\n&quot;</span>, (<span class="keyword">long</span> <span class="keyword">double</span>)(end - start) / CLOCKS_PER_SEC);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="exercise-3---loop-unrolling">Exercise 3 - Loop Unrolling</h3>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">sum_simd_unrolled</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> vals[NUM_ELEMS])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">clock_t</span> start = <span class="built_in">clock</span>();</span><br><span class="line">	__m128i _127 = _mm_set1_epi32(<span class="number">127</span>);</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> w = <span class="number">0</span>; w &lt; OUTER_ITERATIONS; w++) &#123;</span><br><span class="line">		<span class="comment">/* COPY AND PASTE YOUR sum_simd() HERE */</span></span><br><span class="line">		<span class="comment">/* MODIFY IT BY UNROLLING IT */</span></span><br><span class="line">        __m128i result_itr = _mm_setzero_si128();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NUM_ELEMS / <span class="number">16</span> * <span class="number">16</span>; i += <span class="number">16</span>) &#123;</span><br><span class="line">            __m128i vals_m128i = _mm_loadu_si128((__m128i *) &amp;vals[i]);</span><br><span class="line">            result_itr = _mm_add_epi32(result_itr ,_mm_and_si128(vals_m128i, _mm_cmpgt_epi32(vals_m128i, _127)));</span><br><span class="line">            vals_m128i = _mm_loadu_si128((__m128i *) &amp;vals[i + <span class="number">4</span>]);</span><br><span class="line">            result_itr = _mm_add_epi32(result_itr ,_mm_and_si128(vals_m128i, _mm_cmpgt_epi32(vals_m128i, _127)));</span><br><span class="line">            vals_m128i = _mm_loadu_si128((__m128i *) &amp;vals[i + <span class="number">8</span>]);</span><br><span class="line">            result_itr = _mm_add_epi32(result_itr ,_mm_and_si128(vals_m128i, _mm_cmpgt_epi32(vals_m128i, _127)));</span><br><span class="line">            vals_m128i = _mm_loadu_si128((__m128i *) &amp;vals[i + <span class="number">12</span>]);</span><br><span class="line">            result_itr = _mm_add_epi32(result_itr ,_mm_and_si128(vals_m128i, _mm_cmpgt_epi32(vals_m128i, _127)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span> results[<span class="number">4</span>] = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        _mm_storeu_si128((__m128i *)results, result_itr);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++) &#123;</span><br><span class="line">            result += results[i];</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">/* You&#x27;ll need 1 or maybe 2 tail cases here. */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = NUM_ELEMS / <span class="number">16</span> * <span class="number">16</span>; i &lt; NUM_ELEMS; i ++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(vals[i] &gt;= <span class="number">128</span>) result += vals[i];</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">clock_t</span> end = <span class="built_in">clock</span>();</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Time taken: %Lf s\n&quot;</span>, (<span class="keyword">long</span> <span class="keyword">double</span>)(end - start) / CLOCKS_PER_SEC);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/14/cs61c/cs61c_lab8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -969,124 +1051,6 @@ Setup\_Time\\
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/10/23/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%912/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/23/%E5%8C%BA%E5%9D%97%E9%93%BE/MIT15.S12/MIT15.S2%E9%98%85%E8%AF%BB%E6%9D%90%E6%96%99%E7%BF%BB%E8%AF%912/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-10-23 22:28:01" itemprop="dateCreated datePublished" datetime="2022-10-23T22:28:01+08:00">2022-10-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-10-24 01:17:18" itemprop="dateModified" datetime="2022-10-24T01:17:18+08:00">2022-10-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="货币简史"><a href="#货币简史" class="headerlink" title="货币简史"></a>货币简史</h1><blockquote>
-<p>13世纪，中国皇帝忽必烈开始了一项大胆的实验。当时的中国被划分为不同的地区，其中许多地区发行了自己的硬币，阻碍了帝国内部的贸易。因此忽必烈颁布法令，从今以后，货币将以纸币的形式存在。</p>
-<p>这不是一个完全原创的想法。早期的统治者批准纸币，但总是与硬币一起使用，硬币已经存在了几个世纪。忽必烈的大胆想法是让纸币（朝代）成为货币的主要形式。不久后，当意大利商人马可·波罗访问中国时，他惊叹于人们用劳动和货物换取纸张的景象。就好像价值是凭空创造的。</p>
-<p>忽必烈汗走在了时代的前列：他认识到，金钱的重要性不在于它的外表，甚至不在于它有什么后盾，而在于人们是否相信它足以使用它。今天，这一概念是所有现代货币体系的基础，而现代货币体系建立在政府的支持和人民对它们的信任之上。换言之，金钱是一种完全抽象的东西，我们都非常熟悉它，但它日益复杂，难以理解。</p>
-</blockquote>
-<p>今天，许多人渴望更简单的时代。这是对这样一个世界的自然反应：在这个世界中，货币不仅变得越来越抽象，而且越来越数字化和虚拟化，在这个世界里，复杂的计算机算法执行微秒级的市场交易，而完全没有人干预，在这种情况下，在视线之外的经济正在围绕着自己的替代货币涌现，在这种情况下，全球金融危机的原因在没有博士学位的情况下很难解析。当时，人们的想法是，金钱代表着某种东西：金币和贝壳具有真正的价值，因此他们不需要政府支持。</p>
-<p>然而，事实上，金钱从来没有那么简单。尽管它的用途和意义在整个历史中都发生了变化和演变，但事实上，它不再与任何一种物质挂钩，这是一件好事。这就是为什么让我们从钱的用途开始。现代经济学家通常根据它在经济中扮演的三个角色来定义它：</p>
-<p>这是一种价值储存，意味着金钱可以让你推迟消费，直到以后的某一天。</p>
-<p>这是一种记帐单位，这意味着它允许您为不同的商品分配价值，而无需对它们进行比较。因此，与其说一块劳力士手表值六头牛，不如说它（或牛）值1万美元。</p>
-<p>它是一种交换媒介，对你我和其他人来说，这是一种简单而有效的方式，可以相互交换商品和服务。</p>
-<p>所有这些角色都与买卖有关，这就是现代世界对金钱的看法——如此之多，以至于以任何其他方式看待金钱似乎都很奇怪.</p>
-<p>然而，在部落和其他“原始”经济体中，货币的作用却截然不同，与其说是价值的储存或交换媒介，不如说是社会润滑剂。正如人类学家大卫·格雷伯（David Graeber）在他的新书《债务：最初的5000年》（Debt:the First 5000 Years，Melville House，2011）中所说，在这些社会中，金钱是一种“安排婚姻、确立孩子的父子关系、消除仇恨、在葬礼上安慰哀悼者、在犯罪案件中寻求宽恕、谈判条约、获得追随者”的方式，不是为了买卖东西，而是为了帮助定义社会关系的结构。</p>
-<p>那么，货币是如何成为贸易的基础的呢？公元前三千年，在美索不达米亚，当货币首次出现在书面记录中时，社会已经有了一个复杂的金融结构，商人们用白银作为价值标准来平衡他们的账户。但现金仍然没有被广泛使用。</p>
-<p>真的是在公元前7世纪，当利迪亚小王国推出世界上第一枚标准化金属硬币时，你开始看到货币以一种可识别的方式使用。利迪亚位于现在的土耳其，地处地中海和近东的交界处，与外国游客的商业往来十分普遍。事实证明，这正是金钱非常有用的情况。</p>
-<p>为了理解原因，想象一下在没有钱的情况下，通过易货进行交易。（让我们撇开这个事实，没有一个社会曾经完全或甚至在很大程度上依赖易货贸易；这仍然是一个有启发性的概念。）易货贸易的主要问题是经济学家威廉·斯坦利·杰文斯（William Stanley Jevons）所说的“需求的双重巧合”。假设你有一束香蕉，想要一双鞋；找一个有鞋的人或想要香蕉的人是不够的。为了进行交易，你需要找到一个有鞋子愿意交易并且想要香蕉的人。这是一项艰巨的任务。</p>
-<p>不过，有了共同的货币，任务就变得简单了：你只需把香蕉卖给别人，换成钱，然后用钱从别人那里买鞋。如果像在Lydia一样，你有外国人想从他们那里买东西，或者想卖给他们，那么拥有一个共同的交换媒介显然是很有价值的。也就是说，当你和你不认识的人打交道时，金钱是特别有用的。</p>
-<p>Lydian系统的突破是标准化的金属硬币。由一种叫做银银合金的金银合金制成，一枚硬币和另一枚完全一样——不像牛。与牛不同的是，硬币不会随着时间的推移而老化、死亡或发生其他变化。而且它们更容易携带。其他王国效仿Lydia的榜样，硬币在整个地中海无处不在，王国在铸造的硬币上印上自己的徽章。这产生了双重效果：它促进了贸易的流动，并确立了国家的权威。</p>
-<p>现代政府仍然喜欢在货币上盖章，而不仅仅是在钞票和硬币上。总的来说，他们更希望货币，无论是实物现金还是数字货币，只由官方实体发行和控制，而且金融交易（特别是国际交易）是可追踪的。因此，比特币（见本期《加密无政府主义者对现金的回答》）等替代货币最近的兴起，这种货币基于一种允许匿名交易的密码，迄今为止已被证明是不可破解的，这往往会让政府非常不高兴。</p>
-<p>货币在整个地中海的传播并不意味着它被普遍使用。远非如此。大多数人仍然是自给自足的农民，基本上生活在货币经济之外。</p>
-<p>但随着货币变得越来越普遍，它鼓励了市场的传播。事实上，这是历史上的一个经久不衰的教训：一旦你的经济中哪怕是一小部分被市场和货币所占据，它们就倾向于占领经济的其余部分，逐渐迫使易货贸易、封建主义和其他经济安排。这部分是因为货币使市场交易变得更加容易，部分是因为使用货币似乎重新定义了人们的价值观，促使他们从经济角度而非社会角度看待事物。</p>
-<p>各国政府很快接受硬通货，因为它促进了税收和军队的建设。公元前三世纪，随着罗马的崛起，货币成为统一和扩张帝国的重要工具，降低贸易成本，并为维持皇帝权力的军队提供资金。</p>
-<p>罗马帝国的衰落始于公元前三世纪，货币的使用也有所下降，至少在西方是如此。前帝国的部分地区，如英国，只是停止使用硬币。在其他地方，人们仍然用钱来平衡账户和记录债务，许多小王国铸造了自己的硬币。但总的来说，随着城市规模缩小和商业萎缩，货币流通变得不那么重要。</p>
-<p>封建社会的兴起也削弱了金钱的作用。主人和附庸之间的基本关系不是通过支付服务费，而是通过宣誓忠诚和承诺支持来调解的。土地没有买卖；它最终属于国王，国王将土地的使用权授予了他的领主，而领主又将土地提供给了他们的附庸。封建主义阻碍了贸易；封建领地通常是一个封闭的社区，旨在自给自足。在这样的环境下，钱几乎没有用。</p>
-<p>金钱在封建时代的衰落值得注意，因为它揭示了金钱的本质。首先，金钱是非个人的。有了它，你可以和一个叫杰夫·贝佐斯的家伙达成协议，你不认识他，可能永远也不会认识他，这没关系。只要你的钱和他的产品好，你们俩就能做生意。同样，金钱培养了一种奇怪的平等：只要你有足够的现金，所有的门都向你敞开。最后，金钱似乎鼓励人们只根据市场价值来评价事物，将其价值降低到一个数字。</p>
-<p>这些特征使得货币对于现代金融体系来说是无价的：它们鼓励贸易和分工，降低交易成本——也就是说，执行经济交易所产生的成本，使经济更加高效和富有成效。然而，这些同样的品质就是为什么金钱往往会侵蚀传统的社会秩序，以及为什么人们普遍认为，当金钱进入市场时，经济关系会压倒一切。</p>
-<p>因此，封建领主对这些东西几乎没有用处就不足为奇了。在他们的世界里，维持社会等级远比经济增长（或者，就这一点而言，经济自由或社会流动性）更重要。货币的广泛使用，以及它的非个人交易、均衡效应和计算价值，将颠覆这种秩序。</p>
-<p>当然，钱的贬值并没有持续。到了12世纪，中国人正在尝试纸币，欧洲人也开始接受一种新的货币观：钱不是用来囤积或消费的，而是用来投资的，用来工作以赚取更多的钱。</p>
-<p>这个想法是随着人们对商业的重新兴趣而产生的。贸易展览会在欧洲各地兴起，许多商人开始在欧洲大陆做生意。这一时期，意大利城邦也出现了银行业。这些新机构引入了一系列我们今天仍在使用的金融创新，包括市政债券和保险。银行促进了信贷和债务的使用，随着国王借钱为军事冒险提供资金，商人借钱为长期交易提供资金，信贷和债务在经济中变得越来越重要。</p>
-<p>汇票的发明，为西方纸币的出现奠定了基础，也发生在这一时期。汇票是旅行支票的前身：一种代表一定数量的黄金的文件，可以在不同的城市兑换成实物。旅行商人喜欢这些钞票，因为它们携带起来的风险（和费力）远低于贵金属。</p>
-<p>到了16世纪，在欧洲，塑造我们今天思想的许多关于金钱的观念已经到位。尽管如此，金钱仍然是一种有形的东西，即一块黄金或白银。金币不是价值的象征；这是它的一个体现，因为每个人都相信黄金具有内在价值。同样，经济中的货币数量仍然是可用黄金和白银数量的函数。然而，西班牙和葡萄牙的统治者并不完全理解这一制度的局限性，这导致他们掠夺新大陆殖民地，积累了大量的贵金属储备，这反过来又引发了一段时期的恶性通货膨胀和欧洲经济的巨大动荡。</p>
-<p>如今，各国都有中央银行来监督货币供应，以及设定利率、打击通货膨胀和控制货币政策。美国有联邦储备系统，欧元区有欧洲中央银行，马尔代夫有马尔代夫货币管理局，等等。当美联储想要增加货币供应量时，它不必去寻找埃尔多拉多。它也没有打电话给美国铸币局，要求它开始印制更多的美元；事实上，在美国大约10万亿美元的货币供应总量中，只有大约10%的货币供应量（约1万亿美元）以纸币和硬币的形式存在。</p>
-<p>相反，美联储在公开市场上购买政府债券，如国库券，通常是从普通私人银行购买，然后将这些钱存入银行账户。随着银行放贷、投资和以其他方式消费这些新资金，流通的总体货币供应量会增加。另一方面，如果美联储想减少货币供应量，它会做相反的事情：它在公开市场上出售政府债券，通常是向私人银行出售，然后从银行账户中扣除销售价格。银行的钱越来越少，货币供应也在萎缩。</p>
-<p>央行用来维持经济运行的复杂且相对不透明的阴谋可能会让西班牙帝国的通胀弱点看起来有点幼稚。但事实上，货币政策的微调——利率、货币供应和其他金融机制之间的微妙平衡——使经济以稳定、可控的速度持续增长，而不会出现过度的通货膨胀、失业、债务或繁荣与萧条周期——仍在进行中，正如欧洲和美国持续的经济困境所表明的那样。</p>
-<p>回到17世纪：货币作为商品的观点开始转变，只是随着纸币的广泛使用，纸币在美国殖民地受到了最热烈的欢迎。例如，1690年，马萨诸塞湾殖民地发行纸币来资助一场军事战役，但没有明确承诺将纸币兑换成黄金或白银。</p>
-<p>后来，在美国独立战争期间，大陆议会印制了“大陆债券”来支付新国家的战争债务。这些纸币原则上是由黄金支持的，但发行的纸币太多了，以至于它们的总价值远远超过了可用的黄金。当士兵和商人发现他们得到的是几乎毫无价值的纸币时，这引发了对纸币的强烈反对；例如，美国宪法禁止各州使用除金币和银币以外的任何其他货币。直到1862年南北战争期间，国会终于通过了一项法律，允许政府印制纸币或“美钞”。</p>
-<p>这并不是说在那之前纸币是不可用的。就在美国政府只铸造硬币的时候，通常被称为“野猫”的私人银行开始发行实际上变成了数千种货币。就像战时的大陆一样，这些纸币理论上是由黄金支撑的，但很难知道一家银行是否真的有足够的黄金来支撑纸币，因为当时几乎没有银行监管。不出所料，野猫时代是欺诈的温床。令人惊讶的是，大多数银行在保持货币和黄金储备平衡方面做了合理的工作，美国经济增长迅速。</p>
-<p>与此同时，英格兰银行采取了更为冷静的做法。1821年，它采用了金本位制，承诺根据要求将纸币兑换成黄金。随着其他国家效仿，金本位成为发达经济体的普遍规则。19世纪发现的主要新金矿确保了货币供应持续增长。</p>
-<p>金本位制，正如它的初衷，给价格带来了稳定，对房地产持有者和贷款人带来了巨大的好处。然而，它也带来了通货紧缩——也就是说，价格普遍下跌，因为随着国家人口和经济的增长，政府没有办法增加货币供应，除非开采更多的黄金，因此货币实际上变得更加稀缺。通货紧缩对农民和借款者来说很困难，他们渴望有一点通货膨胀来帮助他们偿还债务；当货币逐渐失去一些价值时，人们的债务也会随之失去。</p>
-<p>金本位制也没有阻止经济陷入衰退，当它们在1873年至1896年的全球经济衰退中陷入衰退时，遵守金本位制使得很难做出任何可能很快纠正问题的事情，比如降低利率或向经济注入更多资金。因此，经济体需要很长时间才能从衰退中复苏。</p>
-<p>当然，聪明的金融头脑总能找到绕过规则的终点。事实证明，金本位制并没有完全限制货币的增长。银行仍然可以用黄金储备贷款，而且他们可以自由地这样做。经济历史学家现在认为，流通的纸币数量使银行手头的黄金和白银的实际数量相形见绌。因此，尽管人们心中的金钱仍然与黄金挂钩，但它已经开始脱钩。</p>
-<p>第一次世界大战最终使金本位制脱轨，各国政府的军队需要比黄金更多的资金，因此他们只是开始印刷。尽管战后许多国家试图恢复金本位制，但大萧条却彻底结束了这一试验。</p>
-<p>结果是什么？今天的货币是“法定”货币，这意味着它们有发行政府的权威支持，仅此而已。例如，在美国，这意味着政府只接受美元作为税收支付，并要求债权人接受美元作为债务支付。但如果人们对美元失去信心，不再在日常交易中接受它，它最终会变得一文不值。</p>
-<p>许多人认为这种情况令人不安，这就是为什么人们一直呼吁回归金本位制。我们被告知，对法定货币的依赖给了政府太多的权力，政府可以肆无忌惮地印制任意数量的货币。然而事实是，这一直是可能的。即使采用了金本位制，各国政府也会不时地对其货币进行重估，实际上是规定了黄金的新价格，或者，当标准被证明过于限制时，比如在第一次世界大战期间，政府会忽略该标准。</p>
-<p>更重要的是，黄金比纸币更“真实”的想法是海市蜃楼。黄金是有价值的，因为我们共同决定它是有价值，我们将接受商品和服务作为交换。归根结底，这与我们的集体决定没有什么不同，即彩色矩形纸是有价值的，我们将接受商品和服务作为交换。</p>
-<p>现实是，我们已经摆脱了金本位制，不再认为货币需要与其他东西挂钩，这是一件好事。首先，这是诚实的：一旦我们摒弃了用牛换大麦的习惯（两者都有内在价值），金钱就成为了一种社会习俗，纸币只是让这种习俗变得显而易见。如今，我们不必担心在哪里能找到更多的黄金和白银，而是可以专注于如何明智地管理货币供应，造福于更大的利益。</p>
-<p>第二，更重要的是，放弃金本位制让央行在应对经济衰退方面有了更大的灵活性。经济衰退是一种螺旋式下降：人们和企业不再消费和投资，而是继续持有现金，这会收缩总体需求，迫使企业削减开支，这会造成报复，从而进一步缩减需求。</p>
-<p>一个解决方案是政府通过增加支出来弥补差额。但利率下降和货币供应量增加也很重要，从而使人们更容易借钱，帮助克服他们不愿意花钱的心理。当美联储和其他央行不必担心维持金本位时，这样的行动更容易实施。自金本位制度被废除以来，经济衰退持续时间更短，痛苦也减轻了。即使是最近的全球经济衰退，尽管很严重，与大萧条相比，也微不足道。</p>
-<p>当然，所有这些关于央行行长修补货币供应的言论正是法定货币体系的批评者所担心的，因为他们认为这将不可避免地导致失控的通货膨胀。历史确实表明，当一个政府大规模而粗心地扩大货币供应量时，最终会导致恶性通货膨胀和毫无价值的货币，就像1923年魏玛德国和几年前津巴布韦发生的那样。</p>
-<p>但这样的事件是罕见的。在过去90年中，美国和欧洲在20世纪70年代只经历了一次持续的高通胀。这一记录应该会产生一些信心；总的来说，央行官员的行为是负责任的，健康的工业经济不容易出现定期的螺旋形通胀。但这种信念显然很难树立；相反，对我们许多人来说，通胀似乎总是要失控。</p>
-<p>这种非理性的恐惧最终是金钱进化方式的遗留：我们坚持认为金钱需要有“坚实”的东西作为后盾。从这个意义上讲，我们就像马可波罗一样，仍然有点惊讶于一种想法，即你可以把整个经济建立在一张小小的纸上。</p>
-<p>但我们确实如此。80多年来，我们生活在一个金钱可以凭空创造的世界里。正如我们已经讨论过的，央行可以创造货币，但普通银行也可以。当一家银行贷款时，它通常只会把钱存入借款人的银行账户，不管它手头是否有足够的钱，银行都被允许借出比其储备金更多的钱。因此，每笔房屋净值贷款、汽车贷款和抵押贷款，银行都会逐步增加货币供应。</p>
-<p>当然，这一切都有点怪异，比如最近的房地产泡沫时期，银行发放了大量不良贷款，应该提醒我们信贷失控的危险。但渴望为货币体系建立一个更“坚实”的基础是错误的。金钱是一种社会创造，就像语言一样。这是一种可以很好或很差地使用的工具，我们最好有更多的自由来使用它。</p>
-<p>在历史的进程中，金钱的物质属性变得不那么重要，以至于现在人们很容易谈论无现金社会的可能性。计算机和电信、智能手机和社交媒体、加密技术和虚拟经济的强大结合，正是助长了这种讨论的原因。这种进步是有意义的，因为金钱最重要的不是它是什么，而是它做了什么。毕竟，成功的货币是人们使用的货币：它们润滑商业，允许人们交换商品和服务，从而鼓励人们工作和创造。德国社会学家乔治·西梅尔（Georg Simmel）将金钱描述为“纯粹的互动”，当金钱按其应有的方式运作时，这种描述似乎是恰当的，与其说它是一种事物，不如说它是个过程。</p>
-<p>这也许是忽必烈七个世纪前所理解的。这是我们今天仍在努力理解的。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1156,7 +1120,7 @@ Setup\_Time\\
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

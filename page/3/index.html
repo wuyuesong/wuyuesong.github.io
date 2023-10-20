@@ -160,6 +160,97 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/" class="post-title-link" itemprop="url">数据库————缓冲区管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-25 10:27:27" itemprop="dateCreated datePublished" datetime="2022-07-25T10:27:27+08:00">2022-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-15 20:42:29" itemprop="dateModified" datetime="2022-09-15T20:42:29+08:00">2022-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="缓冲区管理"><a href="#缓冲区管理" class="headerlink" title="缓冲区管理"></a>缓冲区管理</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>到目前为止，我们已经讨论了如何在数据库管理系统的最低级别管理磁盘空间，以及如何在基于页面的数据库系统中管理文件和索引。我们现在将探讨DBMS上这两个级别之间的接口-缓冲区管理器。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221359329.png" alt></p>
+<p>缓冲区管理器负责管理内存中的页面，并处理来自文件和索引管理器的页面请求。请记住，内存空间是有限的，因此我们无法在缓冲池中存储所有页面。缓冲区管理器负责收回策略，或者在空间已满时选择要收回的页面。当从内存中逐出页面或将新页面读入内存时，缓冲区管理器与磁盘空间管理器通信以执行所需的磁盘操作。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221459150.png" alt></p>
+<h2 id="2-缓冲池"><a href="#2-缓冲池" class="headerlink" title="2 缓冲池"></a>2 缓冲池</h2><p>通过将空间划分为可放置页面的帧，将内存转换为缓冲池。缓冲帧可以保存与页面相同数量的数据（因此页面完全适合于帧）。为了有效地跟踪帧，缓冲区管理器为元数据表分配额外的内存空间。</p>
+<p><img src="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/image-20220907221655999.png" alt></p>
+<p>该表跟踪4条信息：</p>
+<p>1.与存储器地址唯一关联的帧ID</p>
+<p>2.用于确定帧当前包含的页面的页面ID</p>
+<p>3.用于验证页面是否已修改的脏位</p>
+<p>4.用于跟踪当前使用页面的请求者数量的Pin计数</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/07/20/cs186%E6%95%B0%E6%8D%AE%E5%BA%93/CS186_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -911,86 +1002,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/" class="post-title-link" itemprop="url">Shell Tools and Scripting课后练习</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-27 16:46:27 / Modified: 20:09:26" itemprop="dateCreated datePublished" datetime="2022-03-27T16:46:27+08:00">2022-03-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Shell-Tools-and-Scripting课后练习"><a href="#Shell-Tools-and-Scripting课后练习" class="headerlink" title="Shell Tools and Scripting课后练习"></a>Shell Tools and Scripting课后练习</h1><ol>
-<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ ls -lhat --color</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r-- 1 rust rust    7 Mar 27 16:18 foo1</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 22:01 ..</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:55 .</span><br><span class="line">-rwxrwxrwx 1 rust rust   83 Mar 26 18:55 script.py</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 bar</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 18:19 foo</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo10</span><br><span class="line">-rw-r--r-- 1 rust rust    0 Mar 26 18:11 foo2</span><br><span class="line">drwxr-xr-x 1 rust rust 4.0K Mar 26 17:14 b</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">marco.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">marco() &#123;</span><br><span class="line">    export MARCO=$(pwd)</span><br><span class="line">&#125;</span><br><span class="line">polo() &#123;</span><br><span class="line">    cd &quot;$MARCO&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ source marco.sh</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing/test$ cd ..</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ marco</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$ cd</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~$ polo</span><br><span class="line">rust@DESKTOP-L4PLVQ4:~/missing$</span><br></pre></td></tr></table></figure>
-<ol>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">count=1</span><br><span class="line"></span><br><span class="line"> <span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"> <span class="keyword">do</span></span><br><span class="line">     ./buggy.sh 2&gt; out.log</span><br><span class="line">     <span class="keyword">if</span> [[ $? -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">         <span class="built_in">echo</span> <span class="string">&quot;failed after <span class="variable">$count</span> times&quot;</span></span><br><span class="line">         cat out.log</span><br><span class="line">         <span class="built_in">break</span></span><br><span class="line">     <span class="keyword">fi</span></span><br><span class="line">     ((count++))</span><br><span class="line"></span><br><span class="line"> <span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1060,7 +1071,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
