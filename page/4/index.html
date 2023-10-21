@@ -160,6 +160,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/28/missing-semester/Data%20Wrangling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/28/missing-semester/Data%20Wrangling/" class="post-title-link" itemprop="url">Data Wrangling</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-28 11:08:27" itemprop="dateCreated datePublished" datetime="2022-03-28T11:08:27+08:00">2022-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-30 21:41:52" itemprop="dateModified" datetime="2022-03-30T21:41:52+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing-Semester</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Data-Wrangling"><a href="#Data-Wrangling" class="headerlink" title="Data Wrangling"></a>Data Wrangling</h1><p>以下代码可以查看服务器的日志<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是 <code>myserver</code> 由，&lt;用户名&gt;@&lt;$ip$地址构成&gt;</p>
+<p><code>sed</code> 是一种匹配工具，<code>s</code> 命令的形式如下：<code>s/REGEX/SUBSTITUTION/</code>  其中 <code>REGEX</code> 是正则表达式，而<code>SUBSTITUTION</code> 是替代文本，也就是将匹配到的正则表达式转换为代替文本，默认只替代一遍。在后面加上<code>g</code> 可以多次匹配。</p>
+<p>为了支持更不用加上<code>\</code> 我们需要在<code>sed</code>后加上<code>-E</code></p>
+<p>以下是该命令的一些示例用法：<br></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/28/missing-semester/Data%20Wrangling/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/27/missing-semester/Shell%20Tools%20and%20Scripting%E8%AF%BE%E5%90%8E%E7%BB%83%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -958,177 +1043,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/" class="post-title-link" itemprop="url">信息安全概论（2）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-16 17:32:27" itemprop="dateCreated datePublished" datetime="2022-03-16T17:32:27+08:00">2022-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-19 10:45:40" itemprop="dateModified" datetime="2022-03-19T10:45:40+08:00">2022-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="信息安全概论（2）"><a href="#信息安全概论（2）" class="headerlink" title="信息安全概论（2）"></a>信息安全概论（2）</h1><h2 id="2-1-密码学基本概念——加密和解密"><a href="#2-1-密码学基本概念——加密和解密" class="headerlink" title="2.1 密码学基本概念——加密和解密"></a>2.1 密码学基本概念——加密和解密</h2><h3 id="机密与真实性的解决方法——加密"><a href="#机密与真实性的解决方法——加密" class="headerlink" title="机密与真实性的解决方法——加密"></a>机密与真实性的解决方法——加密</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">  明文--加密算法 加密密钥--&gt;密文</span><br><span class="line">  密文--解密算法 解密密钥--&gt;明文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="两种密码体制"><a href="#两种密码体制" class="headerlink" title="两种密码体制"></a>两种密码体制</h3><h4 id="单钥密码体制"><a href="#单钥密码体制" class="headerlink" title="单钥密码体制"></a>单钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164218625.png)</p>
-<blockquote>
-<p>加密密钥和解密密钥相同，或能相互推导</p>
-</blockquote>
-<p>单钥算法不能提供抗抵赖保护。</p>
-<ol>
-<li>数据世界中，复制件和原件是不可区分的。</li>
-<li>通信双方对密文Y有对等的生产能力。</li>
-</ol>
-<p>所以单钥密码算法也被称为对称密码算法。</p>
-<p>单钥密码加密的应用条件：</p>
-<p>​    需要敌人拿不到数据的安全信道传递共用的密钥。</p>
-<h4 id="双钥密码体制"><a href="#双钥密码体制" class="headerlink" title="双钥密码体制"></a>双钥密码体制</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316164723920.png)</p>
-<blockquote>
-<p>加密密钥和解密密钥不相同，且不能相互推导</p>
-</blockquote>
-<p>双钥算法之一 —— RSA算法</p>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316172136374.png)</p>
-<p>加密：$c=m^e \mod {n}$</p>
-<p>解密：$c^d \mod n = m$</p>
-<blockquote>
-<p>知道加密密钥推断不出解密密钥</p>
-</blockquote>
-<p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220316174502949.png)</p>
-<p>假设一个场景：A与B要进行通信，C为可能的窃听者，双钥密码体制工作如下。</p>
-<p><strong>工作流程：</strong></p>
-<ol>
-<li>由A产生加密密钥和解密密钥</li>
-<li>A将加密密钥公开出去，B和C都能接收到加密密钥。</li>
-<li>B通过加密密钥加密明文发送给A，A通过解密密钥就可以解密出明文。</li>
-</ol>
-<p>这个过程中就可以不通过安全信道传输信息他，同时通过加密密钥也不能推导出解密密钥，所以信息可以安全的传输。</p>
-<h4 id="2-3-4-双钥密码小结"><a href="#2-3-4-双钥密码小结" class="headerlink" title="2.3.4 双钥密码小结"></a>2.3.4 双钥密码小结</h4><p>两把钥匙：加密能力和解密能力是非对称的。</p>
-<p><strong>公开加密密钥：</strong></p>
-<p>目的：机密性</p>
-<p>优点：降低对安全信道的依赖</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>机密性</th>
-<th>可鉴别性</th>
-<th>完整性</th>
-<th>抗抵赖性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>√</td>
-<td>×</td>
-<td>√</td>
-<td>×</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>公开解密密钥：</strong></p>
-<p>目的：真实性</p>
-<p>优点：提供了抗抵赖的”证据“</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>机密性</th>
-<th>可鉴别性</th>
-<th>完整性</th>
-<th>抗抵赖性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>×</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h4 id="2-6-1-数字签名的基本原理和物理签名的区别"><a href="#2-6-1-数字签名的基本原理和物理签名的区别" class="headerlink" title="2.6.1 数字签名的基本原理和物理签名的区别"></a><strong>2.6.1 数字签名的基本原理和物理签名的区别</strong></h4><p><strong>物理签名：</strong>基于物理载体不可伪造，通过物理载体对其上的内容负责。</p>
-<p><strong>数字签名：</strong>直接基于数据内容不可伪造，没有物理载体。</p>
-<h4 id="2-7-1-数字签名与数字证书"><a href="#2-7-1-数字签名与数字证书" class="headerlink" title="2.7.1 数字签名与数字证书"></a>2.7.1 数字签名与数字证书</h4><p><img src="/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/信息安全概论(2" alt>\image-20220318141759531.png)</p>
-<p>我们以用户向服务器传输加密数据来阐述证书、公私钥和可信第三方的关系：</p>
-<ol>
-<li><p>可信第三方产生公私钥，用私钥对服务器信息进行加密，然后将公钥公布出去。</p>
-</li>
-<li><p>用户向服务器传输数据的时候，先用公钥对签名信息进行解密。</p>
-<blockquote>
-<p>这一步可以保证数据的真实性，因为是可信第三方签名认证的。</p>
-</blockquote>
-</li>
-<li><p>接着服务器通过公开的加密私钥对数据进行加密，将数据传输给服务器。</p>
-<blockquote>
-<p>这一步可以保证数据的机密性，用这个公钥给服务器发送的机密数据，只有服务器可以解开。</p>
-</blockquote>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1198,7 +1112,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
