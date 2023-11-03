@@ -160,6 +160,83 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/11/03/6.828/6.828-%E4%B8%8D%E5%AD%98%E5%9C%A8riscv64-linux-gnu-gdb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wys的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/03/6.828/6.828-%E4%B8%8D%E5%AD%98%E5%9C%A8riscv64-linux-gnu-gdb/" class="post-title-link" itemprop="url">6.828 不存在riscv64-linux-gnu-gdb</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-11-03 11:21:27 / Modified: 11:21:54" itemprop="dateCreated datePublished" datetime="2023-11-03T11:21:27+08:00">2023-11-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/6-828/" itemprop="url" rel="index"><span itemprop="name">6.828</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="6-828-不存在riscv64-linux-gnu-gdb"><a href="#6-828-不存在riscv64-linux-gnu-gdb" class="headerlink" title="6.828 不存在riscv64-linux-gnu-gdb"></a>6.828 不存在riscv64-linux-gnu-gdb</h1><p>上课的时候发现老师使用的是 <code>riscv64-linux-gnu-gdb</code> 但实际操作发现不存在这个程序。</p>
+<p>参照<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2023/tools.html">这个网页</a>发现，<code>Arch Linux</code> 装的是 <code>riscv64-linux-gnu-gdb</code> 。</p>
+<p>而 <code>Debian or Ubuntu</code> 装的是 <code>gdb-multiarch</code>。</p>
+<p>启动<code>gdb-multiarch</code> 发现没有装载文件。</p>
+<p>参照<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2023/labs/gdb.html">这个网页</a> 发现需要远程连接<code>GDB</code>服务器。</p>
+<p><strong>服务端</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd xv6-labs-2023</span><br><span class="line">make qemu-gdb</span><br></pre></td></tr></table></figure>
+<p><strong>客户端：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd xv6-labs-2023</span><br><span class="line">gdb-multiarch</span><br></pre></td></tr></table></figure>
+<p>然后在客户端的的<code>GDB</code> 中输入 <code>target remote localhost:260000</code> 连接服务端。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/10/21/cs61c/cs61c_lab10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -956,86 +1033,6 @@ Setup\_Time\\
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://wuyuesong.github.io/2023/09/27/cs61c/cs61c_lab1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wys的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/27/cs61c/cs61c_lab1/" class="post-title-link" itemprop="url">cs61c_lab1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-27 11:22:27 / Modified: 19:36:20" itemprop="dateCreated datePublished" datetime="2023-09-27T11:22:27+08:00">2023-09-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cs61c/" itemprop="url" rel="index"><span itemprop="name">cs61c</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="cs61c_lab1">cs61c_lab1</h1>
-<p><strong>Exercise 1: See what you can C</strong></p>
-<p>定义常量V0,V1,V2,V3使得程序输出符合要求，同时要求四个常量中不同的值最少。</p>
-<p>V0,V1,V3只能是3，V2取3可以满足不同的值最少。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V0 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V1 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V2 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V3 3</span></span><br></pre></td></tr></table></figure>
-<p><strong>Exercise 2: Catch those bugs!</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/27/cs61c/cs61c_lab1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1105,14 +1102,14 @@ Setup\_Time\\
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
